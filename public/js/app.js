@@ -3821,7 +3821,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     catInfoDatas: {
@@ -26194,77 +26193,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row row-cols-4" },
-      _vm._l(_vm.catInfoDatas, function(catInfoData) {
-        return _c(
-          "div",
-          {
-            key: catInfoData.id,
-            staticClass: "card border-secondary mb-3 m-auto",
-            staticStyle: { width: "18rem" }
-          },
-          [
-            _c("img", {
-              ref: "imgStatus",
-              refInFor: true,
-              staticClass: "card-img-top rounded-3 pt-2",
-              attrs: {
-                src: catInfoData.album_file,
-                width: "200px",
-                height: "200px"
-              }
-            }),
+  return _c(
+    "div",
+    { staticClass: "row row-cols-4" },
+    _vm._l(_vm.catInfoDatas, function(catInfoData) {
+      return _c(
+        "div",
+        {
+          key: catInfoData.id,
+          staticClass: "card border-secondary mb-3 m-auto",
+          staticStyle: { width: "18rem" }
+        },
+        [
+          _c("img", {
+            staticClass: "card-img-top rounded-3 pt-2",
+            attrs: { src: catInfoData.album_file, id: "catimg" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body  text-secondary" }, [
+            _c("h4", { staticClass: "card-text" }, [
+              _c("i", { staticClass: "fas fa-paw" }),
+              _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body  text-secondary" }, [
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
-              ]),
-              _vm._v(" "),
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v("體型:" + _vm._s(catInfoData.animal_bodytype))
-              ]),
-              _vm._v(" "),
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v(
-                  "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: {
-                    type: "button",
-                    "data-bs-toggle": "modal",
-                    "data-bs-target": "#AnimalDetailModal"
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      $event.preventDefault()
-                      return _vm.getAnimalId(
-                        catInfoData.id,
-                        catInfoData.shelter_address
-                      )
-                    }
-                  }
-                },
-                [_vm._v("\r\n  詳細資料\r\n")]
+            _c("h4", { staticClass: "card-text" }, [
+              _c("i", { staticClass: "fas fa-paw" }),
+              _vm._v("體型:" + _vm._s(catInfoData.animal_bodytype))
+            ]),
+            _vm._v(" "),
+            _c("h4", { staticClass: "card-text" }, [
+              _c("i", { staticClass: "fas fa-paw" }),
+              _vm._v(
+                "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
               )
-            ])
-          ]
-        )
-      }),
-      0
-    )
-  ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: {
+                  type: "button",
+                  "data-bs-toggle": "modal",
+                  "data-bs-target": "#AnimalDetailModal"
+                },
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    $event.preventDefault()
+                    return _vm.getAnimalId(
+                      catInfoData.id,
+                      catInfoData.shelter_address
+                    )
+                  }
+                }
+              },
+              [_vm._v("\n  詳細資料\n")]
+            )
+          ])
+        ]
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

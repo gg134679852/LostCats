@@ -1,10 +1,10 @@
 <template>
-<div class="container">
   <div class="row row-cols-4">
   <div class="card border-secondary mb-3 m-auto" style="width: 18rem;" v-for="catInfoData in catInfoDatas" :key="catInfoData.id">
-  <img :src="catInfoData.album_file" class="card-img-top rounded-3 pt-2" width="200px" height="200px" ref="imgStatus">
+  <img :src="catInfoData.album_file" class="card-img-top rounded-3 pt-2" id="catimg">
   <div class="card-body  text-secondary">
-    <h4 class="card-text"><i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
+    <h4 class="card-text">
+      <i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
     <h4 class="card-text"><i class="fas fa-paw"></i>體型:{{catInfoData.animal_bodytype}}</h4>
     <h4 class="card-text"><i class="fas fa-paw"></i>所在地:{{catInfoData.shelter_address.slice(0,3)}}</h4>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AnimalDetailModal"
@@ -15,7 +15,6 @@
     </div>
    </div>
    </div>
-  </div>
 </template>
 <script>
 
