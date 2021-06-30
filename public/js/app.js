@@ -24353,7 +24353,9 @@ var render = function() {
                     attrs: {
                       src: _vm.catInfoData.album_file,
                       width: "250px",
-                      height: "250px"
+                      height: "250px",
+                      onerror:
+                        "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
                     }
                   })
                 ]),

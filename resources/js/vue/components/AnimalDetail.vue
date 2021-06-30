@@ -9,7 +9,7 @@
       <div class="modal-body">
         <div class="d-flex">
           <div class="p-auto">
-          <img class="rounded-3" :src="catInfoData.album_file" width="250px" height="250px">
+          <img class="rounded-3" :src="catInfoData.album_file" width="250px" height="250px" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
           </div>
           <div class="ml-5">
             <ul class="list-group">
