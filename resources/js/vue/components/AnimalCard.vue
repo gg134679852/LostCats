@@ -8,7 +8,7 @@
     <h4 class="card-text"><i class="fas fa-paw"></i>體型:{{catInfoData.animal_bodytype}}</h4>
     <h4 class="card-text"><i class="fas fa-paw"></i>所在地:{{catInfoData.shelter_address.slice(0,3)}}</h4>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AnimalDetailModal"
-       @click.stop.prevent="getAnimalId(catInfoData.id,catInfoData.shelter_address)"
+       @click.stop.prevent="getAnimalId(catInfoData.id,catInfoData.shelter_name)"
     >
   詳細資料
 </button>

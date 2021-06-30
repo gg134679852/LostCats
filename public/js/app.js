@@ -24289,7 +24289,7 @@ var render = function() {
                     $event.preventDefault()
                     return _vm.getAnimalId(
                       catInfoData.id,
-                      catInfoData.shelter_address
+                      catInfoData.shelter_name
                     )
                   }
                 }
