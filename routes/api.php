@@ -18,6 +18,10 @@ Route::get('/animalData', 'animalDataController@getAnimalData');
 
 Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalDetailData');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/register', 'Auth\RegisteredUserController@store');
+// Route::post('/login', 'Auth\AuthenticatedSessionController@store');
+
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

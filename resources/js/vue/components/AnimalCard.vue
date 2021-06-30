@@ -1,7 +1,7 @@
 <template>
   <div class="row row-cols-4">
   <div class="card border-secondary mb-3 m-auto" style="width: 18rem;" v-for="catInfoData in catInfoDatas" :key="catInfoData.id">
-  <img :src="catInfoData.album_file" class="card-img-top rounded-3 pt-2" width="200px" height="200px">
+  <img :src="catInfoData.album_file" class="card-img-top rounded-3 pt-2" width="200px" height="200px" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
   <div class="card-body  text-secondary">
     <h4 class="card-text">
       <i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
