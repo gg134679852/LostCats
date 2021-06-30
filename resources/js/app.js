@@ -4,13 +4,12 @@ require('./bootstrap');
 require('./bootstrap');
 
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vuex from 'vuex'
 import router from './vue/router/routes'
 import * as VueGoogleMaps from 'vue2-google-maps';
 
 const swal = (window.swal = require("sweetalert2"));
 
-Vue.use(VueRouter);
 
 Vue.use(VueGoogleMaps, {
   load: {
