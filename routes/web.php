@@ -12,7 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/singup', 'userControllers@singup');
+Route::post('/login', 'userControllers@login');
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/logout', 'userControllers@logout');
+});
 
 Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
+

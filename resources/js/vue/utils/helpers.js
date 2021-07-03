@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const baseURL = 'http://127.0.0.1:8000/api'
+const baseURL = 'http://127.0.0.1:8000/'
 
 export const apiHelper = axios.create({
   baseURL

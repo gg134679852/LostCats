@@ -15,11 +15,11 @@ class animalDataController extends Controller
     }
     public function getAnimalDetailData($id, $address)
     {
-        $env = env('MIX_API_KEY');
+        $key = config('keys.mapKEY');
 
         $addressResponse = Http::get(
-            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={$address}&inputtype=textquery&fields=geometry&key={$env}")->json();
-
+            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={$address}&inputtype=textquery&fields=geometry&key={$key}")->json();
+            
         $AnimalData = new AnimalDataResource(AnimalData::findOrFail($id));
 
         return [$AnimalData, $addressResponse];

@@ -1,97 +1,54 @@
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
     <router-link
       class="navbar-brand"
       to="/"
     >
-      迷途喵星人
+      <i class="fas fa-cat"></i> 迷途喵星人
     </router-link>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div
-      id="navbarSupportedContent" 
-      class="navbar-collapse collapse"
-    >
-      <div class="ml-auto d-flex align-items-center">
-        <!-- is user is admin -->
-        <router-link
-      v-if="currentUser.isAdmin"
-      to="#"
-      class="text-white mr-3"
-        >
-         管理員後台
-       </router-link>
-
-        <!-- is user is login -->
-        <template v-if="isAuthenticated">
-      <router-link
-        to="#"
-        class="text-white mr-3"
-      >
-        {{ currentUser.name || '使用者' }} 您好
-      </router-link>
-      <button
-        type="button"
-        class="btn btn-sm btn-outline-success my-2 my-sm-0"
-      >
-        登出
-      </button>
-    </template>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
     </div>
-  </nav>
+    <router-link to="/login" class="btn btn-primary" v-if="!isAuthenticated">
+  登陸
+</router-link>
+ <router-link to="/login" class="btn btn-primary p-1" v-if="isAuthenticated">
+  會員頁面
+</router-link>
+ <button  class="btn btn-primary p-1" v-if="isAuthenticated" @click="logout">
+  登出
+</button>
+  </div>
+</nav>
 </template>
 
 <script>
-// ./src/components/Navbar.vue
-// seed data
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: '管理者',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
-  },
-  isAuthenticated: true
-}
-
+import { mapState } from 'vuex'
+import {apiHelper,Toast} from './../utils/helpers'
+import axios from 'axios'
+const getToken = () => localStorage.getItem('token')
 export default {
-  // Vue 會在沒有資料時使用此預設值
-  data () {
-    return {
-      currentUser: {
-        id: -1,
-        name: '',
-        email: '',
-        image: '',
-        isAdmin: false
-      },
-      isAuthenticated: false
-    }
-  },
-   created () {
-    this.fetchUser()
+ computed: {
+    ...mapState(['currentUser', 'isAuthenticated'])
   },
   methods: {
-    fetchUser () {
-      this.currentUser = {
-        ...this.currentUser,
-        ...dummyUser.currentUser
-      }
-      this.isAuthenticated = dummyUser.isAuthenticated
-    }
+    logout(){
+      axios.get('/sanctum/csrf-cookie')
+      .then(response => {
+       apiHelper.get('logout',{
+      headers: { Authorization: `Bearer ${getToken()}`}})
+      .then(()=>{
+        this.$store.commit('revokeAuthentication')
+        Toast.fire({
+          icon: 'success',
+          title:'成功登出'
+        })
+      })
+    })
   }
+ }
 }
 </script>
