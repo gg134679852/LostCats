@@ -3,6 +3,8 @@
   <div class="container">
   <AnimalCard :catInfoDatas = catDatas.data
   @get-Animal-Id="fetchAnimalDetailData"
+  @get-Favorite-Cat-Id="getFavoriteCatId"
+  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
   />
   <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
   @get-pagination-url="getPaginationUrl"
@@ -66,7 +68,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-        <button type="button" class="btn btn-primary">追蹤</button>
+        <button type="button" class="btn btn-primary" v-if="isAuthenticated">追蹤</button>
       </div>
     </div>
   </div>
@@ -78,7 +80,9 @@
  import AnimalCard from './../components/AnimalCard'
  import Pagination from './../components/Pagination'
  import Spinner from './../components/Spinner'
- import {apiHelper} from './../utils/helpers'
+ import {apiHelper,Toast} from './../utils/helpers'
+ import { mapState } from 'vuex'
+ const getToken = () => localStorage.getItem('token')
  
  export default {
    components:{
@@ -118,18 +122,44 @@
    },
    methods: {
     fetchAnimalData () {
-      this.homeIsLoading = true
      apiHelper.get('api/animalData')
      .then((obj)=>{
        this.catDatas = obj.data
      })
-     this.homeIsLoading = false
     },
     getPaginationUrl (url) {
       axios.get(url)
      .then((obj)=>{
        this.catDatas = obj.data
      })
+    },
+    getFavoriteCatId(id){
+      apiHelper.post(`api/${id}/addFavorite`,{
+      headers: { Authorization: `Bearer ${getToken()}`
+      }})
+      .then(()=>{
+        Toast.fire({
+          icon: 'success',
+          title:'成功加入最愛'
+        })
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    },
+    getRemoveFavoriteCatId(id){
+      apiHelper.post(`api/${id}/removeFavorite`,{
+      headers: { Authorization: `Bearer ${getToken()}`
+      }})
+      .then(()=>{
+        Toast.fire({
+          icon: 'success',
+          title:'成功移除最愛'
+        })
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
     },
     fetchAnimalDetailData (id,address) {
       this.modalIsLoading = true
@@ -147,6 +177,9 @@
        this.modalIsLoading = false
      })
     }
+  },
+  computed:{
+    ...mapState(['isAuthenticated'])
   }
  }
  </script>

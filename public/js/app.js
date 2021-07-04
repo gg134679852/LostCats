@@ -1845,6 +1845,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1863,6 +1870,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     catInfoDatas: {
@@ -1870,11 +1891,37 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  data: function data() {
+    return {
+      favoriteId: []
+    };
+  },
   methods: {
     getAnimalId: function getAnimalId(id, address) {
       this.$emit('get-Animal-Id', id, address);
+    },
+    addFavorite: function addFavorite(id) {
+      this.favoriteId.push(id);
+      this.$emit('get-Favorite-Cat-Id', id);
+    },
+    removeFavorite: function removeFavorite(id) {
+      var target = this.favoriteId.indexOf(id);
+      this.favoriteId.splice(target, 1);
+      this.$emit('get-Remove-Favorite-Cat-Id', id);
+    },
+    FavoriteButton: function FavoriteButton(id) {
+      var _this = this;
+
+      if (this.favoriteId.length === 0) {
+        this.favoriteCats.forEach(function (data) {
+          _this.favoriteId.push(data.id);
+        });
+      }
+
+      return this.favoriteId.includes(id);
     }
-  }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)(['favoriteCats', 'isAuthenticated']))
 });
 
 /***/ }),
@@ -2055,6 +2102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../components/Pagination */ "./resources/js/vue/components/Pagination.vue");
 /* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../components/Spinner */ "./resources/js/vue/components/Spinner.vue");
 /* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../utils/helpers */ "./resources/js/vue/utils/helpers.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2136,10 +2184,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
 
+
+
+
+var getToken = function getToken() {
+  return localStorage.getItem('token');
+};
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2181,17 +2237,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchAnimalData: function fetchAnimalData() {
       var _this = this;
 
-      this.homeIsLoading = true;
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData').then(function (obj) {
         _this.catDatas = obj.data;
       });
-      this.homeIsLoading = false;
     },
     getPaginationUrl: function getPaginationUrl(url) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (obj) {
         _this2.catDatas = obj.data;
+      });
+    },
+    getFavoriteCatId: function getFavoriteCatId(id) {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("api/".concat(id, "/addFavorite"), {
+        headers: {
+          Authorization: "Bearer ".concat(getToken())
+        }
+      }).then(function () {
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: 'success',
+          title: '成功加入最愛'
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getRemoveFavoriteCatId: function getRemoveFavoriteCatId(id) {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("api/".concat(id, "/removeFavorite"), {
+        headers: {
+          Authorization: "Bearer ".concat(getToken())
+        }
+      }).then(function () {
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: 'success',
+          title: '成功移除最愛'
+        });
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
     fetchAnimalDetailData: function fetchAnimalDetailData(id, address) {
@@ -2205,7 +2287,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.modalIsLoading = false;
       });
     }
-  }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapState)(['isAuthenticated']))
 });
 
 /***/ }),
@@ -2554,15 +2637,18 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
       name: '',
       email: ''
     },
+    favoriteCats: [],
     isAuthenticated: false
   },
   mutations: {
     setUser: function setUser(state, currentUser) {
       state.currentUser = _objectSpread(_objectSpread({}, state.currentUser), currentUser.user);
+      state.favoriteCats = currentUser.favoriteCats;
       state.isAuthenticated = true;
     },
     revokeAuthentication: function revokeAuthentication(state) {
       state.currentUser = {};
+      state.favoriteCats = [];
       state.isAuthenticated = false;
       localStorage.removeItem('token');
     }
@@ -2579,10 +2665,12 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
             id = _obj$data$user.id,
             name = _obj$data$user.name,
             email = _obj$data$user.email;
+        var favoriteCats = obj.data.favoriteCats;
         commit('setUser', {
           id: id,
           name: name,
-          email: email
+          email: email,
+          favoriteCats: favoriteCats
         });
       })["catch"](function (error) {
         console.log(error);
@@ -24994,47 +25082,88 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body  text-secondary" }, [
-            _c("h4", { staticClass: "card-text" }, [
-              _c("i", { staticClass: "fas fa-paw" }),
-              _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
-            ]),
-            _vm._v(" "),
-            _c("h4", { staticClass: "card-text" }, [
-              _c("i", { staticClass: "fas fa-paw" }),
-              _vm._v("體型:" + _vm._s(catInfoData.animal_bodytype))
-            ]),
-            _vm._v(" "),
-            _c("h4", { staticClass: "card-text" }, [
-              _c("i", { staticClass: "fas fa-paw" }),
-              _vm._v(
-                "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: {
-                  type: "button",
-                  "data-bs-toggle": "modal",
-                  "data-bs-target": "#AnimalDetailModal"
-                },
-                on: {
-                  click: function($event) {
-                    $event.stopPropagation()
-                    $event.preventDefault()
-                    return _vm.getAnimalId(
-                      catInfoData.id,
-                      catInfoData.shelter_name
-                    )
+          _c(
+            "div",
+            { staticClass: "card-body  text-secondary" },
+            [
+              _c("h4", { staticClass: "card-text" }, [
+                _c("i", { staticClass: "fas fa-paw" }),
+                _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
+              ]),
+              _vm._v(" "),
+              _c("h4", { staticClass: "card-text" }, [
+                _c("i", { staticClass: "fas fa-paw" }),
+                _vm._v("體型:" + _vm._s(catInfoData.animal_bodytype))
+              ]),
+              _vm._v(" "),
+              _c("h4", { staticClass: "card-text" }, [
+                _c("i", { staticClass: "fas fa-paw" }),
+                _vm._v(
+                  "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
+                )
+              ]),
+              _vm._v(" "),
+              _vm.isAuthenticated
+                ? [
+                    !_vm.FavoriteButton(catInfoData.id)
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                $event.preventDefault()
+                                return _vm.addFavorite(catInfoData.id)
+                              }
+                            }
+                          },
+                          [_vm._v("\n  加入最愛\n")]
+                        )
+                      : _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                $event.preventDefault()
+                                return _vm.removeFavorite(catInfoData.id)
+                              }
+                            }
+                          },
+                          [_vm._v("\n  移除最愛\n")]
+                        )
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    type: "button",
+                    "data-bs-toggle": "modal",
+                    "data-bs-target": "#AnimalDetailModal"
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      $event.preventDefault()
+                      return _vm.getAnimalId(
+                        catInfoData.id,
+                        catInfoData.shelter_name
+                      )
+                    }
                   }
-                }
-              },
-              [_vm._v("\n  詳細資料\n")]
-            )
-          ])
+                },
+                [_vm._v("\n  詳細資料\n")]
+              )
+            ],
+            2
+          )
         ]
       )
     }),
@@ -25326,7 +25455,11 @@ var render = function() {
       [
         _c("AnimalCard", {
           attrs: { catInfoDatas: _vm.catDatas.data },
-          on: { "get-Animal-Id": _vm.fetchAnimalDetailData }
+          on: {
+            "get-Animal-Id": _vm.fetchAnimalDetailData,
+            "get-Favorite-Cat-Id": _vm.getFavoriteCatId,
+            "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
+          }
         }),
         _vm._v(" "),
         _c("Pagination", {
@@ -25482,7 +25615,27 @@ var render = function() {
                     1
                   ),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-bs-dismiss": "modal" }
+                  },
+                  [_vm._v("關閉")]
+                ),
+                _vm._v(" "),
+                _vm.isAuthenticated
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" }
+                      },
+                      [_vm._v("追蹤")]
+                    )
+                  : _vm._e()
+              ])
             ],
             1
           )
@@ -25511,27 +25664,6 @@ var staticRenderFns = [
           "aria-label": "Close"
         }
       })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-bs-dismiss": "modal" }
-        },
-        [_vm._v("關閉")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("追蹤")]
-      )
     ])
   }
 ]

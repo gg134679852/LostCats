@@ -39,6 +39,9 @@ class getCatData extends Command
      */
     public function handle()
     {
+
+    AnimalData::truncate();
+
     $response = Http::get('https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL')->json();
 
     $catData = array_filter($response, function ($item) {
