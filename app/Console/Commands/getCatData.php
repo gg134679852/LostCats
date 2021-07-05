@@ -62,6 +62,7 @@ class getCatData extends Command
             "shelter_name" => $cat['shelter_name'],
             "album_file" => $cat['album_file'],
             "shelter_address" => $cat['shelter_address'],
+            'short_address'=>mb_substr($cat['shelter_address'],0,3,'UTF-8'),
             "shelter_tel" => $cat['shelter_tel'],
         ]);
     };

@@ -1,6 +1,37 @@
 <template>
 <div class ="mt-4">
   <div class="container">
+    <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter">
+      <div class="w-25">
+        <h6>地區</h6>
+        <select class="form-select" v-model="filterSubmitData.short_address">
+    <option name="all" value='0'>全部</option>
+  <option v-for="item in shortAddress" name="shelter_address" :value="item" :key="item.index">{{item}}</option>
+</select>
+      </div>
+      <div class="w-25">
+        <h6>性別</h6>
+        <select class="form-select"
+        v-model="filterSubmitData.animal_sex"
+        >
+          <option name="all" value='0'>全部</option>
+  <option name="animal_sex" value="男生">男生</option>
+  <option name="animal_sex" value="女生">女生</option>
+</select>
+      </div>
+      <div class="w-25">
+        <h6>顏色</h6>
+        <select class="form-select"
+        v-model="filterSubmitData.animal_colour"
+        >
+          <option name="all" value='0'>全部</option>
+  <option v-for="item in catColor" name="animal_colour" :value="item" :key="item.index">{{item}}</option>
+</select>
+      </div>
+      <div>
+   <button type="submit" class="btn btn-primary" >送出</button>
+      </div>
+  </form>
   <AnimalCard :catInfoDatas = catDatas.data
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Favorite-Cat-Id="getFavoriteCatId"
@@ -68,7 +99,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-        <button type="button" class="btn btn-primary" v-if="isAuthenticated">追蹤</button>
       </div>
     </div>
   </div>
@@ -113,18 +143,31 @@
            lng:-1
          }
        },
+       shortAddress:[],
+       catColor:[],
+       filterSubmitData:{
+         short_address:'',
+         animal_sex:'',
+         animal_colour:''
+
+       },
        modalIsLoading: true,
        homeIsLoading: true
      }
    },
    created(){
-     this.fetchAnimalData()
+      this.fetchAnimalData()
    },
    methods: {
     fetchAnimalData () {
      apiHelper.get('api/animalData')
      .then((obj)=>{
        this.catDatas = obj.data
+     })
+     apiHelper.get('api/animalData/getFilter')
+     .then((obj)=>{
+       this.shortAddress= obj.data.shortAddress
+       this.catColor= obj.data.color
      })
     },
     getPaginationUrl (url) {
@@ -175,6 +218,20 @@
         ...obj.data[1].candidates[0].geometry.location
        }
        this.modalIsLoading = false
+     })
+    },
+    getFilter(){
+     const data = {
+       short_address:this.filterSubmitData.short_address,
+         animal_sex:this.filterSubmitData.animal_sex,
+         animal_colour:this.filterSubmitData.animal_colour
+     }
+     apiHelper.post('api/animalData/postFilter',data)
+     .then((obj)=>{
+       console.log(obj.data)
+     })
+     .catch((error)=>{
+        console.log(error)
      })
     }
   },

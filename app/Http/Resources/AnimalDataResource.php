@@ -32,8 +32,8 @@ class AnimalDataResource extends JsonResource
                 "shelter_name" => $this->shelter_name,
                 "album_file" => $this->album_file,
                 "shelter_address" => $this->shelter_address,
+                "short_address" =>$this->short_address,
                 "shelter_tel" => $this->shelter_tel
-            
         ];
     }
 }

@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Route::get('/animalData', 'animalDataController@getAnimalData');
+Route::get('/animalData/getFilter', 'animalDataController@getAnimalDataFilter');
+Route::post('/animalData/postFilter', 'animalDataController@postAnimalDataFilter');
+
 Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalDetailData');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

@@ -2186,6 +2186,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2226,6 +2256,13 @@ var getToken = function getToken() {
           lng: -1
         }
       },
+      shortAddress: [],
+      catColor: [],
+      filterSubmitData: {
+        short_address: '',
+        animal_sex: '',
+        animal_colour: ''
+      },
       modalIsLoading: true,
       homeIsLoading: true
     };
@@ -2239,6 +2276,10 @@ var getToken = function getToken() {
 
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData').then(function (obj) {
         _this.catDatas = obj.data;
+      });
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData/getFilter').then(function (obj) {
+        _this.shortAddress = obj.data.shortAddress;
+        _this.catColor = obj.data.color;
       });
     },
     getPaginationUrl: function getPaginationUrl(url) {
@@ -2285,6 +2326,18 @@ var getToken = function getToken() {
         _this3.catData = _objectSpread(_objectSpread({}, _this3.catData), obj.data[0]);
         _this3.catData.address = _objectSpread(_objectSpread({}, _this3.catData.address), obj.data[1].candidates[0].geometry.location);
         _this3.modalIsLoading = false;
+      });
+    },
+    getFilter: function getFilter() {
+      var data = {
+        short_address: this.filterSubmitData.short_address,
+        animal_sex: this.filterSubmitData.animal_sex,
+        animal_colour: this.filterSubmitData.animal_colour
+      };
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post('api/animalData/postFilter', data).then(function (obj) {
+        console.log(obj.data);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   },
@@ -25453,6 +25506,190 @@ var render = function() {
       "div",
       { staticClass: "container" },
       [
+        _c(
+          "form",
+          {
+            staticClass: "d-flex justify-content-between w-50 mb-3",
+            on: {
+              submit: function($event) {
+                $event.stopPropagation()
+                $event.preventDefault()
+                return _vm.getFilter.apply(null, arguments)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "w-25" }, [
+              _c("h6", [_vm._v("地區")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filterSubmitData.short_address,
+                      expression: "filterSubmitData.short_address"
+                    }
+                  ],
+                  staticClass: "form-select",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filterSubmitData,
+                        "short_address",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { name: "all", value: "0" } }, [
+                    _vm._v("全部")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.shortAddress, function(item) {
+                    return _c(
+                      "option",
+                      {
+                        key: item.index,
+                        attrs: { name: "shelter_address" },
+                        domProps: { value: item }
+                      },
+                      [_vm._v(_vm._s(item))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-25" }, [
+              _c("h6", [_vm._v("性別")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filterSubmitData.animal_sex,
+                      expression: "filterSubmitData.animal_sex"
+                    }
+                  ],
+                  staticClass: "form-select",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filterSubmitData,
+                        "animal_sex",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { name: "all", value: "0" } }, [
+                    _vm._v("全部")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "option",
+                    { attrs: { name: "animal_sex", value: "男生" } },
+                    [_vm._v("男生")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "option",
+                    { attrs: { name: "animal_sex", value: "女生" } },
+                    [_vm._v("女生")]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-25" }, [
+              _c("h6", [_vm._v("顏色")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.filterSubmitData.animal_colour,
+                      expression: "filterSubmitData.animal_colour"
+                    }
+                  ],
+                  staticClass: "form-select",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.filterSubmitData,
+                        "animal_colour",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { name: "all", value: "0" } }, [
+                    _vm._v("全部")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.catColor, function(item) {
+                    return _c(
+                      "option",
+                      {
+                        key: item.index,
+                        attrs: { name: "animal_colour" },
+                        domProps: { value: item }
+                      },
+                      [_vm._v(_vm._s(item))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        ),
+        _vm._v(" "),
         _c("AnimalCard", {
           attrs: { catInfoDatas: _vm.catDatas.data },
           on: {
@@ -25490,7 +25727,7 @@ var render = function() {
             "div",
             { staticClass: "modal-content" },
             [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _vm.modalIsLoading
                 ? _c("Spinner")
@@ -25615,27 +25852,7 @@ var render = function() {
                     1
                   ),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-bs-dismiss": "modal" }
-                  },
-                  [_vm._v("關閉")]
-                ),
-                _vm._v(" "),
-                _vm.isAuthenticated
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" }
-                      },
-                      [_vm._v("追蹤")]
-                    )
-                  : _vm._e()
-              ])
+              _vm._m(2)
             ],
             1
           )
@@ -25645,6 +25862,18 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("送出")]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -25664,6 +25893,21 @@ var staticRenderFns = [
           "aria-label": "Close"
         }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-bs-dismiss": "modal" }
+        },
+        [_vm._v("關閉")]
+      )
     ])
   }
 ]
