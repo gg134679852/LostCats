@@ -17,7 +17,7 @@ class animalDataController extends Controller
 
         return $animalData;
     }
-    public function getAnimalDataFilter()
+    public function getAnimalDataSelect()
     {
         $filterData = AnimalData::all();
         $shortAddress = [];
@@ -39,53 +39,18 @@ class animalDataController extends Controller
       return ['shortAddress'=>$shortAddress,
        'color'=>$color];
     }
-    public function postAnimalDataFilter(Request $request)
+    public function getAnimalDataFilter($address,$sex,$colour)
     {
-        $requestData = $request->input();
-         
-         $requestData = array_filter($requestData);
-
-         $requestData = array_chunk($requestData, 1, true);
-          
-         $responesData = [];
-
-         if(count($requestData)=== 1){
-            $column = key($requestData['0']);
-            $keyWord = pos($requestData['0']);
-            $responesData = 
-            new AnimalDataCollection(
-            AnimalData::where($column,$keyWord)->paginate(16));
-            return $responesData ;
-         }
-
-            if (count($requestData) === 2) {
-                $column0 = key($requestData['0']);
-                $keyWord0 = pos($requestData['0']);
-                $column1 = key($requestData['1']);
-                $keyWord1 = pos($requestData['1']);
-
-                $responesData =
-                new AnimalDataCollection(
-                    AnimalData::where($column0, $keyWord0)->where($column1, $keyWord1)->paginate(16));
-                return $responesData;
-            }
-    if (count($requestData) === 3) {
-    $column0 = key($requestData['0']);
-    $keyWord0 = pos($requestData['0']);
-    $column1 = key($requestData['1']);
-    $keyWord1 = pos($requestData['1']);
-    $column2 = key($requestData['2']);
-    $keyWord2 = pos($requestData['2']);
-
-
+        
     $responesData =
     new AnimalDataCollection(
-        AnimalData::where($column0, $keyWord0)->where($column1, $keyWord1)->where($column2, $keyWord2)->paginate(16));
+        AnimalData::where('short_address',$address)->where('animal_sex', $sex)->where('animal_colour', $colour)->paginate(16));
+
     return $responesData;
 }
 
 
-    }
+    
     public function getAnimalDetailData($id, $address)
     {
         $key = config('keys.mapKEY');

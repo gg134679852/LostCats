@@ -164,7 +164,7 @@
      .then((obj)=>{
        this.catDatas = obj.data
      })
-     apiHelper.get('api/animalData/getFilter')
+     apiHelper.get('api/animalData/getSelect')
      .then((obj)=>{
        this.shortAddress= obj.data.shortAddress
        this.catColor= obj.data.color
@@ -208,7 +208,6 @@
       this.modalIsLoading = true
      apiHelper.get(`api/animalData/${id}/${address}/detail`)
      .then((obj)=>{
-       console.log(obj)
        this.catData ={
          ...this.catData,
          ...obj.data[0] 
@@ -226,9 +225,9 @@
          animal_sex:this.filterSubmitData.animal_sex,
          animal_colour:this.filterSubmitData.animal_colour
      }
-     apiHelper.post('api/animalData/postFilter',data)
+     apiHelper.get(`api/animalData/getFilter/${data.short_address}/${data.animal_sex}/${data.animal_colour}`)
      .then((obj)=>{
-       console.log(obj.data)
+       this.catDatas = obj.data
      })
      .catch((error)=>{
         console.log(error)

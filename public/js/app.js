@@ -2277,7 +2277,7 @@ var getToken = function getToken() {
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData').then(function (obj) {
         _this.catDatas = obj.data;
       });
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData/getFilter').then(function (obj) {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData/getSelect').then(function (obj) {
         _this.shortAddress = obj.data.shortAddress;
         _this.catColor = obj.data.color;
       });
@@ -2322,20 +2322,21 @@ var getToken = function getToken() {
 
       this.modalIsLoading = true;
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/".concat(id, "/").concat(address, "/detail")).then(function (obj) {
-        console.log(obj);
         _this3.catData = _objectSpread(_objectSpread({}, _this3.catData), obj.data[0]);
         _this3.catData.address = _objectSpread(_objectSpread({}, _this3.catData.address), obj.data[1].candidates[0].geometry.location);
         _this3.modalIsLoading = false;
       });
     },
     getFilter: function getFilter() {
+      var _this4 = this;
+
       var data = {
         short_address: this.filterSubmitData.short_address,
         animal_sex: this.filterSubmitData.animal_sex,
         animal_colour: this.filterSubmitData.animal_colour
       };
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post('api/animalData/postFilter', data).then(function (obj) {
-        console.log(obj.data);
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getFilter/".concat(data.short_address, "/").concat(data.animal_sex, "/").concat(data.animal_colour)).then(function (obj) {
+        _this4.catDatas = obj.data;
       })["catch"](function (error) {
         console.log(error);
       });
