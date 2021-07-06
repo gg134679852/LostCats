@@ -227,6 +227,7 @@
      }
      apiHelper.get(`api/animalData/getFilter/${data.short_address}/${data.animal_sex}/${data.animal_colour}`)
      .then((obj)=>{
+       console.log(obj)
        this.catDatas = obj.data
      })
      .catch((error)=>{

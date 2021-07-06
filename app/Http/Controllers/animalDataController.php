@@ -39,18 +39,43 @@ class animalDataController extends Controller
       return ['shortAddress'=>$shortAddress,
        'color'=>$color];
     }
-    public function getAnimalDataFilter($address,$sex,$colour)
-    {
-        
-    $responesData =
-    new AnimalDataCollection(
-        AnimalData::where('short_address',$address)->where('animal_sex', $sex)->where('animal_colour', $colour)->paginate(16));
 
-    return $responesData;
+public function getAnimalDataFilter($address,$sex,$colour)
+    {
+    $requestData = [
+        'short_address'=>$address,
+        'animal_sex'=>$sex,
+        'animal_colour'=>$colour];
+    
+    $requestData = array_filter($requestData);
+   
+    $requestData = array_chunk($requestData, 1, true);
+
+    $responesData = [];
+
+    if (count($requestData) === 1) {
+        $responesData =
+        new AnimalDataCollection(
+            AnimalData::where(key($requestData['0']), pos($requestData['0']))->paginate(16));
+    }
+
+
+    if (count($requestData) === 2) {
+        $responesData =
+        new AnimalDataCollection(
+            AnimalData::where(key($requestData['0']), pos($requestData['0']))->where(key($requestData['1']), pos($requestData['1']))->paginate(16));
+    }
+
+
+    if(count($requestData) === 3){
+        $responesData =
+        new AnimalDataCollection(
+        AnimalData::where(key($requestData['0']), pos($requestData['0']))->where(key($requestData['1']), pos($requestData['1']))->where(key($requestData['2']), pos($requestData['2']))->paginate(16));
+        }
+         
+         return $responesData;
 }
 
-
-    
     public function getAnimalDetailData($id, $address)
     {
         $key = config('keys.mapKEY');
