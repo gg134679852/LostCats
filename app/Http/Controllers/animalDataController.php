@@ -53,6 +53,13 @@ public function getAnimalDataFilter($address,$sex,$colour)
 
     $responesData = [];
 
+
+    if (count($requestData) === 0) {
+    $responesData =
+    new AnimalDataCollection(
+        AnimalData::paginate(16));
+}
+
     if (count($requestData) === 1) {
         $responesData =
         new AnimalDataCollection(
