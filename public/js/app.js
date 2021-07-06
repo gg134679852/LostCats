@@ -2259,9 +2259,9 @@ var getToken = function getToken() {
       shortAddress: [],
       catColor: [],
       filterSubmitData: {
-        short_address: '',
-        animal_sex: '',
-        animal_colour: ''
+        short_address: 0,
+        animal_sex: 0,
+        animal_colour: 0
       },
       modalIsLoading: true,
       homeIsLoading: true
@@ -2336,7 +2336,6 @@ var getToken = function getToken() {
         animal_colour: this.filterSubmitData.animal_colour
       };
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getFilter/".concat(data.short_address, "/").concat(data.animal_sex, "/").concat(data.animal_colour)).then(function (obj) {
-        console.log(obj);
         _this4.catDatas = obj.data;
       })["catch"](function (error) {
         console.log(error);
@@ -25536,6 +25535,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-select",
+                  attrs: { required: "" },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -25592,6 +25592,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-select",
+                  attrs: { required: "" },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -25647,6 +25648,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-select",
+                  attrs: { required: "" },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter

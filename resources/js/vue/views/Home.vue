@@ -4,7 +4,7 @@
     <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter">
       <div class="w-25">
         <h6>地區</h6>
-        <select class="form-select" v-model="filterSubmitData.short_address">
+        <select class="form-select" v-model="filterSubmitData.short_address" required>
     <option name="all" value='0'>全部</option>
   <option v-for="item in shortAddress" name="shelter_address" :value="item" :key="item.index">{{item}}</option>
 </select>
@@ -12,7 +12,7 @@
       <div class="w-25">
         <h6>性別</h6>
         <select class="form-select"
-        v-model="filterSubmitData.animal_sex"
+        v-model="filterSubmitData.animal_sex" required
         >
           <option name="all" value='0'>全部</option>
   <option name="animal_sex" value="男生">男生</option>
@@ -22,7 +22,7 @@
       <div class="w-25">
         <h6>顏色</h6>
         <select class="form-select"
-        v-model="filterSubmitData.animal_colour"
+        v-model="filterSubmitData.animal_colour" required
         >
           <option name="all" value='0'>全部</option>
   <option v-for="item in catColor" name="animal_colour" :value="item" :key="item.index">{{item}}</option>
@@ -146,9 +146,9 @@
        shortAddress:[],
        catColor:[],
        filterSubmitData:{
-         short_address:'',
-         animal_sex:'',
-         animal_colour:''
+         short_address:0,
+         animal_sex:0,
+         animal_colour:0
 
        },
        modalIsLoading: true,
@@ -227,7 +227,6 @@
      }
      apiHelper.get(`api/animalData/getFilter/${data.short_address}/${data.animal_sex}/${data.animal_colour}`)
      .then((obj)=>{
-       console.log(obj)
        this.catDatas = obj.data
      })
      .catch((error)=>{
