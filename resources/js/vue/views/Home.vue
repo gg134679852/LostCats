@@ -1,7 +1,7 @@
 <template>
 <div class ="mt-4">
   <div class="container">
-    <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter">
+    <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter" id="searchFilter">
       <div class="w-25">
         <h6>地區</h6>
         <select class="form-select" v-model="filterSubmitData.short_address" required>
@@ -37,6 +37,7 @@
   @get-Favorite-Cat-Id="getFavoriteCatId"
   @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
   />
+
   <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
   @get-pagination-url="getPaginationUrl"
    />
@@ -50,11 +51,11 @@
       </div>
       <Spinner v-if="modalIsLoading"/>
       <div class="modal-body" v-else>
-        <div class="d-flex">
+        <div class="d-flex justify-content-evenly">
           <div class="p-auto">
           <img class="rounded-3" :src="catData.album_file" width="250px" height="250px" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
           </div>
-          <div class="ml-5">
+          <div>
             <ul class="list-group">
               <li class="list-group-item">
                <h6>編號:{{catData.animal_id}}</h6>
@@ -86,16 +87,18 @@
             </ul>
           </div>
         </div>
+        <div class="mt-3">
          <GmapMap
   :center="{lat:catData.address.lat,lng:catData.address.lng}" 
-  :zoom="40"
+  :zoom="15"
   map-type-id="terrain"
-  style="width: 500px; height: 300px"
+  style="width: 766px; height: 300px"
 >
   <GmapMarker
     :position="{lat:catData.address.lat,lng:catData.address.lng}"
   />
 </GmapMap>
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>

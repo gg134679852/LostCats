@@ -1,19 +1,21 @@
 <template>
-  <nav aria-label="Page navigation example">
-  <ul class="pagination mt-3">
-    <li class="page-item" v-for="(pagination ,index) in paginationMeta.links" :key="index">
+<div>
+  <ul class="pagination">
+    <li :class="['page-item', { active: pagination.active}]" v-for="(pagination ,index) in paginationMeta.links" :key="index">
       <button class="page-link" v-if="index === 0"
       @click.stop.prevent="paginationButtonClick(pagination.url)"
+      :disabled ="pagination.url === null"
       >&laquo;</button>
       <button class="page-link"  v-if="index === paginationMeta.links.length -1"
       @click.stop.prevent="paginationButtonClick(pagination.url)"
+      :disabled ="pagination.url === null"
       >&raquo;</button>
       <button class="page-link"  v-if="index !== 0 && index !== paginationMeta.links.length -1"
       @click.stop.prevent="paginationButtonClick(pagination.url)"
       >{{pagination.label}}</button>
       </li>
   </ul>
-</nav>
+</div>
 </template>
 <script>
 export default {
@@ -34,3 +36,9 @@ export default {
   }
 }
 </script>
+<style>
+.pagination{
+  margin-top:20px;
+  margin-left:360px;
+}
+</style>
