@@ -29,11 +29,15 @@ export default new Vuex.Store ({
       state.favoriteCats = []
       state.isAuthenticated = false
       localStorage.removeItem('token')
+    },
+    updateFavoriteCats(state,data){
+      console.log(data)
+      state.favoriteCats = data
     }
   },
   actions:{
      fetchCurrentUser ({ commit }) {
-    apiHelper.get('/CurrentUser',{
+    apiHelper.get('api/CurrentUser',{
       headers: { Authorization: `Bearer ${getToken()}`}})
   .then((obj)=>{
     const { id, name, email } = obj.data.user
@@ -48,6 +52,17 @@ export default new Vuex.Store ({
   .catch((error)=>{
     console.log(error)
   })
+  },
+  getFavoriteCats ({ commit }){
+     apiHelper.get('api/CurrentUser',{
+      headers: { Authorization: `Bearer ${getToken()}`}})
+  .then((obj)=>{
+    console.log(obj)
+    const favoriteCats = obj.data.favoriteCats
+    commit('updateFavoriteCats', {
+          favoriteCats
+        })
+   })
   }
  }
 })

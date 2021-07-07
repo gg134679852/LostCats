@@ -1,47 +1,17 @@
 <template>
-<div class ="mt-4">
-  <div class="container">
-    <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter">
-      <div class="w-25">
-        <h6>地區</h6>
-        <select class="form-select" v-model="filterSubmitData.short_address" required>
-    <option name="all" value='0'>全部</option>
-  <option v-for="item in shortAddress" name="shelter_address" :value="item" :key="item.index">{{item}}</option>
-</select>
-      </div>
-      <div class="w-25">
-        <h6>性別</h6>
-        <select class="form-select"
-        v-model="filterSubmitData.animal_sex" required
-        >
-          <option name="all" value='0'>全部</option>
-  <option name="animal_sex" value="男生">男生</option>
-  <option name="animal_sex" value="女生">女生</option>
-</select>
-      </div>
-      <div class="w-25">
-        <h6>顏色</h6>
-        <select class="form-select"
-        v-model="filterSubmitData.animal_colour" required
-        >
-          <option name="all" value='0'>全部</option>
-  <option v-for="item in catColor" name="animal_colour" :value="item" :key="item.index">{{item}}</option>
-</select>
-      </div>
-      <div>
-   <button type="submit" class="btn btn-primary" >送出</button>
-      </div>
-  </form>
-  <AnimalCard :catInfoDatas = catDatas.data
+<div class="container">
+  <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">最愛喵星人</a>
+  </li>
+</ul>
+<div>
+ <AnimalCard :catInfoDatas = this.catDatas
   @get-Animal-Id="fetchAnimalDetailData"
-  @get-Favorite-Cat-Id="getFavoriteCatId"
   @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
   />
-  <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
-  @get-pagination-url="getPaginationUrl"
-   />
-    </div>
-     <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">
+</div>
+ <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -103,22 +73,19 @@
     </div>
   </div>
 </div>
-  </div>
+</div>
 </template>
- <script>
- import axios from 'axios'
- import AnimalCard from './../components/AnimalCard'
- import Pagination from './../components/Pagination'
- import Spinner from './../components/Spinner'
- import {apiHelper,Toast} from './../utils/helpers'
- import { mapState } from 'vuex'
- const getToken = () => localStorage.getItem('token')
- 
- export default {
+<script>
+import AnimalCard from './../components/AnimalCard'
+import Spinner from './../components/Spinner'
+import {apiHelper,Toast} from './../utils/helpers'
+import { mapState } from 'vuex'
+const getToken = () => localStorage.getItem('token')
+
+export default {
    components:{
      AnimalCard,
-     Pagination,
-     Spinner
+      Spinner
    },
    data(){
      return{
@@ -141,59 +108,29 @@
          address:{
            lat:-1,
            lng:-1
-         }
+         },
        },
-       shortAddress:[],
-       catColor:[],
-       filterSubmitData:{
-         short_address:0,
-         animal_sex:0,
-         animal_colour:0
-       },
-       modalIsLoading: true,
-       homeIsLoading: true
+        modalIsLoading: true,
      }
    },
    created(){
-      this.fetchAnimalData()
-   },
+    this.copyFavoriteCats()
+  },
    methods: {
-    fetchAnimalData () {
-     apiHelper.get('api/animalData')
-     .then((obj)=>{
-       this.catDatas = obj.data
-     })
-     apiHelper.get('api/animalData/getSelect')
-     .then((obj)=>{
-       this.shortAddress= obj.data.shortAddress
-       this.catColor= obj.data.color
-     })
-    },
-    getPaginationUrl (url) {
-      axios.get(url)
-     .then((obj)=>{
-       this.catDatas = obj.data
-     })
-    },
-    getFavoriteCatId(id){
-      apiHelper.post(`api/${id}/addFavorite`,{
+     copyFavoriteCats(){
+      this.favoriteCats.forEach((data)=>{
+         this.catDatas.push(data)
+      })
+     },
+   async getRemoveFavoriteCatId(id){
+     
+     this.catDatas = this.catDatas.filter((data)=> data.id !== id)
+
+    apiHelper.post(`api/${id}/removeFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{
-        Toast.fire({
-          icon: 'success',
-          title:'成功加入最愛'
-        })
-      })
-      .catch((error)=>{
-        console.log(error)
-      })
-    },
-    getRemoveFavoriteCatId(id){
-      apiHelper.post(`api/${id}/removeFavorite`,{
-      headers: { Authorization: `Bearer ${getToken()}`
-      }})
-      .then(()=>{
+        this.$store.dispatch('getFavoriteCats',this.catDatas)
         Toast.fire({
           icon: 'success',
           title:'成功移除最愛'
@@ -203,7 +140,7 @@
         console.log(error)
       })
     },
-    fetchAnimalDetailData (id,address) {
+     fetchAnimalDetailData (id,address) {
       this.modalIsLoading = true
      apiHelper.get(`api/animalData/${id}/${address}/detail`)
      .then((obj)=>{
@@ -217,24 +154,10 @@
        }
        this.modalIsLoading = false
      })
-    },
-    getFilter(){
-     const data = {
-       short_address:this.filterSubmitData.short_address,
-         animal_sex:this.filterSubmitData.animal_sex,
-         animal_colour:this.filterSubmitData.animal_colour
-     }
-     apiHelper.get(`api/animalData/getFilter/${data.short_address}/${data.animal_sex}/${data.animal_colour}`)
-     .then((obj)=>{
-       this.catDatas = obj.data
-     })
-     .catch((error)=>{
-        console.log(error)
-     })
     }
-  },
-  computed:{
-    ...mapState(['isAuthenticated'])
+   },
+   computed:{
+    ...mapState(['isAuthenticated','currentUser','favoriteCats'])
   }
- }
- </script>
+}
+</script>

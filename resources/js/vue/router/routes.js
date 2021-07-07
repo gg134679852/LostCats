@@ -4,6 +4,7 @@ import NotFound from '../views/NotFound'
 import Home from '../views/Home.vue'
 import SingUp from '../views/SingUp.vue'
 import Login from '../views/Login.vue'
+import UserPage from '../views/UserPage.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -23,6 +24,11 @@ const routes = [
     path: '/singup',
     name: 'SingUp',
     component: SingUp
+  },
+  {
+    path: '/userpage',
+    name: 'UserPage',
+    component: UserPage
   },
   {
     path: '*',
