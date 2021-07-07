@@ -28,7 +28,17 @@ const routes = [
   {
     path: '/userpage',
     name: 'UserPage',
-    component: UserPage
+    component: UserPage,
+    meta:{
+       isAuthenticated:store.state.isAuthenticated
+    },
+  beforeEnter:((to, from, next) => {
+   if(!store.state.isAuthenticated){
+     next(false)
+   }else{
+     next()
+   }
+})
   },
   {
     path: '*',

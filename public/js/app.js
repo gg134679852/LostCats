@@ -3401,8 +3401,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -3619,7 +3617,17 @@ var routes = [{
 }, {
   path: '/userpage',
   name: 'UserPage',
-  component: _views_UserPage_vue__WEBPACK_IMPORTED_MODULE_4__.default
+  component: _views_UserPage_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+  meta: {
+    isAuthenticated: _store_index__WEBPACK_IMPORTED_MODULE_5__.default.state.isAuthenticated
+  },
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (!_store_index__WEBPACK_IMPORTED_MODULE_5__.default.state.isAuthenticated) {
+      next(false);
+    } else {
+      next();
+    }
+  }
 }, {
   path: '*',
   name: 'not-found',
@@ -27323,173 +27331,180 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
-        _c("AnimalCard", {
-          attrs: { catInfoDatas: this.catDatas },
-          on: {
-            "get-Animal-Id": _vm.fetchAnimalDetailData,
-            "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "AnimalDetailModal",
-          tabindex: "-1",
-          "aria-labelledby": "AnimalDetailModalLabel",
-          "aria-hidden": "true"
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("AnimalCard", {
+        attrs: { catInfoDatas: this.catDatas },
+        on: {
+          "get-Animal-Id": _vm.fetchAnimalDetailData,
+          "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
         }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog modal-lg" }, [
-          _c(
-            "div",
-            { staticClass: "modal-content" },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm.modalIsLoading
-                ? _c("Spinner")
-                : _c(
-                    "div",
-                    { staticClass: "modal-body" },
-                    [
-                      _c("div", { staticClass: "d-flex" }, [
-                        _c("div", { staticClass: "p-auto" }, [
-                          _c("img", {
-                            staticClass: "rounded-3",
-                            attrs: {
-                              src: _vm.catData.album_file,
-                              width: "250px",
-                              height: "250px",
-                              onerror:
-                                "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ml-5" }, [
-                          _c("ul", { staticClass: "list-group" }, [
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("編號:" + _vm._s(_vm.catData.animal_id))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("性別:" + _vm._s(_vm.catData.animal_sex))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("歲數:" + _vm._s(_vm.catData.animal_age))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "體型:" + _vm._s(_vm.catData.animal_bodytype)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "顏色:" + _vm._s(_vm.catData.animal_colour)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  _vm._s(_vm.catData.animal_sterilization) +
-                                    "," +
-                                    _vm._s(_vm.catData.animal_bacterin)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "收容所名稱:" +
-                                    _vm._s(_vm.catData.shelter_name)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "地址:" + _vm._s(_vm.catData.shelter_address)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "電話:" + _vm._s(_vm.catData.shelter_tel)
-                                )
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "AnimalDetailModal",
+            tabindex: "-1",
+            "aria-labelledby": "AnimalDetailModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-lg" }, [
+            _c(
+              "div",
+              { staticClass: "modal-content" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm.modalIsLoading
+                  ? _c("Spinner")
+                  : _c(
+                      "div",
+                      { staticClass: "modal-body" },
+                      [
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c("div", { staticClass: "p-auto" }, [
+                            _c("img", {
+                              staticClass: "rounded-3",
+                              attrs: {
+                                src: _vm.catData.album_file,
+                                width: "250px",
+                                height: "250px",
+                                onerror:
+                                  "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "ml-5" }, [
+                            _c("ul", { staticClass: "list-group" }, [
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "編號:" + _vm._s(_vm.catData.animal_id)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "性別:" + _vm._s(_vm.catData.animal_sex)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "歲數:" + _vm._s(_vm.catData.animal_age)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "體型:" +
+                                      _vm._s(_vm.catData.animal_bodytype)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "顏色:" + _vm._s(_vm.catData.animal_colour)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    _vm._s(_vm.catData.animal_sterilization) +
+                                      "," +
+                                      _vm._s(_vm.catData.animal_bacterin)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "收容所名稱:" +
+                                      _vm._s(_vm.catData.shelter_name)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "地址:" +
+                                      _vm._s(_vm.catData.shelter_address)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("h6", [
+                                  _vm._v(
+                                    "電話:" + _vm._s(_vm.catData.shelter_tel)
+                                  )
+                                ])
                               ])
                             ])
                           ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "GmapMap",
-                        {
-                          staticStyle: { width: "500px", height: "300px" },
-                          attrs: {
-                            center: {
-                              lat: _vm.catData.address.lat,
-                              lng: _vm.catData.address.lng
-                            },
-                            zoom: 40,
-                            "map-type-id": "terrain"
-                          }
-                        },
-                        [
-                          _c("GmapMarker", {
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "GmapMap",
+                          {
+                            staticStyle: { width: "500px", height: "300px" },
                             attrs: {
-                              position: {
+                              center: {
                                 lat: _vm.catData.address.lat,
                                 lng: _vm.catData.address.lng
-                              }
+                              },
+                              zoom: 40,
+                              "map-type-id": "terrain"
                             }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-              _vm._v(" "),
-              _vm._m(2)
-            ],
-            1
-          )
-        ])
-      ]
-    )
-  ])
+                          },
+                          [
+                            _c("GmapMarker", {
+                              attrs: {
+                                position: {
+                                  lat: _vm.catData.address.lat,
+                                  lng: _vm.catData.address.lng
+                                }
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                _vm._v(" "),
+                _vm._m(2)
+              ],
+              1
+            )
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

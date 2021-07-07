@@ -5,12 +5,10 @@
     <a class="nav-link active" aria-current="page" href="#">最愛喵星人</a>
   </li>
 </ul>
-<div>
  <AnimalCard :catInfoDatas = this.catDatas
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
   />
-</div>
  <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -123,7 +121,7 @@ export default {
       })
      },
    async getRemoveFavoriteCatId(id){
-     
+
      this.catDatas = this.catDatas.filter((data)=> data.id !== id)
 
     apiHelper.post(`api/${id}/removeFavorite`,{
