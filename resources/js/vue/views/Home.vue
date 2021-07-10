@@ -179,7 +179,7 @@
      })
     },
     getFavoriteCatId(id){
-      apiHelper.post(`api/${id}/addFavorite`,{
+      apiHelper.post(`${id}/addFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{
@@ -193,7 +193,7 @@
       })
     },
     getRemoveFavoriteCatId(id){
-      apiHelper.post(`api/${id}/removeFavorite`,{
+      apiHelper.post(`${id}/removeFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{

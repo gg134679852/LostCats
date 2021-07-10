@@ -3064,7 +3064,7 @@ var getToken = function getToken() {
       });
     },
     getFavoriteCatId: function getFavoriteCatId(id) {
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("api/".concat(id, "/addFavorite"), {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("".concat(id, "/addFavorite"), {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
@@ -3078,7 +3078,7 @@ var getToken = function getToken() {
       });
     },
     getRemoveFavoriteCatId: function getRemoveFavoriteCatId(id) {
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("api/".concat(id, "/removeFavorite"), {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("".concat(id, "/removeFavorite"), {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }

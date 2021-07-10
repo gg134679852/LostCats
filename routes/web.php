@@ -17,6 +17,9 @@ Route::post('/login', 'userControllers@login');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/logout', 'userControllers@logout');
+    Route::post('{id}/addFavorite', 'userControllers@addFavorite');
+Route::post('{id}/removeFavorite', 'userControllers@removeFavorite');
+
 });
 
 Route::get('/{any}', function () {

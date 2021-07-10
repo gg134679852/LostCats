@@ -22,8 +22,6 @@ Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalD
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/CurrentUser', 'userControllers@getCurrentUser');
-    Route::post('{id}/addFavorite', 'userControllers@addFavorite');
-    Route::post('{id}/removeFavorite', 'userControllers@removeFavorite');
 });
 
 
