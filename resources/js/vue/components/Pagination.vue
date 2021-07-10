@@ -1,5 +1,4 @@
 <template>
-<div>
   <ul class="pagination">
     <li :class="['page-item', { active: pagination.active}]" v-for="(pagination ,index) in paginationMeta.links" :key="index">
       <button class="page-link" v-if="index === 0"
@@ -15,7 +14,6 @@
       >{{pagination.label}}</button>
       </li>
   </ul>
-</div>
 </template>
 <script>
 export default {
@@ -38,7 +36,6 @@ export default {
 </script>
 <style>
 .pagination{
-  margin-top:20px;
-  margin-left:360px;
-}
+  display: flex;
+  justify-content: center;}
 </style>

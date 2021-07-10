@@ -7,15 +7,12 @@
     >
       <i class="fas fa-cat"></i> 迷途喵星人
     </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     </div>
     <router-link to="/login" class="btn btn-primary" v-if="!isAuthenticated">
   登陸
 </router-link>
- <router-link to="/login" class="btn btn-primary p-1" v-if="isAuthenticated">
+ <router-link to="/userpage" class="btn btn-primary p-1" v-if="isAuthenticated">
   會員頁面
 </router-link>
  <button  class="btn btn-primary p-1" v-if="isAuthenticated" @click="logout">
@@ -46,6 +43,7 @@ export default {
           icon: 'success',
           title:'成功登出'
         })
+        this.$router.push('/')
       })
     })
   }

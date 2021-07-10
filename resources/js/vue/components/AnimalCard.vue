@@ -1,5 +1,5 @@
 <template>
-  <div class="row row-cols-4">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
   <div class="card border-secondary mb-3 m-auto" style="width: 18rem;" v-for="catInfoData in catInfoDatas" :key="catInfoData.id">
   <img :src="catInfoData.album_file" class="card-img-top rounded-3 pt-2" width="200px" height="200px" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
   <div class="card-body  text-secondary">
@@ -10,7 +10,7 @@
   <template v-if="isAuthenticated">
      <button type="button" class="btn btn-primary"
      @click.stop.prevent="addFavorite(catInfoData.id)"
-     v-if="!FavoriteButton(catInfoData.id)"
+     v-if="!isFavorite(catInfoData.id)"
     >
   加入最愛
 </button>
@@ -31,6 +31,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import {Toast} from './../utils/helpers'
 export default {
   props: {
     catInfoDatas: {
@@ -43,25 +44,42 @@ export default {
       favoriteId:[]
     })
   },
+  created(){
+      this.fetchFavoriteCats()
+   },
+   updated(){
+     this.fetchFavoriteCats()
+   },
   methods: {
+    fetchFavoriteCats(){
+      if(this.isAuthenticated){
+        if(this.favoriteId.length === 0){
+        this.favoriteCats.forEach((data)=>{
+        this.favoriteId.push(data.id)
+      })
+       }
+      }
+    },
    getAnimalId(id,address){
       this.$emit('get-Animal-Id', id,address)
     },
     addFavorite(id){
-      this.favoriteId.push(id)
+      if(this.favoriteId.length === 16){
+         Toast.fire({
+          icon: 'warning',
+          title:"達到收藏上限"
+        })
+      }else{
+        this.favoriteId.push(id)
       this.$emit('get-Favorite-Cat-Id', id)
+      }
     },
     removeFavorite(id){
       const target = this.favoriteId.indexOf(id)
       this.favoriteId.splice(target,1)
       this.$emit('get-Remove-Favorite-Cat-Id', id)
     },
-    FavoriteButton(id){
-      if(this.favoriteId.length === 0){
-        this.favoriteCats.forEach((data)=>{
-        this.favoriteId.push(data.id)
-      })
-      }
+    isFavorite(id){
       return this.favoriteId.includes(id)
     }
   },

@@ -1,6 +1,7 @@
 <template>
 <div class="container">
-  <form class="text-center" @submit.prevent.stop="singup">
+  <div class="d-flex justify-content-center mt-5">
+  <form class="text-center w-50" @submit.prevent.stop="singup">
   <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">名字</span>
   <input type="text" class="form-control" aria-describedby="basic-addon1"
@@ -15,22 +16,22 @@
 </div>
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">密碼</span>
-  <input type="text" class="form-control"  aria-describedby="basic-addon1"
+  <input type="password" class="form-control"  aria-describedby="basic-addon1"
    v-model="singUpData.password"
   >
 </div>
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">確認密碼</span>
-  <input type="text" class="form-control" aria-describedby="basic-addon1"
+  <input type="password" class="form-control" aria-describedby="basic-addon1"
   v-model="singUpData.password_confirmation"
   >
 </div>
 <button type="submit" class="btn btn-primary" :disabled="isProcessing" >送出</button>
 </form>
 </div>
+</div>
 </template>
 <script>
-import axios from 'axios'
 import {apiHelper,Toast} from './../utils/helpers'
 
 export default {
@@ -48,7 +49,6 @@ export default {
  methods: {
    singup(){
      this.isProcessing = true
-     axios.get('/sanctum/csrf-cookie').then(response => {
        apiHelper.post('singup',{
        name:this.singUpData.name,
          email: this.singUpData.email,
@@ -74,7 +74,6 @@ export default {
        })
      }
  })  
-   })
   }
  }
 }

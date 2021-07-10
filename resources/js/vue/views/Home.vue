@@ -1,7 +1,9 @@
 <template>
-<div class ="mt-4">
-  <div class="container">
-    <form class="d-flex justify-content-between w-50 mb-3" @submit.stop.prevent="getFilter" id="searchFilter">
+ <div class="mt-4">
+   <!-- <Spinner v-if="homeIsLoading"/> -->
+   <template>
+  <div class="container text-center">
+    <form class="d-flex justify-content-between w-50 mb-5" @submit.stop.prevent="getFilter" id="searchFilter">
       <div class="w-25">
         <h6>地區</h6>
         <select class="form-select" v-model="filterSubmitData.short_address" required>
@@ -29,19 +31,18 @@
 </select>
       </div>
       <div>
-   <button type="submit" class="btn btn-primary" >送出</button>
+   <button type="submit" class="btn btn-primary mt-4" >送出</button>
       </div>
   </form>
   <AnimalCard :catInfoDatas = catDatas.data
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Favorite-Cat-Id="getFavoriteCatId"
-  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
-  />
-
+  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"/>
   <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
   @get-pagination-url="getPaginationUrl"
    />
-    </div>
+  </div>
+  </template>
      <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -105,7 +106,7 @@
       </div>
     </div>
   </div>
-</div>
+    </div>
   </div>
 </template>
  <script>

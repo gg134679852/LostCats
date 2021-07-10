@@ -1,14 +1,23 @@
 <template>
 <div class="container">
+  <div class="d-flex justify-content-center" id="userCard">
+    <img src="/img/avatar.png" width="200px" height="200px">
+    <div class="userInfo">
+      <h5>{{this.currentUser.name}}</h5>
+      <h5>{{this.currentUser.email}}</h5>
+    </div>
+  </div>
   <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="#">最愛喵星人</a>
   </li>
 </ul>
+<div class="mt-5">
  <AnimalCard :catInfoDatas = this.catDatas
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
   />
+  </div>
  <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -116,11 +125,17 @@ export default {
   },
    methods: {
      copyFavoriteCats(){
+       this.$store.dispatch('getFavoriteCats')
       this.favoriteCats.forEach((data)=>{
          this.catDatas.push(data)
       })
      },
-   async getRemoveFavoriteCatId(id){
+     copyCurrentUser(){
+        this.userData = {
+          ...this.currentUser
+        }
+     },
+   getRemoveFavoriteCatId(id){
 
      this.catDatas = this.catDatas.filter((data)=> data.id !== id)
 
@@ -159,3 +174,8 @@ export default {
   }
 }
 </script>
+<style>
+.userInfo{
+  margin-top: 70px;
+}
+</style>
