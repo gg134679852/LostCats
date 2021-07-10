@@ -3630,6 +3630,7 @@ var routes = [{
     if (!_store_index__WEBPACK_IMPORTED_MODULE_5__.default.state.isAuthenticated) {
       next(false);
     } else {
+      _store_index__WEBPACK_IMPORTED_MODULE_5__.default.dispatch('fetchCurrentUser');
       next();
     }
   }
@@ -3643,7 +3644,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__.default({
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
-  _store_index__WEBPACK_IMPORTED_MODULE_5__.default.dispatch('fetchCurrentUser');
+  if (_store_index__WEBPACK_IMPORTED_MODULE_5__.default.state.isAuthenticated) {
+    _store_index__WEBPACK_IMPORTED_MODULE_5__.default.dispatch('fetchCurrentUser');
+  } else {
+    next();
+  }
+
   next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);

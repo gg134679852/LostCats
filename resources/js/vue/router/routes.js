@@ -36,6 +36,7 @@ const routes = [
    if(!store.state.isAuthenticated){
      next(false)
    }else{
+     store.dispatch('fetchCurrentUser')
      next()
    }
 })
@@ -53,7 +54,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
- store.dispatch('fetchCurrentUser')
+  if(store.state.isAuthenticated){
+    store.dispatch('fetchCurrentUser')
+   }else{
+     next()
+   }
   next()
 })
 
