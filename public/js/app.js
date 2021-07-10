@@ -2427,7 +2427,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$router.push('/');
 
-        localStorage.setItem('token', obj.data.token.accessToken);
+        localStorage.setItem('token', obj.data.token);
         _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.Toast.fire({
           icon: 'success',
           title: obj.data.message

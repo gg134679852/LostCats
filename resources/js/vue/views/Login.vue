@@ -43,7 +43,7 @@ export default {
       .then((obj)=>{
          this.$store.commit('setUser',obj.data.userData)
          this.$router.push('/')
-         localStorage.setItem('token',obj.data.token.accessToken)
+         localStorage.setItem('token',obj.data.token)
         Toast.fire({
           icon: 'success',
           title:obj.data.message

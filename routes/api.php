@@ -20,8 +20,4 @@ Route::get('/animalData/getFilter/{address}/{sex}/{colour}', 'animalDataControll
 
 Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalDetailData');
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/CurrentUser', 'userControllers@getCurrentUser');
-});
-
 
