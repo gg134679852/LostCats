@@ -92,6 +92,15 @@
          <GmapMap
   :center="{lat:catData.address.lat,lng:catData.address.lng}" 
   :zoom="15"
+  :options="{
+   zoomControl: true,
+   mapTypeControl: false,
+   scaleControl: false,
+   streetViewControl: false,
+   rotateControl: false,
+   fullscreenControl: true,
+   disableDefaultUI: false
+ }"
   map-type-id="terrain"
   style="width: 766px; height: 300px"
 >

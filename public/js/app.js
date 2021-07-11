@@ -2236,6 +2236,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2558,6 +2567,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -26294,6 +26312,15 @@ var render = function() {
                                   lng: _vm.catData.address.lng
                                 },
                                 zoom: 15,
+                                options: {
+                                  zoomControl: true,
+                                  mapTypeControl: false,
+                                  scaleControl: false,
+                                  streetViewControl: false,
+                                  rotateControl: false,
+                                  fullscreenControl: true,
+                                  disableDefaultUI: false
+                                },
                                 "map-type-id": "terrain"
                               }
                             },
@@ -26897,6 +26924,15 @@ var render = function() {
                               lng: _vm.catData.address.lng
                             },
                             zoom: 40,
+                            options: {
+                              zoomControl: true,
+                              mapTypeControl: false,
+                              scaleControl: false,
+                              streetViewControl: false,
+                              rotateControl: false,
+                              fullscreenControl: true,
+                              disableDefaultUI: false
+                            },
                             "map-type-id": "terrain"
                           }
                         },
