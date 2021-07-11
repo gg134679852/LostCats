@@ -37,7 +37,7 @@ export default new Vuex.Store ({
   },
   actions:{
      fetchCurrentUser ({ commit }) {
-    apiHelper.get('api/CurrentUser',{
+    apiHelper.get('CurrentUser',{
       headers: { Authorization: `Bearer ${getToken()}`}})
   .then((obj)=>{
     const { id, name, email } = obj.data.user
@@ -54,7 +54,7 @@ export default new Vuex.Store ({
   })
   },
   getFavoriteCats ({ commit }){
-     apiHelper.get('api/CurrentUser',{
+     apiHelper.get('CurrentUser',{
       headers: { Authorization: `Bearer ${getToken()}`}})
   .then((obj)=>{
     console.log(obj)

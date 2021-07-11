@@ -194,7 +194,7 @@
       })
     },
     getRemoveFavoriteCatId(id){
-      apiHelper.post(`${id}/removeFavorite`,{
+      apiHelper.delete(`${id}/removeFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{

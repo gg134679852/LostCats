@@ -2325,7 +2325,7 @@ var getToken = function getToken() {
       });
     },
     getRemoveFavoriteCatId: function getRemoveFavoriteCatId(id) {
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.post("".concat(id, "/removeFavorite"), {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.delete("".concat(id, "/removeFavorite"), {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
@@ -2943,7 +2943,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
   actions: {
     fetchCurrentUser: function fetchCurrentUser(_ref) {
       var commit = _ref.commit;
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('api/CurrentUser', {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('CurrentUser', {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
@@ -2965,7 +2965,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
     },
     getFavoriteCats: function getFavoriteCats(_ref2) {
       var commit = _ref2.commit;
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('api/CurrentUser', {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('CurrentUser', {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
@@ -3000,7 +3000,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var baseURL = 'http://127.0.0.1:8000/';
+var baseURL = 'http://localhost:8000/';
 var apiHelper = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: baseURL
 });
