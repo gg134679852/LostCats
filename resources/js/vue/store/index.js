@@ -13,7 +13,7 @@ export default new Vuex.Store ({
       email: ''
     },
     favoriteCats:[],
-    isAuthenticated: false
+    isAuthenticated: false,
   },
   mutations:{
      setUser (state, currentUser) {
@@ -31,7 +31,6 @@ export default new Vuex.Store ({
       localStorage.removeItem('token')
     },
     updateFavoriteCats(state,data){
-      console.log(data)
       state.favoriteCats = data
     }
   },
@@ -57,7 +56,6 @@ export default new Vuex.Store ({
      apiHelper.get('CurrentUser',{
       headers: { Authorization: `Bearer ${getToken()}`}})
   .then((obj)=>{
-    console.log(obj)
     const favoriteCats = obj.data.favoriteCats
     commit('updateFavoriteCats', {
           favoriteCats

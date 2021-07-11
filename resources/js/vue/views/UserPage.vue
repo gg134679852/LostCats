@@ -139,7 +139,7 @@ export default {
 
      this.catDatas = this.catDatas.filter((data)=> data.id !== id)
 
-    apiHelper.post(`api/${id}/removeFavorite`,{
+    apiHelper.delete(`${id}/removeFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{

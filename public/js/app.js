@@ -1988,7 +1988,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -2704,7 +2703,7 @@ var getToken = function getToken() {
       this.catDatas = this.catDatas.filter(function (data) {
         return data.id !== id;
       });
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.apiHelper.post("api/".concat(id, "/removeFavorite"), {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.apiHelper.delete("".concat(id, "/removeFavorite"), {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
@@ -2936,7 +2935,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
       localStorage.removeItem('token');
     },
     updateFavoriteCats: function updateFavoriteCats(state, data) {
-      console.log(data);
       state.favoriteCats = data;
     }
   },
@@ -2970,7 +2968,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
           Authorization: "Bearer ".concat(getToken())
         }
       }).then(function (obj) {
-        console.log(obj);
         var favoriteCats = obj.data.favoriteCats;
         commit('updateFavoriteCats', {
           favoriteCats: favoriteCats

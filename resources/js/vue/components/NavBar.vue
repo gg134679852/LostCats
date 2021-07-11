@@ -21,7 +21,6 @@
   </div>
 </nav>
 </template>
-
 <script>
 import { mapState } from 'vuex'
 import {apiHelper,Toast} from './../utils/helpers'
