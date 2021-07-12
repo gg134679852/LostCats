@@ -5,7 +5,6 @@
   <div class="card-body  text-secondary">
     <h4 class="card-text">
       <i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
-    <h4 class="card-text"><i class="fas fa-paw"></i>體型:{{catInfoData.animal_bodytype}}</h4>
     <h4 class="card-text"><i class="fas fa-paw"></i>所在地:{{catInfoData.shelter_address.slice(0,3)}}</h4>
   <template v-if="isAuthenticated">
      <button type="button" class="btn btn-primary"

@@ -67,9 +67,6 @@
              <li class="list-group-item">
                <h6>歲數:{{catData.animal_age}}</h6>
              </li>
-             <li class="list-group-item">
-               <h6>體型:{{catData.animal_bodytype}}</h6>
-             </li>
               <li class="list-group-item">
                <h6>顏色:{{catData.animal_colour}}</h6>
              </li>

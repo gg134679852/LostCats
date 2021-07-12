@@ -1883,7 +1883,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2125,9 +2124,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
 //
 //
 //
@@ -2777,7 +2773,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: "AIzaSyAnn_303ylJPP07gf8ahboe8Vnh1jK2uII",
+    key: "AIzaSyBHwKMdT1WgIHunB_ZRoHxK2C34sH0zEf4",
     libraries: 'places'
   }
 });
@@ -25619,11 +25615,6 @@ var render = function() {
               _vm._v(" "),
               _c("h4", { staticClass: "card-text" }, [
                 _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v("體型:" + _vm._s(catInfoData.animal_bodytype))
-              ]),
-              _vm._v(" "),
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
                 _vm._v(
                   "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
                 )
@@ -26237,15 +26228,6 @@ var render = function() {
                                 _c("h6", [
                                   _vm._v(
                                     "歲數:" + _vm._s(_vm.catData.animal_age)
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "list-group-item" }, [
-                                _c("h6", [
-                                  _vm._v(
-                                    "體型:" +
-                                      _vm._s(_vm.catData.animal_bodytype)
                                   )
                                 ])
                               ]),
