@@ -85,7 +85,7 @@ public function getAnimalDataFilter($address,$sex,$colour)
 
     public function getAnimalDetailData($id, $address)
     {
-        $key = env('MIX_MAP_API_KEY');
+        $key = env('API_KEY');
 
         $addressResponse = Http::get(
             "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={$address}&inputtype=textquery&fields=geometry&key={$key}")->json();

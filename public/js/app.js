@@ -2788,7 +2788,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: process.env.MIX_MAP_API_KEY,
+    key: process.env.API_KEY,
     libraries: 'places'
   }
 });
