@@ -36,7 +36,6 @@ const routes = [
    if(!store.state.isAuthenticated){
      next(false)
    }else{
-     store.dispatch('fetchCurrentUser')
      next()
    }
 })

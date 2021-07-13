@@ -2563,6 +2563,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -2701,19 +2713,9 @@ var getToken = function getToken() {
   },
   methods: {
     copyFavoriteCats: function copyFavoriteCats() {
-      var _this = this;
-
-      this.$store.dispatch('getFavoriteCats');
-      this.favoriteCats.forEach(function (data) {
-        _this.catDatas.push(data);
-      });
-    },
-    copyCurrentUser: function copyCurrentUser() {
-      this.userData = _objectSpread({}, this.currentUser);
+      this.catDatas = _toConsumableArray(this.favoriteCats);
     },
     getRemoveFavoriteCatId: function getRemoveFavoriteCatId(id) {
-      var _this2 = this;
-
       this.catDatas = this.catDatas.filter(function (data) {
         return data.id !== id;
       });
@@ -2722,8 +2724,6 @@ var getToken = function getToken() {
           Authorization: "Bearer ".concat(getToken())
         }
       }).then(function () {
-        _this2.$store.dispatch('getFavoriteCats', _this2.catDatas);
-
         _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.Toast.fire({
           icon: 'success',
           title: '成功移除最愛'
@@ -2733,14 +2733,19 @@ var getToken = function getToken() {
       });
     },
     fetchAnimalDetailData: function fetchAnimalDetailData(id, address) {
-      var _this3 = this;
+      var _this = this;
 
       this.modalIsLoading = true;
       _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.apiHelper.get("api/animalData/".concat(id, "/").concat(address, "/detail")).then(function (obj) {
-        _this3.catData = _objectSpread(_objectSpread({}, _this3.catData), obj.data[0]);
-        _this3.catData.address = _objectSpread(_objectSpread({}, _this3.catData.address), obj.data[1].candidates[0].geometry.location);
-        _this3.modalIsLoading = false;
+        _this.catData = _objectSpread(_objectSpread({}, _this.catData), obj.data[0]);
+        _this.catData.address = _objectSpread(_objectSpread({}, _this.catData.address), obj.data[1].candidates[0].geometry.location);
+        _this.modalIsLoading = false;
       });
+    }
+  },
+  watch: {
+    favoriteCats: function favoriteCats() {
+      this.catDatas = _toConsumableArray(this.favoriteCats);
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)(['isAuthenticated', 'currentUser', 'favoriteCats']))
@@ -2761,6 +2766,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_router_routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vue/router/routes */ "./resources/js/vue/router/routes.js");
 /* harmony import */ var _vue_views_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue/views/App */ "./resources/js/vue/views/App.vue");
 /* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -2773,7 +2779,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: "AIzaSyBHwKMdT1WgIHunB_ZRoHxK2C34sH0zEf4",
+    key: process.env.MIX_MAP_API_KEY,
     libraries: 'places'
   }
 });
@@ -2871,7 +2877,6 @@ var routes = [{
     if (!_store_index__WEBPACK_IMPORTED_MODULE_5__.default.state.isAuthenticated) {
       next(false);
     } else {
-      _store_index__WEBPACK_IMPORTED_MODULE_5__.default.dispatch('fetchCurrentUser');
       next();
     }
   }
@@ -2947,9 +2952,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
       state.favoriteCats = [];
       state.isAuthenticated = false;
       localStorage.removeItem('token');
-    },
-    updateFavoriteCats: function updateFavoriteCats(state, data) {
-      state.favoriteCats = data;
     }
   },
   actions: {
@@ -2973,19 +2975,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vuex__WEBPACK_IMPORTED_MODULE_2__.d
         });
       })["catch"](function (error) {
         console.log(error);
-      });
-    },
-    getFavoriteCats: function getFavoriteCats(_ref2) {
-      var commit = _ref2.commit;
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('CurrentUser', {
-        headers: {
-          Authorization: "Bearer ".concat(getToken())
-        }
-      }).then(function (obj) {
-        var favoriteCats = obj.data.favoriteCats;
-        commit('updateFavoriteCats', {
-          favoriteCats: favoriteCats
-        });
       });
     }
   }

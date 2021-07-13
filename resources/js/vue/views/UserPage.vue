@@ -130,29 +130,20 @@ export default {
      }
    },
    created(){
-    this.copyFavoriteCats()
-  },
+      this.copyFavoriteCats()
+   },
    methods: {
      copyFavoriteCats(){
-       this.$store.dispatch('getFavoriteCats')
-      this.favoriteCats.forEach((data)=>{
-         this.catDatas.push(data)
-      })
+      this.catDatas = [...this.favoriteCats]
      },
-     copyCurrentUser(){
-        this.userData = {
-          ...this.currentUser
-        }
-     },
-   getRemoveFavoriteCatId(id){
-
-     this.catDatas = this.catDatas.filter((data)=> data.id !== id)
+  getRemoveFavoriteCatId(id){
+    
+    this.catDatas = this.catDatas.filter((data)=> data.id !== id)
 
     apiHelper.delete(`${id}/removeFavorite`,{
       headers: { Authorization: `Bearer ${getToken()}`
       }})
       .then(()=>{
-        this.$store.dispatch('getFavoriteCats',this.catDatas)
         Toast.fire({
           icon: 'success',
           title:'成功移除最愛'
@@ -177,6 +168,11 @@ export default {
        this.modalIsLoading = false
      })
     }
+   },
+   watch:{
+     favoriteCats:function () {
+       this.catDatas = [...this.favoriteCats]
+     }
    },
    computed:{
     ...mapState(['isAuthenticated','currentUser','favoriteCats'])
