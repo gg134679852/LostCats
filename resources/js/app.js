@@ -10,7 +10,7 @@ const swal = (window.swal = require("sweetalert2"));
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: process.env.API_KEY,
+    key: process.env.MIX_API_KEY,
     libraries: 'places'
   }
 })

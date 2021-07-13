@@ -2775,7 +2775,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vue_router_routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vue/router/routes */ "./resources/js/vue/router/routes.js");
 /* harmony import */ var _vue_views_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue/views/App */ "./resources/js/vue/views/App.vue");
 /* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -2788,7 +2787,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: process.env.API_KEY,
+    key: "AIzaSyDJh9gEhTOh6NscXMLcjr8GDSgESyqigVI",
     libraries: 'places'
   }
 });
