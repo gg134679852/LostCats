@@ -46,9 +46,6 @@ export default {
   created(){
       this.fetchFavoriteCats()
    },
-   updated(){
-     this.fetchFavoriteCats()
-   },
   methods: {
     fetchFavoriteCats(){
       if(this.isAuthenticated){
@@ -80,6 +77,18 @@ export default {
     },
     isFavorite(id){
       return this.favoriteId.includes(id)
+    }
+  },
+  watch:{
+    favoriteCats: function () {
+      if(this.isAuthenticated){
+
+        this.favoriteId = []
+
+        this.favoriteCats.forEach((data)=>{
+        this.favoriteId.push(data.id)
+       })
+      }
     }
   },
   computed:{

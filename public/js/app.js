@@ -1900,9 +1900,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.fetchFavoriteCats();
   },
-  updated: function updated() {
-    this.fetchFavoriteCats();
-  },
   methods: {
     fetchFavoriteCats: function fetchFavoriteCats() {
       var _this = this;
@@ -1936,6 +1933,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     isFavorite: function isFavorite(id) {
       return this.favoriteId.includes(id);
+    }
+  },
+  watch: {
+    favoriteCats: function favoriteCats() {
+      var _this2 = this;
+
+      if (this.isAuthenticated) {
+        this.favoriteId = [];
+        this.favoriteCats.forEach(function (data) {
+          _this2.favoriteId.push(data.id);
+        });
+      }
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(['favoriteCats', 'isAuthenticated']))
