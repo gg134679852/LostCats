@@ -123,7 +123,6 @@
  import {apiHelper,Toast} from './../utils/helpers'
  import { mapState } from 'vuex'
  const getToken = () => localStorage.getItem('token')
- 
  export default {
    components:{
      AnimalCard,
@@ -178,6 +177,13 @@
        this.shortAddress= obj.data.shortAddress
        this.catColor= obj.data.color
      })
+    },
+   getAnimalData(){
+      this.catDatas = exportCatDatas
+      this.shortAddress = exportShortAddressDatas
+      this.catColor = 
+      exportCatColorDatas
+      console.log(exportCatDatas)
     },
     getPaginationUrl (url) {
       axios.get(url)
