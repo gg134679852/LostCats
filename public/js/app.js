@@ -2793,7 +2793,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: "AIzaSyBfdDDcp2OkoTOeogeB2AGJKXU_-DVuFrs",
+    key: "AIzaSyBjZ4tAu734DSU1exeFNgnwPUQxNK7Utm4",
     libraries: 'places'
   }
 });
