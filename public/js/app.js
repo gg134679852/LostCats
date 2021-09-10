@@ -2250,6 +2250,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2298,7 +2299,8 @@ var getToken = function getToken() {
         animal_colour: 0
       },
       modalIsLoading: true,
-      homeIsLoading: true
+      homeIsLoading: true,
+      clickPage: false
     };
   },
   created: function created() {
@@ -2314,19 +2316,21 @@ var getToken = function getToken() {
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get('api/animalData/getSelect').then(function (obj) {
         _this.shortAddress = obj.data.shortAddress;
         _this.catColor = obj.data.color;
+        _this.homeIsLoading = false;
       });
     },
     getAnimalData: function getAnimalData() {
       this.catDatas = exportCatDatas;
       this.shortAddress = exportShortAddressDatas;
       this.catColor = exportCatColorDatas;
-      console.log(exportCatDatas);
     },
     getPaginationUrl: function getPaginationUrl(url) {
       var _this2 = this;
 
+      this.clickPage = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (obj) {
         _this2.catDatas = obj.data;
+        _this2.clickPage = false;
       });
     },
     getFavoriteCatId: function getFavoriteCatId(id) {
@@ -25957,217 +25961,230 @@ var render = function() {
     { staticClass: "mt-4" },
     [
       [
-        _c(
-          "div",
-          { staticClass: "container text-center" },
-          [
-            _c(
-              "form",
-              {
-                staticClass: "d-flex justify-content-between w-50 mb-5",
-                attrs: { id: "searchFilter" },
-                on: {
-                  submit: function($event) {
-                    $event.stopPropagation()
-                    $event.preventDefault()
-                    return _vm.getFilter.apply(null, arguments)
-                  }
-                }
-              },
+        _vm.homeIsLoading
+          ? _c("Spinner")
+          : _c(
+              "div",
+              { staticClass: "container text-center" },
               [
-                _c("div", { staticClass: "w-25" }, [
-                  _c("h6", [_vm._v("地區")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filterSubmitData.short_address,
-                          expression: "filterSubmitData.short_address"
-                        }
-                      ],
-                      staticClass: "form-select",
-                      attrs: { required: "" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.filterSubmitData,
-                            "short_address",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
+                _c(
+                  "form",
+                  {
+                    staticClass: "d-flex justify-content-between w-50 mb-5",
+                    attrs: { id: "searchFilter" },
+                    on: {
+                      submit: function($event) {
+                        $event.stopPropagation()
+                        $event.preventDefault()
+                        return _vm.getFilter.apply(null, arguments)
                       }
-                    },
-                    [
-                      _c("option", { attrs: { name: "all", value: "0" } }, [
-                        _vm._v("全部")
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.shortAddress, function(item) {
-                        return _c(
-                          "option",
-                          {
-                            key: item.index,
-                            attrs: { name: "shelter_address" },
-                            domProps: { value: item }
-                          },
-                          [_vm._v(_vm._s(item))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-25" }, [
-                  _c("h6", [_vm._v("性別")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filterSubmitData.animal_sex,
-                          expression: "filterSubmitData.animal_sex"
-                        }
-                      ],
-                      staticClass: "form-select",
-                      attrs: { required: "" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.filterSubmitData,
-                            "animal_sex",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { name: "all", value: "0" } }, [
-                        _vm._v("全部")
-                      ]),
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "w-25" }, [
+                      _c("h6", [_vm._v("地區")]),
                       _vm._v(" "),
                       _c(
-                        "option",
-                        { attrs: { name: "animal_sex", value: "男生" } },
-                        [_vm._v("男生")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "option",
-                        { attrs: { name: "animal_sex", value: "女生" } },
-                        [_vm._v("女生")]
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filterSubmitData.short_address,
+                              expression: "filterSubmitData.short_address"
+                            }
+                          ],
+                          staticClass: "form-select",
+                          attrs: { required: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.filterSubmitData,
+                                "short_address",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { name: "all", value: "0" } }, [
+                            _vm._v("全部")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.shortAddress, function(item) {
+                            return _c(
+                              "option",
+                              {
+                                key: item.index,
+                                attrs: { name: "shelter_address" },
+                                domProps: { value: item }
+                              },
+                              [_vm._v(_vm._s(item))]
+                            )
+                          })
+                        ],
+                        2
                       )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-25" }, [
-                  _c("h6", [_vm._v("顏色")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filterSubmitData.animal_colour,
-                          expression: "filterSubmitData.animal_colour"
-                        }
-                      ],
-                      staticClass: "form-select",
-                      attrs: { required: "" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.filterSubmitData,
-                            "animal_colour",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { name: "all", value: "0" } }, [
-                        _vm._v("全部")
-                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "w-25" }, [
+                      _c("h6", [_vm._v("性別")]),
                       _vm._v(" "),
-                      _vm._l(_vm.catColor, function(item) {
-                        return _c(
-                          "option",
-                          {
-                            key: item.index,
-                            attrs: { name: "animal_colour" },
-                            domProps: { value: item }
-                          },
-                          [_vm._v(_vm._s(item))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filterSubmitData.animal_sex,
+                              expression: "filterSubmitData.animal_sex"
+                            }
+                          ],
+                          staticClass: "form-select",
+                          attrs: { required: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.filterSubmitData,
+                                "animal_sex",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { name: "all", value: "0" } }, [
+                            _vm._v("全部")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            { attrs: { name: "animal_sex", value: "男生" } },
+                            [_vm._v("男生")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "option",
+                            { attrs: { name: "animal_sex", value: "女生" } },
+                            [_vm._v("女生")]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "w-25" }, [
+                      _c("h6", [_vm._v("顏色")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filterSubmitData.animal_colour,
+                              expression: "filterSubmitData.animal_colour"
+                            }
+                          ],
+                          staticClass: "form-select",
+                          attrs: { required: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.filterSubmitData,
+                                "animal_colour",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { name: "all", value: "0" } }, [
+                            _vm._v("全部")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.catColor, function(item) {
+                            return _c(
+                              "option",
+                              {
+                                key: item.index,
+                                attrs: { name: "animal_colour" },
+                                domProps: { value: item }
+                              },
+                              [_vm._v(_vm._s(item))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary mt-4",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("送出")]
+                      )
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _vm._m(0)
-              ]
-            ),
-            _vm._v(" "),
-            _c("AnimalCard", {
-              attrs: { catInfoDatas: _vm.catDatas.data },
-              on: {
-                "get-Animal-Id": _vm.fetchAnimalDetailData,
-                "get-Favorite-Cat-Id": _vm.getFavoriteCatId,
-                "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
-              }
-            }),
-            _vm._v(" "),
-            _c("Pagination", {
-              attrs: {
-                paginationLinks: _vm.catDatas.links,
-                paginationMeta: _vm.catDatas.meta
-              },
-              on: { "get-pagination-url": _vm.getPaginationUrl }
-            })
-          ],
-          1
-        )
+                _vm.clickPage
+                  ? _c("Spinner")
+                  : _c("AnimalCard", {
+                      attrs: { catInfoDatas: _vm.catDatas.data },
+                      on: {
+                        "get-Animal-Id": _vm.fetchAnimalDetailData,
+                        "get-Favorite-Cat-Id": _vm.getFavoriteCatId,
+                        "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
+                      }
+                    }),
+                _vm._v(" "),
+                _c("Pagination", {
+                  attrs: {
+                    paginationLinks: _vm.catDatas.links,
+                    paginationMeta: _vm.catDatas.meta
+                  },
+                  on: { "get-pagination-url": _vm.getPaginationUrl }
+                })
+              ],
+              1
+            )
       ],
       _vm._v(" "),
       _c(
@@ -26187,7 +26204,7 @@ var render = function() {
               "div",
               { staticClass: "modal-content" },
               [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _vm.modalIsLoading
                   ? _c("Spinner")
@@ -26326,7 +26343,7 @@ var render = function() {
                       )
                     ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ],
               1
             )
@@ -26338,18 +26355,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary mt-4", attrs: { type: "submit" } },
-        [_vm._v("送出")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

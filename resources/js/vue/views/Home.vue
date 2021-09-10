@@ -1,8 +1,8 @@
 <template>
  <div class="mt-4">
-   <!-- <Spinner v-if="homeIsLoading"/> -->
-   <template>
-  <div class="container text-center">
+  <template>
+  <Spinner v-if="homeIsLoading"/>
+  <div class="container text-center" v-else>
     <form class="d-flex justify-content-between w-50 mb-5" @submit.stop.prevent="getFilter" id="searchFilter">
       <div class="w-25">
         <h6>地區</h6>
@@ -34,10 +34,11 @@
    <button type="submit" class="btn btn-primary mt-4" >送出</button>
       </div>
   </form>
+  <Spinner v-if="clickPage"/>
   <AnimalCard :catInfoDatas = catDatas.data
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Favorite-Cat-Id="getFavoriteCatId"
-  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"/>
+  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId" v-else/>
   <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
   @get-pagination-url="getPaginationUrl"
    />
@@ -160,7 +161,8 @@
          animal_colour:0
        },
        modalIsLoading: true,
-       homeIsLoading: true
+       homeIsLoading: true,
+       clickPage:false
      }
    },
    created(){
@@ -176,6 +178,7 @@
      .then((obj)=>{
        this.shortAddress= obj.data.shortAddress
        this.catColor= obj.data.color
+       this.homeIsLoading = false
      })
     },
    getAnimalData(){
@@ -183,12 +186,13 @@
       this.shortAddress = exportShortAddressDatas
       this.catColor = 
       exportCatColorDatas
-      console.log(exportCatDatas)
     },
     getPaginationUrl (url) {
+      this.clickPage = true
       axios.get(url)
      .then((obj)=>{
        this.catDatas = obj.data
+       this.clickPage = false
      })
     },
     getFavoriteCatId(id){
