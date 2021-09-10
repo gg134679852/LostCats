@@ -1,8 +1,8 @@
 <template>
  <div class="container text-center">
-   <img src="/img/avatar.png" width="400px" height="400px">
+   <img src="/img/avatar.png">
    <div class="d-flex justify-content-center">
-   <form class="text-center w-50" @submit.prevent.stop="login">
+   <form class="text-center" @submit.prevent.stop="login">
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">電子郵件</span>
   <input type="email" class="form-control" aria-describedby="basic-addon1"
@@ -60,3 +60,6 @@ export default {
  }
 }
 </script>
+<style lang="sass">
+@import '../scss/Login.scss'
+</style>

@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="d-flex justify-content-center mt-5">
-  <form class="text-center w-50" @submit.prevent.stop="singup">
+  <form class="text-center" @submit.prevent.stop="singup">
   <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">名字</span>
   <input type="text" class="form-control" aria-describedby="basic-addon1"
@@ -78,3 +78,6 @@ export default {
  }
 }
 </script>
+<style lang="sass">
+@import '../scss/SingUp.scss'
+</style>

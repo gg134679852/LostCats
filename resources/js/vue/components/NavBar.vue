@@ -5,7 +5,9 @@
       class="navbar-brand"
       to="/"
     >
+    <h3 class="navbar-brand__title">
       <i class="fas fa-cat"></i> 迷途喵星人
+    </h3>
     </router-link>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
     </div>
@@ -49,3 +51,6 @@ export default {
  }
 }
 </script>
+<style lang="sass">
+@import '../scss/NavBar.scss'
+</style>

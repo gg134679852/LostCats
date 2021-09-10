@@ -1,0 +1,10 @@
+.animalCard{
+  & .card{
+    & img{
+      height:250px;
+      width: 250px;
+      border-radius: 10px;
+      margin: 10px auto;
+    }
+  }
+}

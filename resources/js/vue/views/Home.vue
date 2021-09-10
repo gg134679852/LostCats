@@ -3,7 +3,7 @@
   <template>
   <Spinner v-if="homeIsLoading"/>
   <div class="container text-center" v-else>
-    <form class="d-flex justify-content-between w-50 mb-5" @submit.stop.prevent="getFilter" id="searchFilter">
+    <form class="catFliter d-flex justify-content-between" @submit.stop.prevent="getFilter" id="searchFilter">
       <div class="w-25">
         <h6>地區</h6>
         <select class="form-select" v-model="filterSubmitData.short_address" required>
@@ -31,7 +31,7 @@
 </select>
       </div>
       <div>
-   <button type="submit" class="btn btn-primary mt-4" >送出</button>
+   <button type="submit" class="btn btn-primary mt-3" >送出</button>
       </div>
   </form>
   <Spinner v-if="clickPage"/>
@@ -53,11 +53,8 @@
       </div>
       <Spinner v-if="modalIsLoading"/>
       <div class="modal-body" v-else>
-        <div class="d-flex justify-content-evenly">
-          <div class="p-auto">
-          <img class="rounded-3" :src="catData.album_file" width="250px" height="250px" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
-          </div>
-          <div>
+        <div class="modal-body__cat-info">
+          <img class="rounded-3" :src="catData.album_file" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
             <ul class="list-group">
               <li class="list-group-item">
                <h6>編號:{{catData.animal_id}}</h6>
@@ -84,29 +81,75 @@
                <h6>電話:{{catData.shelter_tel}}</h6>
              </li>
             </ul>
-          </div>
         </div>
-        <div class="mt-3">
-         <GmapMap
-  :center="{lat:catData.address.lat,lng:catData.address.lng}" 
-  :zoom="15"
-  :options="{
-   zoomControl: true,
-   mapTypeControl: false,
-   scaleControl: false,
-   streetViewControl: false,
-   rotateControl: false,
-   fullscreenControl: true,
-   disableDefaultUI: false
- }"
-  map-type-id="terrain"
-  style="width: 766px; height: 300px"
->
+        <div class="google-map mt-3">
+          <MatchMedia query="(max-width: 374px)" v-slot="{ matches }">
+            <GmapMap
+            :center="{lat:catData.address.lat,lng:catData.address.lng}" 
+            :zoom="15"
+            :options="{
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            rotateControl: false,
+            fullscreenControl: true,
+            disableDefaultUI: false
+          }"
+            map-type-id="terrain"
+            style="width: 325px; height: 300px"
+            v-if="matches"
+          >
   <GmapMarker
     :position="{lat:catData.address.lat,lng:catData.address.lng}"
   />
 </GmapMap>
-</div>
+          </MatchMedia>
+          <MatchMedia query="(max-width: 813px)" v-slot="{ matches }">
+            <GmapMap
+            :center="{lat:catData.address.lat,lng:catData.address.lng}" 
+            :zoom="15"
+            :options="{
+            zoomControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            rotateControl: false,
+            fullscreenControl: true,
+            disableDefaultUI: false
+          }"
+            map-type-id="terrain"
+            style="width: 300px; height: 300px"
+            v-if="matches"
+          >
+            <GmapMarker
+              :position="{lat:catData.address.lat,lng:catData.address.lng}"
+            />
+          </GmapMap>
+          </MatchMedia>
+          <MatchMedia query="(min-width: 1024px)" v-slot="{ matches }">
+              <GmapMap
+              :center="{lat:catData.address.lat,lng:catData.address.lng}" 
+              :zoom="15"
+              :options="{
+              zoomControl: true,
+              mapTypeControl: false,
+              scaleControl: false,
+              streetViewControl: false,
+              rotateControl: false,
+              fullscreenControl: true,
+              disableDefaultUI: false
+            }"
+              map-type-id="terrain"
+              style="width: 766px; height: 300px"
+              v-if="matches"
+              >
+              <GmapMarker
+                :position="{lat:catData.address.lat,lng:catData.address.lng}"
+              />
+            </GmapMap>
+          </MatchMedia>
+       </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
@@ -122,13 +165,15 @@
  import Pagination from './../components/Pagination'
  import Spinner from './../components/Spinner'
  import {apiHelper,Toast} from './../utils/helpers'
+ import { MatchMedia } from "vue-component-media-queries";
  import { mapState } from 'vuex'
  const getToken = () => localStorage.getItem('token')
  export default {
    components:{
      AnimalCard,
      Pagination,
-     Spinner
+     Spinner,
+     MatchMedia
    },
    data(){
      return{
@@ -180,12 +225,6 @@
        this.catColor= obj.data.color
        this.homeIsLoading = false
      })
-    },
-   getAnimalData(){
-      this.catDatas = exportCatDatas
-      this.shortAddress = exportShortAddressDatas
-      this.catColor = 
-      exportCatColorDatas
     },
     getPaginationUrl (url) {
       this.clickPage = true
@@ -258,3 +297,6 @@
   }
  }
  </script>
+ <style lang="sass">
+ @import '../scss/Home.scss'
+ </style>
