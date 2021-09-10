@@ -35,13 +35,15 @@
       </div>
   </form>
   <Spinner v-if="clickPage"/>
-  <AnimalCard :catInfoDatas = catDatas.data
+  <template v-else>
+    <AnimalCard :catInfoDatas = catDatas.data
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Favorite-Cat-Id="getFavoriteCatId"
-  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId" v-else/>
+  @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"/>
   <Pagination :paginationLinks = catDatas.links :paginationMeta = catDatas.meta
   @get-pagination-url="getPaginationUrl"
    />
+  </template>
   </div>
   </template>
      <div class="modal fade" id="AnimalDetailModal" tabindex="-1" aria-labelledby="AnimalDetailModalLabel" aria-hidden="true">

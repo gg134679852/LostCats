@@ -2317,6 +2317,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -26681,24 +26683,27 @@ var render = function() {
                 _vm._v(" "),
                 _vm.clickPage
                   ? _c("Spinner")
-                  : _c("AnimalCard", {
-                      attrs: { catInfoDatas: _vm.catDatas.data },
-                      on: {
-                        "get-Animal-Id": _vm.fetchAnimalDetailData,
-                        "get-Favorite-Cat-Id": _vm.getFavoriteCatId,
-                        "get-Remove-Favorite-Cat-Id": _vm.getRemoveFavoriteCatId
-                      }
-                    }),
-                _vm._v(" "),
-                _c("Pagination", {
-                  attrs: {
-                    paginationLinks: _vm.catDatas.links,
-                    paginationMeta: _vm.catDatas.meta
-                  },
-                  on: { "get-pagination-url": _vm.getPaginationUrl }
-                })
+                  : [
+                      _c("AnimalCard", {
+                        attrs: { catInfoDatas: _vm.catDatas.data },
+                        on: {
+                          "get-Animal-Id": _vm.fetchAnimalDetailData,
+                          "get-Favorite-Cat-Id": _vm.getFavoriteCatId,
+                          "get-Remove-Favorite-Cat-Id":
+                            _vm.getRemoveFavoriteCatId
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("Pagination", {
+                        attrs: {
+                          paginationLinks: _vm.catDatas.links,
+                          paginationMeta: _vm.catDatas.meta
+                        },
+                        on: { "get-pagination-url": _vm.getPaginationUrl }
+                      })
+                    ]
               ],
-              1
+              2
             )
       ],
       _vm._v(" "),
