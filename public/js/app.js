@@ -2297,28 +2297,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -26805,7 +26783,7 @@ var render = function() {
                         { staticClass: "google-map mt-3" },
                         [
                           _c("MatchMedia", {
-                            attrs: { query: "(max-width: 374px)" },
+                            attrs: { query: "(max-width: 1023px)" },
                             scopedSlots: _vm._u([
                               {
                                 key: "default",
@@ -26818,59 +26796,6 @@ var render = function() {
                                           {
                                             staticStyle: {
                                               width: "325px",
-                                              height: "300px"
-                                            },
-                                            attrs: {
-                                              center: {
-                                                lat: _vm.catData.address.lat,
-                                                lng: _vm.catData.address.lng
-                                              },
-                                              zoom: 15,
-                                              options: {
-                                                zoomControl: true,
-                                                mapTypeControl: false,
-                                                scaleControl: false,
-                                                streetViewControl: false,
-                                                rotateControl: false,
-                                                fullscreenControl: true,
-                                                disableDefaultUI: false
-                                              },
-                                              "map-type-id": "terrain"
-                                            }
-                                          },
-                                          [
-                                            _c("GmapMarker", {
-                                              attrs: {
-                                                position: {
-                                                  lat: _vm.catData.address.lat,
-                                                  lng: _vm.catData.address.lng
-                                                }
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      : _vm._e()
-                                  ]
-                                }
-                              }
-                            ])
-                          }),
-                          _vm._v(" "),
-                          _c("MatchMedia", {
-                            attrs: { query: "(max-width: 813px)" },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "default",
-                                fn: function(ref) {
-                                  var matches = ref.matches
-                                  return [
-                                    matches
-                                      ? _c(
-                                          "GmapMap",
-                                          {
-                                            staticStyle: {
-                                              width: "300px",
                                               height: "300px"
                                             },
                                             attrs: {

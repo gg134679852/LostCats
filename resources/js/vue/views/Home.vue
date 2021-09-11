@@ -85,7 +85,7 @@
             </ul>
         </div>
         <div class="google-map mt-3">
-          <MatchMedia query="(max-width: 374px)" v-slot="{ matches }">
+          <MatchMedia query="(max-width: 1023px)" v-slot="{ matches }">
             <GmapMap
             :center="{lat:catData.address.lat,lng:catData.address.lng}" 
             :zoom="15"
@@ -106,28 +106,6 @@
     :position="{lat:catData.address.lat,lng:catData.address.lng}"
   />
 </GmapMap>
-          </MatchMedia>
-          <MatchMedia query="(max-width: 813px)" v-slot="{ matches }">
-            <GmapMap
-            :center="{lat:catData.address.lat,lng:catData.address.lng}" 
-            :zoom="15"
-            :options="{
-            zoomControl: true,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: false,
-            rotateControl: false,
-            fullscreenControl: true,
-            disableDefaultUI: false
-          }"
-            map-type-id="terrain"
-            style="width: 300px; height: 300px"
-            v-if="matches"
-          >
-            <GmapMarker
-              :position="{lat:catData.address.lat,lng:catData.address.lng}"
-            />
-          </GmapMap>
           </MatchMedia>
           <MatchMedia query="(min-width: 1024px)" v-slot="{ matches }">
               <GmapMap
