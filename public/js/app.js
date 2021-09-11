@@ -26735,7 +26735,7 @@ var render = function() {
                           attrs: {
                             src: _vm.catData.album_file,
                             onerror:
-                              "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
+                              "this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
                           }
                         }),
                         _vm._v(" "),

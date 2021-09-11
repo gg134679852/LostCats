@@ -56,7 +56,7 @@
       <Spinner v-if="modalIsLoading"/>
       <div class="modal-body" v-else>
         <div class="modal-body__cat-info">
-          <img class="rounded-3" :src="catData.album_file" onerror="this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'">
+          <img class="rounded-3" :src="catData.album_file" onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'">
             <ul class="list-group">
               <li class="list-group-item">
                <h6>編號:{{catData.animal_id}}</h6>
