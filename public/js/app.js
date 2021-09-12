@@ -2840,7 +2840,7 @@ var swal = window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/
 
 vue__WEBPACK_IMPORTED_MODULE_4__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
   load: {
-    key: "AIzaSyAwEr5jfijhWldUzQ31stZZG7Vck4ofPf0",
+    key: "AIzaSyABlmBxhyKGmUSpEElRfk0-ZVQSxTBZgeE",
     libraries: 'places'
   }
 });
@@ -3163,7 +3163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".catFliter {\n  width: 100%;\n  margin-bottom: 50px;\n}\n.modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".catFliter {\n  width: 100%;\n  margin-bottom: 50px;\n}\n.modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}\n@media screen and (min-width: 1440px) {\n.catFliter {\n    width: 49%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

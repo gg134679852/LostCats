@@ -24,16 +24,16 @@ class animalDataController extends Controller
         $color = [];
 
         foreach ($filterData as $data) {
-    if (in_array($data['short_address'], $shortAddress)) {
-    } else {
-        array_push($shortAddress, $data['short_address']);
-    }
+            if (in_array($data['short_address'], $shortAddress)) {
+            } else {
+                array_push($shortAddress, $data['short_address']);
+            }
 
-    if (in_array($data['animal_colour'], $color)) {
-    } else {
-        array_push($color, $data['animal_colour']);
-    }
-}
+            if (in_array($data['animal_colour'], $color)) {
+            } else {
+                array_push($color, $data['animal_colour']);
+            }
+        }
     $color = array_filter($color);
 
       return ['shortAddress'=>$shortAddress,
