@@ -2,10 +2,6 @@
 <div class="container">
   <div class="userCard">
     <img src="/img/avatar.png" width="200px" height="200px">
-    <div class="userInfo">
-      <h5>{{this.currentUser.name}}</h5>
-      <h5>{{this.currentUser.email}}</h5>
-    </div>
   </div>
   <ul class="nav nav-tabs">
   <li class="nav-item">
