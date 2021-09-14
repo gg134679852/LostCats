@@ -40,32 +40,32 @@ class getCatData extends Command
     public function handle()
     {
 
-    AnimalData::truncate();
+        AnimalData::truncate();
 
-    $response = Http::get('https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL')->json();
+        $response = Http::get('https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL')->json();
 
-    $catData = array_filter($response, function ($item) {
-        return ($item['animal_kind'] === '貓');
-    });
-    foreach ($catData as $cat) {
-        AnimalData::create([
-            "animal_id" => $cat['animal_id'],
-            "animal_place" => $cat['animal_place'],
-            "animal_sex" => $cat['animal_sex'] === 'F' ? '女生' : '男生',
-            "animal_bodytype" => $cat['animal_bodytype'],
-            "animal_colour" => $cat['animal_colour'],
-            "animal_age" => $cat['animal_age'] === '' ? '歲數未知' : $cat['animal_age'],
-            "animal_sterilization" => $cat['animal_sterilization'] === 'F' ? '未絕育' : '已絕育',
-            "animal_bacterin" => $cat['animal_bacterin'] === 'F' ? '未打狂犬病疫苗' : '已打狂犬病疫苗',
-            "animal_foundplace" => $cat['animal_foundplace'],
-            "animal_remark" => $cat['animal_remark'],
-            "shelter_name" => $cat['shelter_name'],
-            "album_file" => $cat['album_file'],
-            "shelter_address" => $cat['shelter_address'],
-            'short_address'=>mb_substr($cat['shelter_address'],0,3,'UTF-8'),
-            "shelter_tel" => $cat['shelter_tel'],
-        ]);
-    };
-}
+        $catData = array_filter($response, function ($item) {
+            return ($item['animal_kind'] === '貓');
+        });
+        foreach ($catData as $cat) {
+            AnimalData::create([
+                "animal_id" => $cat['animal_id'],
+                "animal_place" => $cat['animal_place'],
+                "animal_sex" => $cat['animal_sex'] === 'F' ? '女生' : '男生',
+                "animal_bodytype" => $cat['animal_bodytype'],
+                "animal_colour" => $cat['animal_colour'],
+                "animal_age" => $cat['animal_age'] === '' ? '歲數未知' : $cat['animal_age'],
+                "animal_sterilization" => $cat['animal_sterilization'] === 'F' ? '未絕育' : '已絕育',
+                "animal_bacterin" => $cat['animal_bacterin'] === 'F' ? '未打狂犬病疫苗' : '已打狂犬病疫苗',
+                "animal_foundplace" => $cat['animal_foundplace'],
+                "animal_remark" => $cat['animal_remark'],
+                "shelter_name" => $cat['shelter_name'],
+                "album_file" => $cat['album_file'],
+                "shelter_address" => $cat['shelter_address'],
+                'short_address' => mb_substr($cat['shelter_address'], 0, 3, 'UTF-8'),
+                "shelter_tel" => $cat['shelter_tel'],
+            ]);
+        };
+    }
 
 }

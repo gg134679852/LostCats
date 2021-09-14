@@ -11,19 +11,17 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 Route::post('/singup', 'userControllers@singup');
 Route::post('/login', 'userControllers@login');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/logout', 'userControllers@logout');
     Route::post('{id}/addFavorite', 'userControllers@addFavorite');
-Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
-Route::get('/CurrentUser', 'userControllers@getCurrentUser');
-
+    Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
+    Route::get('/CurrentUser', 'userControllers@getCurrentUser');
 });
 
 Route::get('/{any}', function () {
     return view('welcome');
 })->where('any', '.*');
-

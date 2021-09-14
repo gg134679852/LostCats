@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <div class="d-flex justify-content-center" id="userCard">
+  <div class="userCard">
     <img src="/img/avatar.png" width="200px" height="200px">
     <div class="userInfo">
       <h5>{{this.currentUser.name}}</h5>

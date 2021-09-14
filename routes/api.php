@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +17,3 @@ Route::get('/animalData/getSelect', 'animalDataController@getAnimalDataSelect');
 Route::get('/animalData/getFilter/{address}/{sex}/{colour}', 'animalDataController@getAnimalDataFilter');
 
 Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalDetailData');
-
