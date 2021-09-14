@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="userCard">
-    <img src="/img/avatar.png" width="200px" height="200px">
+    <img src="/img/avatar.png">
     <div class="userInfo">
       <h5>{{this.currentUser.name}}</h5>
       <h5>{{this.currentUser.email}}</h5>
@@ -12,7 +12,7 @@
     <a class="nav-link active" aria-current="page" href="#">最愛喵星人</a>
   </li>
 </ul>
-<div class="mt-5">
+<div class="mt-5 text-center">
  <AnimalCard :catInfoDatas = this.catDatas
   @get-Animal-Id="fetchAnimalDetailData"
   @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"

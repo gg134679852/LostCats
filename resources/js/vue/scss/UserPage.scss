@@ -1,5 +1,11 @@
 .userCard{
   display: flex;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  & img{
+    width: 200px;
+    height: 200px;
+  }
 }

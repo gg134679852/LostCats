@@ -1,5 +1,5 @@
 <template>
-  <div class="animalCard row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+  <div class="animalCard row row-cols-auto">
   <div class="card border-secondary mb-3 m-auto" style="width: 18rem;" v-for="catInfoData in catInfoDatas" :key="catInfoData.id">
   <img :src="catInfoData.album_file" class="card-img-top" onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'">
   <div class="card-body  text-secondary">
@@ -7,26 +7,26 @@
       <i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
     <h4 class="card-text"><i class="fas fa-paw"></i>所在地:{{catInfoData.shelter_address.slice(0,3)}}</h4>
   <template v-if="isAuthenticated">
-     <button type="button" class="btn btn-primary"
+     <button type="button" class="btn btn-primary "
      @click.stop.prevent="addFavorite(catInfoData.id)"
      v-if="!isFavorite(catInfoData.id)"
     >
   加入最愛
 </button>
-  <button type="button" class="btn btn-primary" 
+  <button type="button" class="btn btn-primary ml-2" 
   @click.stop.prevent="removeFavorite(catInfoData.id)"
   v-else>
   移除最愛
 </button>
 </template>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AnimalDetailModal"
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AnimalDetailModal"
        @click.stop.prevent="getAnimalId(catInfoData.id,catInfoData.shelter_name)"
     >
   詳細資料
 </button>
-    </div>
    </div>
-   </div>
+  </div>
+ </div>
 </template>
 <script>
 import { mapState } from 'vuex'
