@@ -50,7 +50,6 @@ class getCatData extends Command
         foreach ($catData as $cat) {
             AnimalData::create([
                 "animal_id" => $cat['animal_id'],
-                "animal_place" => $cat['animal_place'],
                 "animal_sex" => $cat['animal_sex'] === 'F' ? '女生' : '男生',
                 "animal_bodytype" => $cat['animal_bodytype'],
                 "animal_colour" => $cat['animal_colour'],
