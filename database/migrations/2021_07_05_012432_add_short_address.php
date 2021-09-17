@@ -13,7 +13,7 @@ class AddShortAddress extends Migration
      */
     public function up()
     {
-       Schema::table('animal_datas', function (Blueprint $table) {
+       Schema::table('animal_data', function (Blueprint $table) {
     $table->string('short_address',15)->after('shelter_address');
 });
 
@@ -26,7 +26,7 @@ class AddShortAddress extends Migration
      */
     public function down()
     {
-        Schema::table('animal_datas', function (Blueprint $table) {
+        Schema::table('animal_data', function (Blueprint $table) {
     $table->dropColumn('short_address');
 
 });
