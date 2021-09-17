@@ -20,7 +20,6 @@ class AnimalDataResource extends JsonResource
             'id' => $this->id,
             "animal_id" =>
             $this->animal_id,
-                "animal_place" => $this->animal_place,
                 "animal_sex" => $this->animal_sex,
                 "animal_bodytype" => $this->animal_bodytype,
                 "animal_colour" => $this->animal_colour,
