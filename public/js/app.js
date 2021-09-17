@@ -2690,8 +2690,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_AnimalCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../components/AnimalCard */ "./resources/js/vue/components/AnimalCard.vue");
 /* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../components/Spinner */ "./resources/js/vue/components/Spinner.vue");
-/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../utils/helpers */ "./resources/js/vue/utils/helpers.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_component_media_queries__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-component-media-queries */ "./node_modules/vue-component-media-queries/dist/index.es.js");
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../utils/helpers */ "./resources/js/vue/utils/helpers.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2803,19 +2804,86 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 
 var getToken = function getToken() {
-  return localStorage.getItem('token');
+  return localStorage.getItem("token");
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AnimalCard: _components_AnimalCard__WEBPACK_IMPORTED_MODULE_0__.default,
-    Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__.default
+    Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__.default,
+    MatchMedia: vue_component_media_queries__WEBPACK_IMPORTED_MODULE_2__.MatchMedia
   },
   data: function data() {
     return {
@@ -2823,18 +2891,18 @@ var getToken = function getToken() {
       catData: {
         id: -1,
         animal_id: -1,
-        album_file: '',
-        animal_age: '',
-        animal_bacterin: '',
-        animal_bodytype: '',
-        animal_colour: '',
-        animal_place: '',
-        animal_remark: '',
-        animal_sex: '',
-        animal_sterilization: '',
-        shelter_address: '',
-        shelter_name: '',
-        shelter_tel: '',
+        album_file: "",
+        animal_age: "",
+        animal_bacterin: "",
+        animal_bodytype: "",
+        animal_colour: "",
+        animal_place: "",
+        animal_remark: "",
+        animal_sex: "",
+        animal_sterilization: "",
+        shelter_address: "",
+        shelter_name: "",
+        shelter_tel: "",
         address: {
           lat: -1,
           lng: -1
@@ -2854,14 +2922,14 @@ var getToken = function getToken() {
       this.catDatas = this.catDatas.filter(function (data) {
         return data.id !== id;
       });
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.apiHelper.delete("".concat(id, "/removeFavorite"), {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_3__.apiHelper.delete("".concat(id, "/removeFavorite"), {
         headers: {
           Authorization: "Bearer ".concat(getToken())
         }
       }).then(function () {
-        _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.Toast.fire({
-          icon: 'success',
-          title: '成功移除最愛'
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_3__.Toast.fire({
+          icon: "success",
+          title: "成功移除最愛"
         });
       })["catch"](function (error) {
         console.log(error);
@@ -2871,7 +2939,7 @@ var getToken = function getToken() {
       var _this = this;
 
       this.modalIsLoading = true;
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_2__.apiHelper.get("api/animalData/".concat(id, "/").concat(address, "/detail")).then(function (obj) {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_3__.apiHelper.get("api/animalData/".concat(id, "/").concat(address, "/detail")).then(function (obj) {
         _this.catData = _objectSpread(_objectSpread({}, _this.catData), obj.data[0]);
         _this.catData.address = _objectSpread(_objectSpread({}, _this.catData.address), obj.data[1].candidates[0].geometry.location);
         _this.modalIsLoading = false;
@@ -2883,7 +2951,7 @@ var getToken = function getToken() {
       this.catDatas = _toConsumableArray(this.favoriteCats);
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)(['isAuthenticated', 'currentUser', 'favoriteCats']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapState)(["isAuthenticated", "currentUser", "favoriteCats"]))
 });
 
 /***/ }),
@@ -3134,7 +3202,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var baseURL = 'http://127.0.0.1:8000/';
+var baseURL = 'https://serene-oasis-02398.herokuapp.com/';
 var apiHelper = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: baseURL
 });
@@ -3308,7 +3376,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".userCard {\n  display: flex;\n  flex-flow: column;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n}\n.userCard img {\n  width: 200px;\n  height: 200px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".userCard {\n  display: flex;\n  flex-flow: column;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n}\n.userCard img {\n  width: 200px;\n  height: 200px;\n}\n.modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -27444,135 +27512,205 @@ var render = function() {
               _vm._v(" "),
               _vm.modalIsLoading
                 ? _c("Spinner")
-                : _c(
-                    "div",
-                    { staticClass: "modal-body" },
-                    [
-                      _c("div", { staticClass: "d-flex" }, [
-                        _c("div", { staticClass: "p-auto" }, [
-                          _c("img", {
-                            staticClass: "rounded-3",
-                            attrs: {
-                              src: _vm.catData.album_file,
-                              width: "250px",
-                              height: "250px",
-                              onerror:
-                                "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ml-5" }, [
-                          _c("ul", { staticClass: "list-group" }, [
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("編號:" + _vm._s(_vm.catData.animal_id))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("性別:" + _vm._s(_vm.catData.animal_sex))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v("歲數:" + _vm._s(_vm.catData.animal_age))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "體型:" + _vm._s(_vm.catData.animal_bodytype)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "顏色:" + _vm._s(_vm.catData.animal_colour)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
+                : _c("div", { staticClass: "modal-body" }, [
+                    _c("div", { staticClass: "modal-body__cat-info" }, [
+                      _c("img", {
+                        staticClass: "rounded-3",
+                        attrs: {
+                          src: _vm.catData.album_file,
+                          width: "250px",
+                          height: "250px",
+                          onerror:
+                            "this.src='https://cel.ac/wp-content/uploads/2016/02/placeholder-img-1.jpg'"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ml-5" }, [
+                        _c("ul", { staticClass: "list-group" }, [
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v("編號:" + _vm._s(_vm.catData.animal_id))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v("性別:" + _vm._s(_vm.catData.animal_sex))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v("歲數:" + _vm._s(_vm.catData.animal_age))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v(
+                                "體型:" + _vm._s(_vm.catData.animal_bodytype)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v(
+                                "顏色:" + _vm._s(_vm.catData.animal_colour)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v(
+                                "\n                    " +
                                   _vm._s(_vm.catData.animal_sterilization) +
-                                    "," +
-                                    _vm._s(_vm.catData.animal_bacterin)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "收容所名稱:" +
-                                    _vm._s(_vm.catData.shelter_name)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "地址:" + _vm._s(_vm.catData.shelter_address)
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("h6", [
-                                _vm._v(
-                                  "電話:" + _vm._s(_vm.catData.shelter_tel)
-                                )
-                              ])
+                                  "," +
+                                  _vm._s(_vm.catData.animal_bacterin) +
+                                  "\n                  "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v(
+                                "收容所名稱:" + _vm._s(_vm.catData.shelter_name)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v(
+                                "地址:" + _vm._s(_vm.catData.shelter_address)
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "list-group-item" }, [
+                            _c("h6", [
+                              _vm._v("電話:" + _vm._s(_vm.catData.shelter_tel))
                             ])
                           ])
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "GmapMap",
-                        {
-                          staticStyle: { width: "500px", height: "300px" },
-                          attrs: {
-                            center: {
-                              lat: _vm.catData.address.lat,
-                              lng: _vm.catData.address.lng
-                            },
-                            zoom: 40,
-                            options: {
-                              zoomControl: true,
-                              mapTypeControl: false,
-                              scaleControl: false,
-                              streetViewControl: false,
-                              rotateControl: false,
-                              fullscreenControl: true,
-                              disableDefaultUI: false
-                            },
-                            "map-type-id": "terrain"
-                          }
-                        },
-                        [
-                          _c("GmapMarker", {
-                            attrs: {
-                              position: {
-                                lat: _vm.catData.address.lat,
-                                lng: _vm.catData.address.lng
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "google-map mt-3" },
+                      [
+                        _c("MatchMedia", {
+                          attrs: { query: "(max-width: 1023px)" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var matches = ref.matches
+                                return [
+                                  matches
+                                    ? _c(
+                                        "GmapMap",
+                                        {
+                                          staticStyle: {
+                                            width: "325px",
+                                            height: "300px"
+                                          },
+                                          attrs: {
+                                            center: {
+                                              lat: _vm.catData.address.lat,
+                                              lng: _vm.catData.address.lng
+                                            },
+                                            zoom: 15,
+                                            options: {
+                                              zoomControl: true,
+                                              mapTypeControl: false,
+                                              scaleControl: false,
+                                              streetViewControl: false,
+                                              rotateControl: false,
+                                              fullscreenControl: true,
+                                              disableDefaultUI: false
+                                            },
+                                            "map-type-id": "terrain"
+                                          }
+                                        },
+                                        [
+                                          _c("GmapMarker", {
+                                            attrs: {
+                                              position: {
+                                                lat: _vm.catData.address.lat,
+                                                lng: _vm.catData.address.lng
+                                              }
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
+                                ]
                               }
                             }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c("MatchMedia", {
+                          attrs: { query: "(min-width: 1024px)" },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "default",
+                              fn: function(ref) {
+                                var matches = ref.matches
+                                return [
+                                  matches
+                                    ? _c(
+                                        "GmapMap",
+                                        {
+                                          staticStyle: {
+                                            width: "766px",
+                                            height: "300px"
+                                          },
+                                          attrs: {
+                                            center: {
+                                              lat: _vm.catData.address.lat,
+                                              lng: _vm.catData.address.lng
+                                            },
+                                            zoom: 15,
+                                            options: {
+                                              zoomControl: true,
+                                              mapTypeControl: false,
+                                              scaleControl: false,
+                                              streetViewControl: false,
+                                              rotateControl: false,
+                                              fullscreenControl: true,
+                                              disableDefaultUI: false
+                                            },
+                                            "map-type-id": "terrain"
+                                          }
+                                        },
+                                        [
+                                          _c("GmapMarker", {
+                                            attrs: {
+                                              position: {
+                                                lat: _vm.catData.address.lat,
+                                                lng: _vm.catData.address.lng
+                                              }
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
+                                ]
+                              }
+                            }
+                          ])
+                        })
+                      ],
+                      1
+                    )
+                  ]),
               _vm._v(" "),
               _vm._m(2)
             ],
@@ -27633,7 +27771,7 @@ var staticRenderFns = [
           staticClass: "btn btn-secondary",
           attrs: { type: "button", "data-bs-dismiss": "modal" }
         },
-        [_vm._v("關閉")]
+        [_vm._v("\n            關閉\n          ")]
       )
     ])
   }
