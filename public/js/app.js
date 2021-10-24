@@ -2421,7 +2421,8 @@ var getToken = function getToken() {
       },
       modalIsLoading: true,
       homeIsLoading: true,
-      clickPage: false
+      clickPage: false,
+      windowWidth: window.innerWidth
     };
   },
   created: function created() {
@@ -2430,17 +2431,6 @@ var getToken = function getToken() {
   methods: {
     fetchAnimalData: function fetchAnimalData() {
       var _this = this;
-
-      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
-        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData?dataLength=18").then(function (obj) {
-          _this.catDatas = obj.data;
-        });
-      } else {
-        console.log(window.innerWidth);
-        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData?dataLength=16").then(function (obj) {
-          _this.catDatas = obj.data;
-        });
-      }
 
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData").then(function (obj) {
         _this.catDatas = obj.data;

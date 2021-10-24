@@ -10,11 +10,9 @@ use Illuminate\Support\Facades\Http;
 
 class animalDataController extends Controller
 {
-    public function getAnimalData(Request $request)
+    public function getAnimalData()
     {
-        $dataLength = intval($request->input('dataLength'));
-
-        $animalData = new AnimalDataCollection(AnimalData::paginate($dataLength));
+        $animalData = new AnimalDataCollection(AnimalData::paginate(18));
 
         return $animalData;
     }

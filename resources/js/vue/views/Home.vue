@@ -255,6 +255,7 @@ export default {
       modalIsLoading: true,
       homeIsLoading: true,
       clickPage: false,
+      windowWidth: window.innerWidth
     };
   },
   created() {
@@ -262,16 +263,6 @@ export default {
   },
   methods: {
     fetchAnimalData() {
-      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
-        apiHelper.get("api/animalData?dataLength=18").then((obj) => {
-          this.catDatas = obj.data;
-        });
-      } else {
-        console.log(window.innerWidth)
-        apiHelper.get("api/animalData?dataLength=16").then((obj) => {
-          this.catDatas = obj.data;
-        });
-      }
       apiHelper.get("api/animalData").then((obj) => {
         this.catDatas = obj.data;
       });
