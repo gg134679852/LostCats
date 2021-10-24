@@ -225,6 +225,7 @@ export default {
   data() {
     return {
       catDatas: [],
+      originCatDatas:[],
       catData: {
         id: -1,
         animal_id: -1,
@@ -254,17 +255,31 @@ export default {
       },
       modalIsLoading: true,
       homeIsLoading: true,
-      clickPage: false,
-      windowWidth: window.innerWidth
+      clickPage: false
     };
   },
   created() {
     this.fetchAnimalData();
   },
+  mounted() {
+    window.onresize = () => {
+      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+        this.catDatas.data = this.originCatDatas;
+      } else {
+        this.catDatas.data = this.catDatas.data.slice(0, 16);
+      }
+    };
+  },
   methods: {
     fetchAnimalData() {
       apiHelper.get("api/animalData").then((obj) => {
-        this.catDatas = obj.data;
+        this.originCatDatas = obj.data.data
+        if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+          this.catDatas = obj.data;
+        } else {
+          this.catDatas = obj.data;
+          this.catDatas.data = this.catDatas.data.slice(0, 16);
+        }
       });
       apiHelper.get("api/animalData/getSelect").then((obj) => {
         this.shortAddress = obj.data.shortAddress;

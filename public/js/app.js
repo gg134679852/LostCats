@@ -2392,6 +2392,7 @@ var getToken = function getToken() {
   data: function data() {
     return {
       catDatas: [],
+      originCatDatas: [],
       catData: {
         id: -1,
         animal_id: -1,
@@ -2421,33 +2422,50 @@ var getToken = function getToken() {
       },
       modalIsLoading: true,
       homeIsLoading: true,
-      clickPage: false,
-      windowWidth: window.innerWidth
+      clickPage: false
     };
   },
   created: function created() {
     this.fetchAnimalData();
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.onresize = function () {
+      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+        _this.catDatas.data = _this.originCatDatas;
+      } else {
+        _this.catDatas.data = _this.catDatas.data.slice(0, 16);
+      }
+    };
+  },
   methods: {
     fetchAnimalData: function fetchAnimalData() {
-      var _this = this;
+      var _this2 = this;
 
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData").then(function (obj) {
-        _this.catDatas = obj.data;
+        _this2.originCatDatas = obj.data.data;
+
+        if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+          _this2.catDatas = obj.data;
+        } else {
+          _this2.catDatas = obj.data;
+          _this2.catDatas.data = _this2.catDatas.data.slice(0, 16);
+        }
       });
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getSelect").then(function (obj) {
-        _this.shortAddress = obj.data.shortAddress;
-        _this.catColor = obj.data.color;
-        _this.homeIsLoading = false;
+        _this2.shortAddress = obj.data.shortAddress;
+        _this2.catColor = obj.data.color;
+        _this2.homeIsLoading = false;
       });
     },
     getPaginationUrl: function getPaginationUrl(url) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.clickPage = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (obj) {
-        _this2.catDatas = obj.data;
-        _this2.clickPage = false;
+        _this3.catDatas = obj.data;
+        _this3.clickPage = false;
       });
     },
     getFavoriteCatId: function getFavoriteCatId(id) {
@@ -2479,17 +2497,17 @@ var getToken = function getToken() {
       });
     },
     fetchAnimalDetailData: function fetchAnimalDetailData(id, address) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.modalIsLoading = true;
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/".concat(id, "/").concat(address, "/detail")).then(function (obj) {
-        _this3.catData = _objectSpread(_objectSpread({}, _this3.catData), obj.data[0]);
-        _this3.catData.address = _objectSpread(_objectSpread({}, _this3.catData.address), obj.data[1].candidates[0].geometry.location);
-        _this3.modalIsLoading = false;
+        _this4.catData = _objectSpread(_objectSpread({}, _this4.catData), obj.data[0]);
+        _this4.catData.address = _objectSpread(_objectSpread({}, _this4.catData.address), obj.data[1].candidates[0].geometry.location);
+        _this4.modalIsLoading = false;
       });
     },
     getFilter: function getFilter() {
-      var _this4 = this;
+      var _this5 = this;
 
       var data = {
         short_address: this.filterSubmitData.short_address,
@@ -2497,7 +2515,7 @@ var getToken = function getToken() {
         animal_colour: this.filterSubmitData.animal_colour
       };
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getFilter/".concat(data.short_address, "/").concat(data.animal_sex, "/").concat(data.animal_colour)).then(function (obj) {
-        _this4.catDatas = obj.data;
+        _this5.catDatas = obj.data;
       })["catch"](function (error) {
         console.log(error);
       });
