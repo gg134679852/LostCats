@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Resources\AnimalDataCollection;
 use App\Http\Resources\AnimalDataResource;
 use App\Models\AnimalData;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class animalDataController extends Controller
 {
-    public function getAnimalData()
+    public function getAnimalData(Request $request)
     {
-        $animalData = new AnimalDataCollection(AnimalData::paginate(16));
+        $dataLength = intval($request->input('dataLength'));
+
+        $animalData = new AnimalDataCollection(AnimalData::paginate($dataLength));
 
         return $animalData;
     }

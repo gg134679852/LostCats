@@ -2431,6 +2431,17 @@ var getToken = function getToken() {
     fetchAnimalData: function fetchAnimalData() {
       var _this = this;
 
+      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData?dataLength=18").then(function (obj) {
+          _this.catDatas = obj.data;
+        });
+      } else {
+        console.log(window.innerWidth);
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData?dataLength=16").then(function (obj) {
+          _this.catDatas = obj.data;
+        });
+      }
+
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData").then(function (obj) {
         _this.catDatas = obj.data;
       });
@@ -27010,8 +27021,7 @@ var render = function() {
                                           "GmapMap",
                                           {
                                             staticStyle: {
-                                              width: "766px",
-                                              height: "300px"
+                                              width: "766px height: 300px"
                                             },
                                             attrs: {
                                               center: {

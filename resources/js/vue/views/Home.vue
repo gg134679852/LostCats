@@ -179,7 +179,7 @@
                     disableDefaultUI: false,
                   }"
                   map-type-id="terrain"
-                  style="width: 766px; height: 300px"
+                  style="width: 766px height: 300px"
                   v-if="matches"
                 >
                   <GmapMarker
@@ -262,6 +262,16 @@ export default {
   },
   methods: {
     fetchAnimalData() {
+      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+        apiHelper.get("api/animalData?dataLength=18").then((obj) => {
+          this.catDatas = obj.data;
+        });
+      } else {
+        console.log(window.innerWidth)
+        apiHelper.get("api/animalData?dataLength=16").then((obj) => {
+          this.catDatas = obj.data;
+        });
+      }
       apiHelper.get("api/animalData").then((obj) => {
         this.catDatas = obj.data;
       });
