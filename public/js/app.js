@@ -2432,7 +2432,7 @@ var getToken = function getToken() {
     var _this = this;
 
     window.onresize = function () {
-      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+      if (window.innerWidth <= 1024 || window.innerWidth <= 1366) {
         _this.catDatas.data = _this.originCatDatas;
       } else {
         _this.catDatas.data = _this.catDatas.data.slice(0, 16);
@@ -2446,12 +2446,13 @@ var getToken = function getToken() {
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData").then(function (obj) {
         _this2.originCatDatas = obj.data.data;
 
-        if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+        if (window.innerWidth <= 1024 || window.innerWidth <= 1366) {
           _this2.catDatas = obj.data;
         } else {
           _this2.catDatas = obj.data;
           _this2.catDatas.data = _this2.catDatas.data.slice(0, 16);
-        }
+        } // this.catDatas = obj.data;
+
       });
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getSelect").then(function (obj) {
         _this2.shortAddress = obj.data.shortAddress;
@@ -27029,7 +27030,8 @@ var render = function() {
                                           "GmapMap",
                                           {
                                             staticStyle: {
-                                              width: "766px height: 300px"
+                                              width: "766px",
+                                              height: "300px"
                                             },
                                             attrs: {
                                               center: {
