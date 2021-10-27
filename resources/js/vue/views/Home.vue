@@ -134,7 +134,7 @@
               </ul>
             </div>
             <div class="google-map mt-3">
-              <MatchMedia query="(max-width: 1023px)" v-slot="{ matches }">
+              <MatchMedia query="(min-width: 1023px)" v-slot="{ matches }">
                 <GmapMap
                   :center="{
                     lat: catData.address.lat,
@@ -225,7 +225,7 @@ export default {
   data() {
     return {
       catDatas: [],
-      originCatDatas:[],
+      originCatDatas: [],
       catData: {
         id: -1,
         animal_id: -1,
@@ -255,31 +255,32 @@ export default {
       },
       modalIsLoading: true,
       homeIsLoading: true,
-      clickPage: false
+      clickPage: false,
     };
   },
   created() {
     this.fetchAnimalData();
   },
-  mounted() {
-    window.onresize = () => {
-      if (window.innerWidth === 1024 || window.innerWidth === 1366) {
-        this.catDatas.data = this.originCatDatas;
-      } else {
-        this.catDatas.data = this.catDatas.data.slice(0, 16);
-      }
-    };
-  },
+  // mounted() {
+  //   window.onresize = () => {
+  //     if (window.innerWidth === 1024 || window.innerWidth === 1366) {
+  //       this.catDatas.data = this.originCatDatas;
+  //     } else {
+  //       this.catDatas.data = this.catDatas.data.slice(0, 16);
+  //     }
+  //   };
+  // },
   methods: {
     fetchAnimalData() {
       apiHelper.get("api/animalData").then((obj) => {
-        this.originCatDatas = obj.data.data
-        if (window.innerWidth === 1024 || window.innerWidth === 1366) {
-          this.catDatas = obj.data;
-        } else {
-          this.catDatas = obj.data;
-          this.catDatas.data = this.catDatas.data.slice(0, 16);
-        }
+        // this.originCatDatas = obj.data.data
+        // if (window.innerWidth <= 1024 || window.innerWidth <= 1366) {
+        //   this.catDatas = obj.data;
+        // } else {
+        //   this.catDatas = obj.data;
+        //   this.catDatas.data = this.catDatas.data.slice(0, 16);
+        // }
+        this.catDatas = obj.data;
       });
       apiHelper.get("api/animalData/getSelect").then((obj) => {
         this.shortAddress = obj.data.shortAddress;
