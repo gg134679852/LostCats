@@ -12,7 +12,7 @@ class animalDataController extends Controller
 {
     public function getAnimalData()
     {
-        $animalData = new AnimalDataCollection(AnimalData::paginate(16));
+        $animalData = new AnimalDataCollection(AnimalData::paginate(18));
 
         return $animalData;
     }
