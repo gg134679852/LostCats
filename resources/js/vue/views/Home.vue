@@ -264,7 +264,6 @@ export default {
   mounted() {
     window.onresize = () => {
       if (window.innerWidth <= 1024) {
-        console.log(window.innerWidth)
         this.catDatas.data = this.originCatDatas;
       } else if(window.innerWidth >= 1400){
         this.catDatas.data = this.catDatas.data.slice(0, 16);
@@ -276,7 +275,6 @@ export default {
       apiHelper.get("api/animalData").then((obj) => {
         this.originCatDatas = obj.data.data
         if (window.innerWidth <= 1024) {
-          console.log(window.innerWidth)
           this.catDatas = obj.data;
         } else if(window.innerWidth >= 1400){
           this.catDatas = obj.data;
@@ -294,7 +292,6 @@ export default {
       axios.get(url).then((obj) => {
         this.originCatDatas = obj.data.data
         if (window.innerWidth <= 1024) {
-          console.log(window.innerWidth)
           this.catDatas = obj.data;
         } else if(window.innerWidth >= 1400){
           this.catDatas = obj.data;

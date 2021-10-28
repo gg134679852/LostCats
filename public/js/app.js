@@ -2431,7 +2431,6 @@ var getToken = function getToken() {
 
     window.onresize = function () {
       if (window.innerWidth <= 1024) {
-        console.log(window.innerWidth);
         _this.catDatas.data = _this.originCatDatas;
       } else if (window.innerWidth >= 1400) {
         _this.catDatas.data = _this.catDatas.data.slice(0, 16);
@@ -2446,7 +2445,6 @@ var getToken = function getToken() {
         _this2.originCatDatas = obj.data.data;
 
         if (window.innerWidth <= 1024) {
-          console.log(window.innerWidth);
           _this2.catDatas = obj.data;
         } else if (window.innerWidth >= 1400) {
           _this2.catDatas = obj.data;
@@ -2467,7 +2465,6 @@ var getToken = function getToken() {
         _this3.originCatDatas = obj.data.data;
 
         if (window.innerWidth <= 1024) {
-          console.log(window.innerWidth);
           _this3.catDatas = obj.data;
         } else if (window.innerWidth >= 1400) {
           _this3.catDatas = obj.data;
