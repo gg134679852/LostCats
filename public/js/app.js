@@ -2126,8 +2126,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2432,9 +2430,10 @@ var getToken = function getToken() {
     var _this = this;
 
     window.onresize = function () {
-      if (window.innerWidth <= 1024 || window.innerWidth <= 1366) {
+      if (window.innerWidth <= 1024) {
+        console.log(window.innerWidth);
         _this.catDatas.data = _this.originCatDatas;
-      } else {
+      } else if (window.innerWidth >= 1400) {
         _this.catDatas.data = _this.catDatas.data.slice(0, 16);
       }
     };
@@ -2446,13 +2445,13 @@ var getToken = function getToken() {
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData").then(function (obj) {
         _this2.originCatDatas = obj.data.data;
 
-        if (window.innerWidth <= 1024 || window.innerWidth <= 1366) {
+        if (window.innerWidth <= 1024) {
+          console.log(window.innerWidth);
           _this2.catDatas = obj.data;
-        } else {
+        } else if (window.innerWidth >= 1400) {
           _this2.catDatas = obj.data;
           _this2.catDatas.data = _this2.catDatas.data.slice(0, 16);
-        } // this.catDatas = obj.data;
-
+        }
       });
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getSelect").then(function (obj) {
         _this2.shortAddress = obj.data.shortAddress;
@@ -2465,7 +2464,16 @@ var getToken = function getToken() {
 
       this.clickPage = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get(url).then(function (obj) {
-        _this3.catDatas = obj.data;
+        _this3.originCatDatas = obj.data.data;
+
+        if (window.innerWidth <= 1024) {
+          console.log(window.innerWidth);
+          _this3.catDatas = obj.data;
+        } else if (window.innerWidth >= 1400) {
+          _this3.catDatas = obj.data;
+          _this3.catDatas.data = _this3.catDatas.data.slice(0, 16);
+        }
+
         _this3.clickPage = false;
       });
     },
@@ -3276,7 +3284,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".navbar-brand__title {\n  color: black;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".navbar-brand {\n  opacity: 0.6;\n}\n.navbar-brand__title {\n  color: black;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26591,7 +26599,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "main",
-    { staticClass: "bg-white", attrs: { role: "main" } },
+    { attrs: { role: "main" } },
     [_c("NavBar"), _vm._v(" "), _c("router-view")],
     1
   )

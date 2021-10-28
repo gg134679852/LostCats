@@ -1,7 +1,5 @@
 <template>
-  <main
-      role="main"
-      class="bg-white">
+  <main role="main">
       <NavBar/>
    <router-view></router-view>
 </main>
