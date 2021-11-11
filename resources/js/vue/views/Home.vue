@@ -133,6 +133,7 @@
                 </li>
               </ul>
             </div>
+            <button type="button" class="btn btn-primary modal-body__donate-button" data-bs-toggle="modal" data-bs-target="#exampleModal" />
             <div class="google-map mt-3">
               <MatchMedia query="(max-width: 1023px)" v-slot="{ matches }">
                 <GmapMap
@@ -204,6 +205,44 @@
         </div>
       </div>
     </div>
+      <div class="modal fade mt-5" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-xl-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">捐款資料</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <div class="mb-3">
+        <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">捐款金額</label>
+        <input type="number" max="5000" class="form-control" v-model="donate_info.price">
+        </div>
+        <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">姓名</label>
+        <input type="text" class="form-control"  v-model="donate_info.name">
+        </div>
+        <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">電子郵件</label>
+        <input type="email" class="form-control"  v-model="donate_info.email">
+        </div>
+        </div>
+        <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">電話</label>
+        <input type="number" class="form-control"  v-model="donate_info.phone">
+        </div>
+        <div class="m-3">
+        <label for="exampleFormControlInput1" class="form-label">地址</label>
+        <input type="text" class="form-control"  v-model="donate_info.addres">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+       </div>
+  </div>
   </div>
 </template>
  <script>
@@ -256,6 +295,13 @@ export default {
       modalIsLoading: true,
       homeIsLoading: true,
       clickPage: false,
+      donate_info:{
+        pricr:'',
+        name:'',
+        email:'',
+        phone:'',
+        addres:''
+      }
     };
   },
   created() {
@@ -265,7 +311,7 @@ export default {
     window.onresize = () => {
       if (window.innerWidth <= 1024) {
         this.catDatas.data = this.originCatDatas;
-      } else if(window.innerWidth >= 1400){
+      } else if (window.innerWidth >= 1400) {
         this.catDatas.data = this.catDatas.data.slice(0, 16);
       }
     };
@@ -273,10 +319,10 @@ export default {
   methods: {
     fetchAnimalData() {
       apiHelper.get("api/animalData").then((obj) => {
-        this.originCatDatas = obj.data.data
+        this.originCatDatas = obj.data.data;
         if (window.innerWidth <= 1024) {
           this.catDatas = obj.data;
-        } else if(window.innerWidth >= 1400){
+        } else if (window.innerWidth >= 1400) {
           this.catDatas = obj.data;
           this.catDatas.data = this.catDatas.data.slice(0, 16);
         }
@@ -290,10 +336,10 @@ export default {
     getPaginationUrl(url) {
       this.clickPage = true;
       axios.get(url).then((obj) => {
-        this.originCatDatas = obj.data.data
+        this.originCatDatas = obj.data.data;
         if (window.innerWidth <= 1024) {
           this.catDatas = obj.data;
-        } else if(window.innerWidth >= 1400){
+        } else if (window.innerWidth >= 1400) {
           this.catDatas = obj.data;
           this.catDatas.data = this.catDatas.data.slice(0, 16);
         }

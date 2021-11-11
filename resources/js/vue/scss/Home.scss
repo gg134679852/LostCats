@@ -30,4 +30,13 @@
   .catFliter{
     width: 49%;
  }
+ .modal-body{
+   &__donate-button{
+     width:100px;
+     height: 40px;
+   }
+   & #exampleModal{
+     outline: 1px solid red;
+   }
+ }
 }

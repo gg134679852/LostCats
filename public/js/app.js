@@ -2368,6 +2368,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2420,7 +2459,14 @@ var getToken = function getToken() {
       },
       modalIsLoading: true,
       homeIsLoading: true,
-      clickPage: false
+      clickPage: false,
+      donate_info: {
+        pricr: '',
+        name: '',
+        email: '',
+        phone: '',
+        addres: ''
+      }
     };
   },
   created: function created() {
@@ -3329,7 +3375,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".catFliter {\n  width: 100%;\n  margin-bottom: 50px;\n}\n.modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}\n@media screen and (min-width: 1440px) {\n.catFliter {\n    width: 49%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".catFliter {\n  width: 100%;\n  margin-bottom: 50px;\n}\n.modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}\n@media screen and (min-width: 1440px) {\n.catFliter {\n    width: 49%;\n}\n.modal-body__donate-button {\n    width: 100px;\n    height: 40px;\n}\n.modal-body #exampleModal {\n    outline: 1px solid red;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26965,6 +27011,16 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
+                      _c("button", {
+                        staticClass:
+                          "btn btn-primary modal-body__donate-button",
+                        attrs: {
+                          type: "button",
+                          "data-bs-toggle": "modal",
+                          "data-bs-target": "#exampleModal"
+                        }
+                      }),
+                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "google-map mt-3" },
@@ -27085,6 +27141,205 @@ var render = function() {
             )
           ])
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade mt-5",
+          attrs: {
+            id: "exampleModal",
+            tabindex: "-1",
+            "aria-labelledby": "exampleModalLabel",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c("div", { staticClass: "modal-dialog modal-fullscreen-xl-down" }, [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "mb-3" }, [
+                  _c("div", { staticClass: "m-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-label",
+                        attrs: { for: "exampleFormControlInput1" }
+                      },
+                      [_vm._v("捐款金額")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.donate_info.price,
+                          expression: "donate_info.price"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", max: "5000" },
+                      domProps: { value: _vm.donate_info.price },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.donate_info,
+                            "price",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "m-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-label",
+                        attrs: { for: "exampleFormControlInput1" }
+                      },
+                      [_vm._v("姓名")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.donate_info.name,
+                          expression: "donate_info.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.donate_info.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.donate_info, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "m-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-label",
+                        attrs: { for: "exampleFormControlInput1" }
+                      },
+                      [_vm._v("電子郵件")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.donate_info.email,
+                          expression: "donate_info.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "email" },
+                      domProps: { value: _vm.donate_info.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.donate_info,
+                            "email",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "form-label",
+                      attrs: { for: "exampleFormControlInput1" }
+                    },
+                    [_vm._v("電話")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.donate_info.phone,
+                        expression: "donate_info.phone"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number" },
+                    domProps: { value: _vm.donate_info.phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.donate_info, "phone", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "form-label",
+                      attrs: { for: "exampleFormControlInput1" }
+                    },
+                    [_vm._v("地址")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.donate_info.addres,
+                        expression: "donate_info.addres"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.donate_info.addres },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.donate_info, "addres", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(3)
+              ])
+            ])
+          ])
+        ]
       )
     ],
     2
@@ -27124,6 +27379,48 @@ var staticRenderFns = [
           attrs: { type: "button", "data-bs-dismiss": "modal" }
         },
         [_vm._v("\n            關閉\n          ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("捐款資料")]
+      ),
+      _vm._v(" "),
+      _c("button", {
+        staticClass: "btn-close",
+        attrs: {
+          type: "button",
+          "data-bs-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-bs-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Save changes")]
       )
     ])
   }
