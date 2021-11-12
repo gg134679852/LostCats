@@ -7,6 +7,11 @@
 <script>
 import NavBar from './../components/NavBar.vue'
 export default {
+   props:{
+      tradeStatus:{
+          type: String
+      }
+   },
    components:{
      NavBar
    }

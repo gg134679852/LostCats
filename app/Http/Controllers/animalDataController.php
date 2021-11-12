@@ -8,6 +8,8 @@ use App\Models\AnimalData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+
+
 class animalDataController extends Controller
 {
     public function getAnimalData()

@@ -2128,6 +2128,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    tradeStatus: {
+      type: String
+    }
+  },
   components: {
     NavBar: _components_NavBar_vue__WEBPACK_IMPORTED_MODULE_0__.default
   }
@@ -2160,6 +2165,101 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2461,11 +2561,18 @@ var getToken = function getToken() {
       homeIsLoading: true,
       clickPage: false,
       donate_info: {
-        pricr: '',
-        name: '',
-        email: '',
-        phone: '',
-        addres: ''
+        price: "",
+        name: "",
+        email: "",
+        phone: "",
+        addres: ""
+      },
+      trade_datas: {
+        PayGateWay: "",
+        MerchantID: "",
+        TradeInfo: "",
+        TradeSha: "",
+        Version: ""
       }
     };
   },
@@ -2570,6 +2677,17 @@ var getToken = function getToken() {
         _this5.catDatas = obj.data;
       })["catch"](function (error) {
         console.log(error);
+      });
+    },
+    sendDonate: function sendDonate() {
+      var _this6 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/spgateway/donate", {
+        data: _objectSpread(_objectSpread({}, this.donate_info), {}, {
+          shelter_name: this.catData.shelter_name
+        })
+      }).then(function (obj) {
+        _this6.trade_datas = _objectSpread(_objectSpread({}, _this6.trade_datas), obj.data);
       });
     }
   },
@@ -3272,8 +3390,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
 
+ // const baseURL = 'https://serene-oasis-02398.herokuapp.com/'
 
-var baseURL = 'https://serene-oasis-02398.herokuapp.com/';
+var baseURL = 'http://127.0.0.1:8000/';
 var apiHelper = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: baseURL
 });
@@ -27011,15 +27130,21 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("button", {
-                        staticClass:
-                          "btn btn-primary modal-body__donate-button",
-                        attrs: {
-                          type: "button",
-                          "data-bs-toggle": "modal",
-                          "data-bs-target": "#exampleModal"
-                        }
-                      }),
+                      _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary modal-body__donate-button",
+                            attrs: {
+                              type: "button",
+                              "data-bs-toggle": "modal",
+                              "data-bs-target": "#exampleModal"
+                            }
+                          },
+                          [_vm._v("\n            捐款\n          ")]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -27139,206 +27264,293 @@ var render = function() {
               ],
               1
             )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade mt-5",
-          attrs: {
-            id: "exampleModal",
-            tabindex: "-1",
-            "aria-labelledby": "exampleModalLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c("div", { staticClass: "modal-dialog modal-fullscreen-xl-down" }, [
-            _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "mb-3" }, [
-                  _c("div", { staticClass: "m-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-label",
-                        attrs: { for: "exampleFormControlInput1" }
-                      },
-                      [_vm._v("捐款金額")]
-                    ),
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade mt-5",
+              attrs: {
+                id: "exampleModal",
+                tabindex: "-1",
+                "aria-labelledby": "exampleModalLabel",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog modal-fullscreen-xl-down" },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(2),
                     _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.donate_info.price,
-                          expression: "donate_info.price"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number", max: "5000" },
-                      domProps: { value: _vm.donate_info.price },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.donate_info,
-                            "price",
-                            $event.target.value
+                    _c("div", { staticClass: "modal-body" }, [
+                      _vm.trade_datas.MerchantID === ""
+                        ? _c(
+                            "form",
+                            {
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  $event.stopPropagation()
+                                  return _vm.sendDonate.apply(null, arguments)
+                                }
+                              }
+                            },
+                            [
+                              _c("div", { staticClass: "mb-3" }, [
+                                _c("div", { staticClass: "m-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-label",
+                                      attrs: { for: "exampleFormControlInput1" }
+                                    },
+                                    [_vm._v("捐款金額")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.donate_info.price,
+                                        expression: "donate_info.price"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "number", max: "5000" },
+                                    domProps: { value: _vm.donate_info.price },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.donate_info,
+                                          "price",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "m-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-label",
+                                      attrs: { for: "exampleFormControlInput1" }
+                                    },
+                                    [_vm._v("姓名")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.donate_info.name,
+                                        expression: "donate_info.name"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.donate_info.name },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.donate_info,
+                                          "name",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "m-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-label",
+                                      attrs: { for: "exampleFormControlInput1" }
+                                    },
+                                    [_vm._v("電子郵件")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.donate_info.email,
+                                        expression: "donate_info.email"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "email" },
+                                    domProps: { value: _vm.donate_info.email },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.donate_info,
+                                          "email",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "m-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-label",
+                                      attrs: { for: "exampleFormControlInput1" }
+                                    },
+                                    [_vm._v("電話")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.donate_info.phone,
+                                        expression: "donate_info.phone"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "number" },
+                                    domProps: { value: _vm.donate_info.phone },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.donate_info,
+                                          "phone",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "m-3" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "form-label",
+                                      attrs: { for: "exampleFormControlInput1" }
+                                    },
+                                    [_vm._v("地址")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.donate_info.addres,
+                                        expression: "donate_info.addres"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.donate_info.addres },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.donate_info,
+                                          "addres",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(3)
+                            ]
                           )
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "m-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-label",
-                        attrs: { for: "exampleFormControlInput1" }
-                      },
-                      [_vm._v("姓名")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.donate_info.name,
-                          expression: "donate_info.name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.donate_info.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.donate_info, "name", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "m-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-label",
-                        attrs: { for: "exampleFormControlInput1" }
-                      },
-                      [_vm._v("電子郵件")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.donate_info.email,
-                          expression: "donate_info.email"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "email" },
-                      domProps: { value: _vm.donate_info.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.donate_info,
-                            "email",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
+                        : _c("div", { staticClass: "text-center" }, [
+                            _c("h3", [_vm._v("準備為訂單編號")]),
+                            _vm._v(" "),
+                            _c("h4", [_vm._v("總價")]),
+                            _vm._v(" "),
+                            _c(
+                              "form",
+                              {
+                                attrs: {
+                                  name: "Spgateway",
+                                  action: _vm.trade_datas.PayGateWay,
+                                  method: "POST"
+                                }
+                              },
+                              [
+                                _c("input", {
+                                  attrs: { type: "hidden", name: "MerchantID" },
+                                  domProps: {
+                                    value: _vm.trade_datas.MerchantID
+                                  }
+                                }),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("input", {
+                                  attrs: { type: "hidden", name: "TradeInfo" },
+                                  domProps: { value: _vm.trade_datas.TradeInfo }
+                                }),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("input", {
+                                  attrs: { type: "hidden", name: "TradeSha" },
+                                  domProps: { value: _vm.trade_datas.TradeSha }
+                                }),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("input", {
+                                  attrs: { type: "hidden", name: "Version" },
+                                  domProps: { value: _vm.trade_datas.Version }
+                                }),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  開始捐款程序\n                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                    ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "m-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-label",
-                      attrs: { for: "exampleFormControlInput1" }
-                    },
-                    [_vm._v("電話")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.donate_info.phone,
-                        expression: "donate_info.phone"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number" },
-                    domProps: { value: _vm.donate_info.phone },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.donate_info, "phone", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "m-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-label",
-                      attrs: { for: "exampleFormControlInput1" }
-                    },
-                    [_vm._v("地址")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.donate_info.addres,
-                        expression: "donate_info.addres"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.donate_info.addres },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.donate_info, "addres", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(3)
-              ])
-            ])
-          ])
+                ]
+              )
+            ]
+          )
         ]
       )
     ],
@@ -27414,13 +27626,13 @@ var staticRenderFns = [
           staticClass: "btn btn-secondary",
           attrs: { type: "button", "data-bs-dismiss": "modal" }
         },
-        [_vm._v("Close")]
+        [_vm._v("\n                  關閉\n                ")]
       ),
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("送出")]
       )
     ])
   }

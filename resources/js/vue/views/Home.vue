@@ -133,7 +133,16 @@
                 </li>
               </ul>
             </div>
-            <button type="button" class="btn btn-primary modal-body__donate-button" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+            <div>
+            <button
+              type="button"
+              class="btn btn-primary modal-body__donate-button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              捐款
+            </button>
+            </div>
             <div class="google-map mt-3">
               <MatchMedia query="(max-width: 1023px)" v-slot="{ matches }">
                 <GmapMap
@@ -204,45 +213,131 @@
           </div>
         </div>
       </div>
+      <div
+        class="modal fade mt-5"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-fullscreen-xl-down">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">捐款資料</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                @submit.prevent.stop="sendDonate"
+                v-if="trade_datas.MerchantID === ''"
+              >
+                <div class="mb-3">
+                  <div class="m-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >捐款金額</label
+                    >
+                    <input
+                      type="number"
+                      max="5000"
+                      class="form-control"
+                      v-model="donate_info.price"
+                    />
+                  </div>
+                  <div class="m-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >姓名</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="donate_info.name"
+                    />
+                  </div>
+                  <div class="m-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >電子郵件</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      v-model="donate_info.email"
+                    />
+                  </div>
+                  <div class="m-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >電話</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="donate_info.phone"
+                    />
+                  </div>
+                  <div class="m-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >地址</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="donate_info.addres"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    關閉
+                  </button>
+                  <button type="submit" class="btn btn-primary">送出</button>
+                </div>
+              </form>
+              <div class="text-center" v-else>
+                <h3>準備為訂單編號</h3>
+                <h4>總價</h4>
+                <form
+                  name="Spgateway"
+                  :action="trade_datas.PayGateWay"
+                  method="POST"
+                >
+                  <input
+                    type="hidden"
+                    name="MerchantID"
+                    :value="trade_datas.MerchantID"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="TradeInfo"
+                    :value="trade_datas.TradeInfo"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="TradeSha"
+                    :value="trade_datas.TradeSha"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="Version"
+                    :value="trade_datas.Version"
+                  /><br />
+                  <button type="submit" class="btn btn-primary">
+                    開始捐款程序
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-      <div class="modal fade mt-5" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen-xl-down">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">捐款資料</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       <div class="mb-3">
-        <div class="m-3">
-        <label for="exampleFormControlInput1" class="form-label">捐款金額</label>
-        <input type="number" max="5000" class="form-control" v-model="donate_info.price">
-        </div>
-        <div class="m-3">
-        <label for="exampleFormControlInput1" class="form-label">姓名</label>
-        <input type="text" class="form-control"  v-model="donate_info.name">
-        </div>
-        <div class="m-3">
-        <label for="exampleFormControlInput1" class="form-label">電子郵件</label>
-        <input type="email" class="form-control"  v-model="donate_info.email">
-        </div>
-        </div>
-        <div class="m-3">
-        <label for="exampleFormControlInput1" class="form-label">電話</label>
-        <input type="number" class="form-control"  v-model="donate_info.phone">
-        </div>
-        <div class="m-3">
-        <label for="exampleFormControlInput1" class="form-label">地址</label>
-        <input type="text" class="form-control"  v-model="donate_info.addres">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-       </div>
-  </div>
   </div>
 </template>
  <script>
@@ -295,13 +390,20 @@ export default {
       modalIsLoading: true,
       homeIsLoading: true,
       clickPage: false,
-      donate_info:{
-        pricr:'',
-        name:'',
-        email:'',
-        phone:'',
-        addres:''
-      }
+      donate_info: {
+        price: "",
+        name: "",
+        email: "",
+        phone: "",
+        addres: "",
+      },
+      trade_datas: {
+        PayGateWay: "",
+        MerchantID: "",
+        TradeInfo: "",
+        TradeSha: "",
+        Version: "",
+      },
     };
   },
   created() {
@@ -405,6 +507,18 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+    sendDonate() {
+      axios
+        .post("http://127.0.0.1:8000/api/spgateway/donate", {
+          data: {
+            ...this.donate_info,
+            shelter_name: this.catData.shelter_name,
+          },
+        })
+        .then((obj) => {
+          this.trade_datas = { ...this.trade_datas, ...obj.data };
         });
     },
   },
