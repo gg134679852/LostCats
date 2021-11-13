@@ -10,7 +10,7 @@ class donateController extends Controller
 {
     public function Donate (Request $request) {
         $PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
-        $url='https://0757-118-150-140-18.ngrok.io';
+        $url= env('URL');
         $trade_info_arr = array(
         'MerchantID' => env('Merchant_ID'),
         'RespondType' => 'JSON',
@@ -23,8 +23,7 @@ class donateController extends Controller
         'ItemDesc' => '捐款',
         'Email'=> $request->data['email'],
         'ReturnURL'=> $url . '/api/spgateway/callback?from=ReturnURL', 
-        'NotifyURL'=> $url . '/api/spgateway/callback?from=NotifyURL',
-        'ClientBackURL'=>$url
+        'NotifyURL'=> $url . '/api/spgateway/callback?from=NotifyURL'
     );
 
         $mer_key = env('HASH_KEY');
@@ -48,7 +47,27 @@ class donateController extends Controller
         return $string;
     }
     public function callback (Request $request){
-        $returnData = $request->all();
-        return view('welcome');
+        $requestData = $request->all();
+        $decryptData = $requestData['TradeInfo'];
+        $mer_key = env('HASH_KEY');
+        $mer_iv = env('HASH_IV');
+        $TradeInfo = $this->strippadding(openssl_decrypt(hex2bin($decryptData), 'AES-256-CBC',$mer_key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,$mer_iv));
+        $returnData = json_decode($TradeInfo,true);
+
+        return view('donateCallBackPage',$returnData);
+    }
+    public function strippadding($string)
+    {
+        $slast = ord(substr($string, -1));
+        $slastc = chr($slast);
+        $pcheck = substr($string, -$slast);
+
+        if (preg_match('/' . $slastc . '{' . $slast . '}/', $string)) {
+            $string = substr($string, 0, strlen($string) - $slast);
+
+            return $string;
+        }
+
+        return false;
     }
 }

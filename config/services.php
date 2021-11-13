@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'facebook' => [
+    'client_id' => env('FACE_BOOK_CLIENT_ID'),
+    'client_secret' => env('FACE_BOOK_CLIENT_SECRET'),
+    'redirect' => 'https://99d1-118-150-140-18.ngrok.io/facebook/callback',
+    ],
 ];

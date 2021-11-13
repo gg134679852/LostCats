@@ -2128,11 +2128,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    tradeStatus: {
-      type: String
-    }
-  },
   components: {
     NavBar: _components_NavBar_vue__WEBPACK_IMPORTED_MODULE_0__.default
   }
@@ -2165,6 +2160,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2682,13 +2683,32 @@ var getToken = function getToken() {
     sendDonate: function sendDonate() {
       var _this6 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/spgateway/donate", {
-        data: _objectSpread(_objectSpread({}, this.donate_info), {}, {
-          shelter_name: this.catData.shelter_name
-        })
-      }).then(function (obj) {
-        _this6.trade_datas = _objectSpread(_objectSpread({}, _this6.trade_datas), obj.data);
-      });
+      if (this.donate_info.price < 0 || this.donate_info.price < 500) {
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: "warning",
+          title: "金額錯誤"
+        });
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/spgateway/donate", {
+          data: _objectSpread(_objectSpread({}, this.donate_info), {}, {
+            shelter_name: this.catData.shelter_name
+          })
+        }).then(function (obj) {
+          _this6.trade_datas = _objectSpread(_objectSpread({}, _this6.trade_datas), obj.data);
+        });
+      }
+    },
+    closeModal: function closeModal() {
+      document.querySelector('#donateModalLabel').nextElementSibling.click();
+    },
+    resetDonateData: function resetDonateData() {
+      this.trade_datas = {
+        PayGateWay: "",
+        MerchantID: "",
+        TradeInfo: "",
+        TradeSha: "",
+        Version: ""
+      };
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_6__.mapState)(["isAuthenticated"]))
@@ -2731,13 +2751,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       loginData: {
-        email: '',
-        password: ''
+        email: "",
+        password: ""
       },
       isProcessing: false
     };
@@ -2747,26 +2778,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isProcessing = true;
-      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.post('login', {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.post("login", {
         email: this.loginData.email,
         password: this.loginData.password
       }).then(function (obj) {
-        _this.$store.commit('setUser', obj.data.userData);
+        _this.$store.commit("setUser", obj.data.userData);
 
-        _this.$router.push('/');
+        _this.$router.push("/");
 
-        localStorage.setItem('token', obj.data.token);
+        localStorage.setItem("token", obj.data.token);
         _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.Toast.fire({
-          icon: 'success',
+          icon: "success",
           title: obj.data.message
         });
       })["catch"](function (error) {
         _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.Toast.fire({
-          icon: 'warning',
+          icon: "warning",
           title: "帳號或密碼錯誤"
         });
         _this.isProcessing = false;
       });
+    },
+    facebookLogin: function facebookLogin() {
+      _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.apiHelper.get('facebook/login');
     }
   }
 });
@@ -27139,8 +27173,9 @@ var render = function() {
                             attrs: {
                               type: "button",
                               "data-bs-toggle": "modal",
-                              "data-bs-target": "#exampleModal"
-                            }
+                              "data-bs-target": "#donateModal"
+                            },
+                            on: { click: _vm.resetDonateData }
                           },
                           [_vm._v("\n            捐款\n          ")]
                         )
@@ -27271,9 +27306,9 @@ var render = function() {
             {
               staticClass: "modal fade mt-5",
               attrs: {
-                id: "exampleModal",
+                id: "donateModal",
                 tabindex: "-1",
-                "aria-labelledby": "exampleModalLabel",
+                "aria-labelledby": "donateModalLabel",
                 "aria-hidden": "true"
               }
             },
@@ -27320,7 +27355,12 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "number", max: "5000" },
+                                    attrs: {
+                                      type: "number",
+                                      max: "5000",
+                                      placeholder: "金額不可小於500",
+                                      required: ""
+                                    },
                                     domProps: { value: _vm.donate_info.price },
                                     on: {
                                       input: function($event) {
@@ -27357,7 +27397,7 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "text" },
+                                    attrs: { type: "text", required: "" },
                                     domProps: { value: _vm.donate_info.name },
                                     on: {
                                       input: function($event) {
@@ -27394,7 +27434,7 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "email" },
+                                    attrs: { type: "email", required: "" },
                                     domProps: { value: _vm.donate_info.email },
                                     on: {
                                       input: function($event) {
@@ -27431,7 +27471,7 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "number" },
+                                    attrs: { type: "number", required: "" },
                                     domProps: { value: _vm.donate_info.phone },
                                     on: {
                                       input: function($event) {
@@ -27468,7 +27508,7 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    attrs: { type: "text" },
+                                    attrs: { type: "text", required: "" },
                                     domProps: { value: _vm.donate_info.addres },
                                     on: {
                                       input: function($event) {
@@ -27490,9 +27530,7 @@ var render = function() {
                             ]
                           )
                         : _c("div", { staticClass: "text-center" }, [
-                            _c("h3", [_vm._v("準備為訂單編號")]),
-                            _vm._v(" "),
-                            _c("h4", [_vm._v("總價")]),
+                            _c("h3"),
                             _vm._v(" "),
                             _c(
                               "form",
@@ -27500,7 +27538,8 @@ var render = function() {
                                 attrs: {
                                   name: "Spgateway",
                                   action: _vm.trade_datas.PayGateWay,
-                                  method: "POST"
+                                  method: "POST",
+                                  target: "_blank"
                                 }
                               },
                               [
@@ -27534,7 +27573,8 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass: "btn btn-primary",
-                                    attrs: { type: "submit" }
+                                    attrs: { type: "submit" },
+                                    on: { click: _vm.closeModal }
                                   },
                                   [
                                     _vm._v(
@@ -27601,7 +27641,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        { staticClass: "modal-title", attrs: { id: "donateModalLabel" } },
         [_vm._v("捐款資料")]
       ),
       _vm._v(" "),
@@ -27748,13 +27788,23 @@ var render = function() {
               staticClass: "btn btn-primary",
               attrs: { type: "submit", disabled: _vm.isProcessing }
             },
-            [_vm._v("登陸")]
+            [_vm._v("\n        登陸\n      ")]
           ),
           _vm._v(" "),
           _c(
             "router-link",
             { staticClass: "btn btn-primary", attrs: { to: "/singup" } },
             [_vm._v("註冊")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: { click: _vm.facebookLogin }
+            },
+            [_vm._v("\n        facebook登陸\n      ")]
           )
         ],
         1

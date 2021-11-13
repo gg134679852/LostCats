@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
  */
 Route::post('/singup', 'userControllers@singup');
 Route::post('/login', 'userControllers@login');
+Route::get('/facebook/login','userControllers@faceBookLogin');
+Route::get('/facebook/callback', 'userControllers@faceBookLoginCallBack');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/logout', 'userControllers@logout');

@@ -138,7 +138,8 @@
               type="button"
               class="btn btn-primary modal-body__donate-button"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              data-bs-target="#donateModal"
+              @click="resetDonateData"
             >
               捐款
             </button>
@@ -215,15 +216,15 @@
       </div>
       <div
         class="modal fade mt-5"
-        id="exampleModal"
+        id="donateModal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="donateModalLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog modal-fullscreen-xl-down">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">捐款資料</h5>
+              <h5 class="modal-title" id="donateModalLabel">捐款資料</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -245,7 +246,9 @@
                       type="number"
                       max="5000"
                       class="form-control"
+                      placeholder="金額不可小於500"
                       v-model="donate_info.price"
+                      required
                     />
                   </div>
                   <div class="m-3">
@@ -256,6 +259,7 @@
                       type="text"
                       class="form-control"
                       v-model="donate_info.name"
+                      required
                     />
                   </div>
                   <div class="m-3">
@@ -266,6 +270,7 @@
                       type="email"
                       class="form-control"
                       v-model="donate_info.email"
+                      required
                     />
                   </div>
                   <div class="m-3">
@@ -276,6 +281,7 @@
                       type="number"
                       class="form-control"
                       v-model="donate_info.phone"
+                      required
                     />
                   </div>
                   <div class="m-3">
@@ -286,6 +292,7 @@
                       type="text"
                       class="form-control"
                       v-model="donate_info.addres"
+                      required
                     />
                   </div>
                 </div>
@@ -301,12 +308,11 @@
                 </div>
               </form>
               <div class="text-center" v-else>
-                <h3>準備為訂單編號</h3>
-                <h4>總價</h4>
+                <h3></h3>
                 <form
                   name="Spgateway"
                   :action="trade_datas.PayGateWay"
-                  method="POST"
+                  method="POST" target="_blank"
                 >
                   <input
                     type="hidden"
@@ -328,7 +334,7 @@
                     name="Version"
                     :value="trade_datas.Version"
                   /><br />
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary" @click="closeModal">
                     開始捐款程序
                   </button>
                 </form>
@@ -510,8 +516,14 @@ export default {
         });
     },
     sendDonate() {
-      axios
-        .post("http://127.0.0.1:8000/api/spgateway/donate", {
+      if(this.donate_info.price < 0 || this.donate_info.price < 500){
+         Toast.fire({
+            icon: "warning",
+            title: "金額錯誤",
+          });
+      }else{
+         axios
+        .post("api/spgateway/donate", {
           data: {
             ...this.donate_info,
             shelter_name: this.catData.shelter_name,
@@ -520,7 +532,20 @@ export default {
         .then((obj) => {
           this.trade_datas = { ...this.trade_datas, ...obj.data };
         });
+      }
     },
+   closeModal(){
+    document.querySelector('#donateModalLabel').nextElementSibling.click()
+    },
+    resetDonateData(){
+      this.trade_datas = {
+        PayGateWay: "",
+        MerchantID: "",
+        TradeInfo: "",
+        TradeSha: "",
+        Version: "",
+      }
+    }
   },
   computed: {
     ...mapState(["isAuthenticated"]),
