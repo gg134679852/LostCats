@@ -1,9 +1,12 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url(/images/wepik-2021928-10212.webp?3365d2adb3dac65386a884549a8fac98);
-  background-position: center;
-  background-size: cover;
+  background-color: #f6f7f8;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 * {

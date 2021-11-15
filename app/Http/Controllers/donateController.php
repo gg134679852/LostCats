@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\DonateLog;
 
 class donateController extends Controller
 {
+   
     public function Donate (Request $request) {
         $PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
         $url= env('URL');
@@ -20,7 +22,7 @@ class donateController extends Controller
         'LoginType'=> 0,
         'OrderComment'=> "捐款至{$request->data['shelter_name']}",
         'Amt' => $request->data['price'],
-        'ItemDesc' => '捐款',
+        'ItemDesc' => $request->data['shelter_name'],
         'Email'=> $request->data['email'],
         'ReturnURL'=> $url . '/api/spgateway/callback?from=ReturnURL', 
         'NotifyURL'=> $url . '/api/spgateway/callback?from=NotifyURL'
@@ -49,11 +51,20 @@ class donateController extends Controller
     public function callback (Request $request){
         $requestData = $request->all();
         $decryptData = $requestData['TradeInfo'];
+        $userId = Auth::id();
         $mer_key = env('HASH_KEY');
         $mer_iv = env('HASH_IV');
         $TradeInfo = $this->strippadding(openssl_decrypt(hex2bin($decryptData), 'AES-256-CBC',$mer_key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,$mer_iv));
+
         $returnData = json_decode($TradeInfo,true);
 
+        DonateLog::create([
+           'user_id'=>$userId,
+           'shelter_name'=>$requestData['ItemDesc'],
+           'donate_price'=>$requestData['Amt']
+        ]);
+
+        
         return view('donateCallBackPage',$returnData);
     }
     public function strippadding($string)

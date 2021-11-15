@@ -1,4 +1,5 @@
 <template>
+<section>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <router-link class="navbar-brand" to="/">
@@ -28,6 +29,7 @@
       </div>
     </div>
   </nav>
+  </section>
 </template>
 <script>
 import { mapState } from "vuex";

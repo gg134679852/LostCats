@@ -1,21 +1,23 @@
 <template>
-  <div class="mt-4">
+ <Spinner v-if="homeIsLoading" />
+  <div v-else>
+    <div class="cat-poster"></div>
     <template>
-      <Spinner v-if="homeIsLoading" />
-      <div class="container text-center" v-else>
+      <div class="container text-center" >
+        <div class="catFliter__container">
+          <div class="catFliter__wrapper">
         <form
           class="catFliter d-flex justify-content-between"
           @submit.stop.prevent="getFilter"
           id="searchFilter"
         >
           <div class="w-25">
-            <h6>地區</h6>
             <select
               class="form-select"
               v-model="filterSubmitData.short_address"
               required
             >
-              <option name="all" value="0">全部</option>
+              <option name="all" value="0">選擇地區</option>
               <option
                 v-for="item in shortAddress"
                 name="shelter_address"
@@ -27,25 +29,23 @@
             </select>
           </div>
           <div class="w-25">
-            <h6>性別</h6>
             <select
               class="form-select"
               v-model="filterSubmitData.animal_sex"
               required
             >
-              <option name="all" value="0">全部</option>
+              <option name="all" value="0">選擇性別</option>
               <option name="animal_sex" value="男生">男生</option>
               <option name="animal_sex" value="女生">女生</option>
             </select>
           </div>
           <div class="w-25">
-            <h6>顏色</h6>
             <select
               class="form-select"
               v-model="filterSubmitData.animal_colour"
               required
             >
-              <option name="all" value="0">全部</option>
+              <option name="all" value="0">選擇顏色</option>
               <option
                 v-for="item in catColor"
                 name="animal_colour"
@@ -57,9 +57,11 @@
             </select>
           </div>
           <div>
-            <button type="submit" class="btn btn-primary mt-3">送出</button>
+            <button type="submit" class="btn btn-primary">送出</button>
           </div>
         </form>
+        </div>
+        </div>
         <Spinner v-if="clickPage" />
         <template v-else>
           <AnimalCard
@@ -97,11 +99,22 @@
           <Spinner v-if="modalIsLoading" />
           <div class="modal-body" v-else>
             <div class="modal-body__cat-info">
+              <div>
               <img
                 class="rounded-3"
                 :src="catData.album_file"
                 onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
               />
+              <button
+              type="button"
+              class="btn btn-primary modal-body__donate-button"
+              data-bs-toggle="modal"
+              data-bs-target="#donateModal"
+              @click="resetDonateData"
+            >
+              捐款
+            </button>
+              </div>
               <ul class="list-group">
                 <li class="list-group-item">
                   <h6>編號:{{ catData.animal_id }}</h6>
@@ -134,15 +147,6 @@
               </ul>
             </div>
             <div>
-            <button
-              type="button"
-              class="btn btn-primary modal-body__donate-button"
-              data-bs-toggle="modal"
-              data-bs-target="#donateModal"
-              @click="resetDonateData"
-            >
-              捐款
-            </button>
             </div>
             <div class="google-map mt-3">
               <MatchMedia query="(max-width: 1023px)" v-slot="{ matches }">
@@ -308,7 +312,9 @@
                 </div>
               </form>
               <div class="text-center" v-else>
-                <h3></h3>
+                <h3>捐款金額{{donate_info.price}}</h3>
+                <br />
+                <h3>捐款至{{catData.shelter_name}}</h3>
                 <form
                   name="Spgateway"
                   :action="trade_datas.PayGateWay"
