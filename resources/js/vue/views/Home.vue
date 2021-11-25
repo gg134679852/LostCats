@@ -423,10 +423,10 @@ export default {
   },
   mounted() {
     window.onresize = () => {
-      if (window.innerWidth <= 1024) {
+      if (window.innerWidth <= 768) {
+        this.catDatas.data = this.catDatas.data.slice(0, 18);
+      } else if (window.innerWidth >= 1024) {
         this.catDatas.data = this.originCatDatas;
-      } else if (window.innerWidth >= 1400) {
-        this.catDatas.data = this.catDatas.data.slice(0, 16);
       }
     };
   },
@@ -434,11 +434,11 @@ export default {
     fetchAnimalData() {
       apiHelper.get("api/animalData").then((obj) => {
         this.originCatDatas = obj.data.data;
-        if (window.innerWidth <= 1024) {
+        if (window.innerWidth <= 768) {
           this.catDatas = obj.data;
-        } else if (window.innerWidth >= 1400) {
+          this.catDatas.data = this.catDatas.data.slice(0, 18);
+        } else if (window.innerWidth >= 1024) {
           this.catDatas = obj.data;
-          this.catDatas.data = this.catDatas.data.slice(0, 16);
         }
       });
       apiHelper.get("api/animalData/getSelect").then((obj) => {
