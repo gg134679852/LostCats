@@ -1883,6 +1883,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1913,26 +1948,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     getAnimalId: function getAnimalId(id, address) {
-      this.$emit('get-Animal-Id', id, address);
+      this.$emit("get-Animal-Id", id, address);
     },
     addFavorite: function addFavorite(id) {
       if (this.favoriteId.length === 16) {
         _utils_helpers__WEBPACK_IMPORTED_MODULE_0__.Toast.fire({
-          icon: 'warning',
+          icon: "warning",
           title: "達到收藏上限"
         });
       } else {
         this.favoriteId.push(id);
-        this.$emit('get-Favorite-Cat-Id', id);
+        this.$emit("get-Favorite-Cat-Id", id);
       }
     },
     removeFavorite: function removeFavorite(id) {
       var target = this.favoriteId.indexOf(id);
       this.favoriteId.splice(target, 1);
-      this.$emit('get-Remove-Favorite-Cat-Id', id);
+      this.$emit("get-Remove-Favorite-Cat-Id", id);
     },
     isFavorite: function isFavorite(id) {
       return this.favoriteId.includes(id);
+    },
+    clickInfoButton: function clickInfoButton(id) {
+      document.querySelector(".animalCard__info-button[id=\"".concat(id, "\"]")).click();
     }
   },
   watch: {
@@ -1947,7 +1985,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(['favoriteCats', 'isAuthenticated']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)(["favoriteCats", "isAuthenticated"]))
 });
 
 /***/ }),
@@ -3464,7 +3502,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".animalCard .card img {\n  height: 250px;\n  width: 250px;\n  border-radius: 10px;\n  margin: 10px auto;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".animalCard__container {\n  display: grid;\n  grid-template-columns: repeat(1, minmax(200px, 200px));\n  align-items: center;\n  justify-content: center;\n  gap: 1.5rem;\n}\n.animalCard__wrapper {\n  border-radius: 3px;\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n  margin: 0 auto;\n  position: relative;\n}\n.animalCard__wrapper .fa-heart {\n  color: #FF69B4;\n  font-size: 20px;\n  margin: 7px auto;\n}\n.animalCard__wrapper .animalCard__like-button {\n  width: 35px;\n  height: 35px;\n  background-color: #fff;\n  border: none;\n  opacity: 0.5;\n  border-radius: 50%;\n  position: absolute;\n  left: 70%;\n  top: 5%;\n}\n.animalCard__info-button {\n  position: fixed;\n  top: 100%;\n}\n.animalCard__img {\n  max-height: 200px;\n  max-width: 100%;\n  border-top-left-radius: 8px;\n  border-top-right-radius: 8px;\n}\n.animalCard__body {\n  position: relative;\n  text-align: center;\n  box-sizing: border-box;\n  padding: 16px 10px 22px;\n  background-color: #fff;\n  border-bottom-right-radius: 8px;\n  border-bottom-left-radius: 8px;\n  border: 1px #cbd1d7 solid;\n  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);\n}\n.animalCard__body::before {\n  content: \"\";\n  display: block;\n  height: 25px;\n  border-radius: 50% 50% 0 0;\n  position: absolute;\n  bottom: calc(100% - 10px);\n  right: -0.1px;\n  left: -0.1px;\n  background-color: #fff;\n}\n.animalCard__info h4 {\n  font-size: small;\n}\n@media screen and (min-width: 375px) and (max-width: 425px) {\n.animalCard__container {\n    grid-template-columns: repeat(2, minmax(150px, 200px));\n    gap: 0.5rem;\n}\n}\n@media screen and (min-width: 768px) {\n.animalCard__container {\n    grid-template-columns: repeat(3, minmax(200px, 200px));\n    gap: 1.5rem;\n}\n}\n@media screen and (min-width: 1024px) {\n.animalCard__container {\n    grid-template-columns: repeat(4, minmax(200px, 200px));\n    gap: 1.5rem;\n}\n}\n@media screen and (min-width: 1440px) {\n.animalCard__container {\n    grid-template-columns: repeat(5, minmax(200px, 200px));\n    gap: 1.5rem;\n}\n.animalCard__wrapper {\n    cursor: pointer;\n}\n.animalCard__wrapper .animalCard__like-button {\n    transition: opacity 0.3s ease-out;\n    cursor: pointer;\n}\n.animalCard__wrapper .animalCard__like-button:hover {\n    opacity: 1;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3542,7 +3580,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_img_cat2_webp__WEBPACK_IMPORTED_MODULE_2__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n.cat-poster {\n  height: 200px;\n  width: 100%;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-position: center;\n  background-size: cover;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}\n@media screen and (min-width: 1440px) {\n.cat-poster {\n    height: 500px;\n    width: 100%;\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n    background-position: center;\n    background-size: cover;\n}\n.modal-body__donate-button {\n    width: 100px;\n    height: 40px;\n}\n.modal-body #exampleModal {\n    outline: 1px solid red;\n}\n.catFliter {\n    width: 100%;\n}\n.catFliter__container {\n    height: 120px;\n    width: 65%;\n    margin-left: 10px;\n}\n.catFliter__wrapper {\n    width: 90%;\n    padding-top: 40px;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".modal-body__cat-info img {\n  margin-bottom: 10px;\n}\n.google-map {\n  display: flex;\n  justify-content: center;\n}\n.cat-poster {\n  height: 200px;\n  width: 100%;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-position: center;\n  background-size: cover;\n}\n@media screen and (min-width: 1024px) {\n.modal-body__cat-info {\n    display: flex;\n    justify-content: space-evenly;\n}\n.modal-body__cat-info img {\n    width: 300px;\n    height: 300px;\n    margin-bottom: 10px;\n}\n}\n@media screen and (min-width: 1440px) {\n.cat-poster {\n    height: 500px;\n}\n.modal-body__donate-button {\n    width: 100px;\n    height: 40px;\n}\n.modal-body #exampleModal {\n    outline: 1px solid red;\n}\n.catFliter {\n    width: 100%;\n}\n.catFliter__container {\n    height: 120px;\n    width: 65%;\n    margin-left: 10px;\n}\n.catFliter__wrapper {\n    width: 90%;\n    padding-top: 40px;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26434,103 +26472,101 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "animalCard row row-cols-auto" },
+    { staticClass: "animalCard__container" },
     _vm._l(_vm.catInfoDatas, function(catInfoData) {
       return _c(
         "div",
         {
           key: catInfoData.id,
-          staticClass: "card border-secondary mb-3 m-auto",
-          staticStyle: { width: "18rem" }
+          staticClass: "animalCard__wrapper",
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+              $event.preventDefault()
+              return _vm.clickInfoButton(catInfoData.id)
+            }
+          }
         },
         [
-          _c("img", {
-            staticClass: "card-img-top",
+          _c("button", {
+            staticClass: "animalCard__info-button",
             attrs: {
-              src: catInfoData.album_file,
-              onerror:
-                "this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
+              type: "button",
+              "data-bs-toggle": "modal",
+              "data-bs-target": "#AnimalDetailModal",
+              id: catInfoData.id
+            },
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                $event.preventDefault()
+                return _vm.getAnimalId(catInfoData.id, catInfoData.shelter_name)
+              }
             }
           }),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body  text-secondary" },
-            [
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
-              ]),
-              _vm._v(" "),
-              _c("h4", { staticClass: "card-text" }, [
-                _c("i", { staticClass: "fas fa-paw" }),
-                _vm._v(
-                  "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
-                )
-              ]),
-              _vm._v(" "),
-              _vm.isAuthenticated
-                ? [
-                    !_vm.isFavorite(catInfoData.id)
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary ",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                $event.stopPropagation()
-                                $event.preventDefault()
-                                return _vm.addFavorite(catInfoData.id)
-                              }
-                            }
-                          },
-                          [_vm._v("\n  加入最愛\n")]
-                        )
-                      : _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary ml-2",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                $event.stopPropagation()
-                                $event.preventDefault()
-                                return _vm.removeFavorite(catInfoData.id)
-                              }
-                            }
-                          },
-                          [_vm._v("\n  移除最愛\n")]
-                        )
-                  ]
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: {
-                    type: "button",
-                    "data-bs-toggle": "modal",
-                    "data-bs-target": "#AnimalDetailModal"
-                  },
-                  on: {
-                    click: function($event) {
-                      $event.stopPropagation()
-                      $event.preventDefault()
-                      return _vm.getAnimalId(
-                        catInfoData.id,
-                        catInfoData.shelter_name
-                      )
-                    }
-                  }
-                },
-                [_vm._v("\n  詳細資料\n")]
-              )
-            ],
-            2
-          )
-        ]
+          _vm.isAuthenticated
+            ? [
+                !_vm.isFavorite(catInfoData.id)
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "animalCard__like-button",
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            $event.preventDefault()
+                            return _vm.addFavorite(catInfoData.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "far fa-heart" })]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "animalCard__like-button",
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            $event.preventDefault()
+                            return _vm.removeFavorite(catInfoData.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-heart" })]
+                    )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "animalCard__main" }, [
+            _c("img", {
+              staticClass: "animalCard__img",
+              attrs: {
+                src: catInfoData.album_file,
+                onerror:
+                  "this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "animalCard__body" }, [
+              _c("div", { staticClass: "animalCard__info text-secondary" }, [
+                _c("h4", { staticClass: "card-text" }, [
+                  _c("i", { staticClass: "fas fa-paw" }),
+                  _vm._v("性別:" + _vm._s(catInfoData.animal_sex))
+                ]),
+                _vm._v(" "),
+                _c("h4", { staticClass: "card-text" }, [
+                  _c("i", { staticClass: "fas fa-paw" }),
+                  _vm._v(
+                    "所在地:" + _vm._s(catInfoData.shelter_address.slice(0, 3))
+                  )
+                ])
+              ])
+            ])
+          ])
+        ],
+        2
       )
     }),
     0

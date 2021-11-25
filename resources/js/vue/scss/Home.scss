@@ -32,10 +32,6 @@
 @media screen and (min-width:1440px) {
  .cat-poster{
     height: 500px;
-    width: 100%;
-    background-image: url('./../../../../public/img/cat2.webp');
-    background-position: center;
-    background-size: cover;
   }
  .modal-body{
    &__donate-button{
