@@ -473,7 +473,10 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
+          Toast.fire({
+            icon: "warning",
+            title: "發生錯誤 請稍後在試",
+          });
         });
     },
     getRemoveFavoriteCatId(id) {
@@ -488,7 +491,10 @@ export default {
           });
         })
         .catch((error) => {
-          console.log(error);
+          Toast.fire({
+            icon: "warning",
+            title: "發生錯誤 請稍後在試",
+          });
         });
     },
     fetchAnimalDetailData(id, address) {
@@ -519,7 +525,10 @@ export default {
           this.catDatas = obj.data;
         })
         .catch((error) => {
-          console.log(error);
+          Toast.fire({
+            icon: "warning",
+            title: "發生錯誤 請稍後在試",
+          });
         });
     },
     sendDonate() {

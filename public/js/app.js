@@ -2658,7 +2658,10 @@ var getToken = function getToken() {
           title: "成功加入最愛"
         });
       })["catch"](function (error) {
-        console.log(error);
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: "warning",
+          title: "發生錯誤 請稍後在試"
+        });
       });
     },
     getRemoveFavoriteCatId: function getRemoveFavoriteCatId(id) {
@@ -2672,7 +2675,10 @@ var getToken = function getToken() {
           title: "成功移除最愛"
         });
       })["catch"](function (error) {
-        console.log(error);
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: "warning",
+          title: "發生錯誤 請稍後在試"
+        });
       });
     },
     fetchAnimalDetailData: function fetchAnimalDetailData(id, address) {
@@ -2696,7 +2702,10 @@ var getToken = function getToken() {
       _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.apiHelper.get("api/animalData/getFilter/".concat(data.short_address, "/").concat(data.animal_sex, "/").concat(data.animal_colour)).then(function (obj) {
         _this5.catDatas = obj.data;
       })["catch"](function (error) {
-        console.log(error);
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_4__.Toast.fire({
+          icon: "warning",
+          title: "發生錯誤 請稍後在試"
+        });
       });
     },
     sendDonate: function sendDonate() {
@@ -3177,7 +3186,10 @@ var getToken = function getToken() {
           title: "成功移除最愛"
         });
       })["catch"](function (error) {
-        console.log(error);
+        _utils_helpers__WEBPACK_IMPORTED_MODULE_3__.Toast.fire({
+          icon: "warning",
+          title: "發生錯誤 請稍後在試"
+        });
       });
     },
     fetchAnimalDetailData: function fetchAnimalDetailData(id, address) {
