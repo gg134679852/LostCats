@@ -111,6 +111,7 @@
               data-bs-toggle="modal"
               data-bs-target="#donateModal"
               @click="resetDonateData"
+              v-if="isAuthenticated"
             >
               捐款
             </button>
@@ -529,7 +530,8 @@ export default {
           });
       }else{
          axios
-        .post("api/spgateway/donate", {
+        .post("spgateway/donate", {
+          headers: { Authorization: `Bearer ${getToken()}` },
           data: {
             ...this.donate_info,
             shelter_name: this.catData.shelter_name,

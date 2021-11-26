@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        '*/spgateway/callback?from=NotifyURL',
+        '*/spgateway/callback?from=ReturnURL'
     ];
 }

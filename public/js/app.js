@@ -1890,34 +1890,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2554,6 +2526,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2735,7 +2708,10 @@ var getToken = function getToken() {
           title: "金額錯誤"
         });
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post("api/spgateway/donate", {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("spgateway/donate", {
+          headers: {
+            Authorization: "Bearer ".concat(getToken())
+          },
           data: _objectSpread(_objectSpread({}, this.donate_info), {}, {
             shelter_name: this.catData.shelter_name
           })
@@ -27246,20 +27222,22 @@ var render = function() {
                                 }
                               }),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary modal-body__donate-button",
-                                  attrs: {
-                                    type: "button",
-                                    "data-bs-toggle": "modal",
-                                    "data-bs-target": "#donateModal"
-                                  },
-                                  on: { click: _vm.resetDonateData }
-                                },
-                                [_vm._v("\n             捐款\n           ")]
-                              )
+                              _vm.isAuthenticated
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary modal-body__donate-button",
+                                      attrs: {
+                                        type: "button",
+                                        "data-bs-toggle": "modal",
+                                        "data-bs-target": "#donateModal"
+                                      },
+                                      on: { click: _vm.resetDonateData }
+                                    },
+                                    [_vm._v("\n             捐款\n           ")]
+                                  )
+                                : _vm._e()
                             ]),
                             _vm._v(" "),
                             _c("ul", { staticClass: "list-group" }, [
