@@ -19,13 +19,14 @@ class userControllers extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string|confirmed'
         ]);
 
         User::create([
             'name' => $validateData['name'],
             'email' => $validateData['email'],
             'password' => Hash::make($validateData['password']),
+            'isAdmin'=> false
         ]);
     }
     public function login(Request $request)

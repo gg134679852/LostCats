@@ -14,6 +14,7 @@ export default new Vuex.Store ({
     },
     favoriteCats:[],
     isAuthenticated: false,
+    isAdmin:''
   },
   mutations:{
      setUser (state, currentUser) {
@@ -23,6 +24,7 @@ export default new Vuex.Store ({
       }
       state.favoriteCats = currentUser.favoriteCats
       state.isAuthenticated = true
+      state.isAdmin = currentUser.isAdmin
     },
     revokeAuthentication (state) {
       state.currentUser = {}
