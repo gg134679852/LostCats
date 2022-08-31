@@ -1,6 +1,6 @@
 <template>
+  <loading-icon :active="isLoading" />
   <div class="text-end mt-3">
-    <loading-icon :active="isLoading" />
     <button type="button" class="btn btn-primary" @click.prevent="switcher('none','newCatInfo')">新增商品</button>
     <table class="table mt-4">
       <thead>
@@ -39,10 +39,10 @@
         </tr>
       </tbody>
     </table>
-    <CatInfoModal :cat-info-modal-switcher="catInfoModalSwitcher" :is-loading="isLoading" :cat-info-data="catInfoData"
-      @cancel-form-value-enter="cancelFormValueEnter" @form-value-enter="formValueEnter" @switcher="switcher"
-      @upload-image="uploadImage" />
   </div>
+  <CatInfoModal :cat-info-modal-switcher="catInfoModalSwitcher" :is-loading="isLoading" :cat-info-data="catInfoData"
+    @cancel-form-value-enter="cancelFormValueEnter" @form-value-enter="formValueEnter" @switcher="switcher"
+    @upload-image="uploadImage" />
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'

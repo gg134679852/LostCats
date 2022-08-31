@@ -1,5 +1,5 @@
-const mix = require('laravel-mix');
-
+const mix = require('laravel-mix')
+const ESLintPlugin = require('eslint-webpack-plugin')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,6 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vue()
-    .sass('resources/css/app.scss', 'public/css');
+mix.js('resources/js/app.js', 'public/js').vue().sass('resources/css/app.scss', 'public/css').webpackConfig({ plugins: [new ESLintPlugin({ fix: true, extensions: ['js', 'vue'] })] })
 mix.version()
