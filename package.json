@@ -14,19 +14,19 @@
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.2.1",
         "resolve-url-loader": "^4.0.0",
         "sass-loader": "^12.1.0",
-        "vue-loader": "^15.9.5",
-        "vue-template-compiler": "^2.6.14"
+        "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "@fawmi/vue-google-maps": "^0.9.79",
+        "bootstrap": "^5.2.0",
         "sass": "^1.39.2",
         "sweetalert2": "^11.0.18",
-        "vue": "^2.6.14",
-        "vue-component-media-queries": "^1.0.0",
-        "vue-router": "^3.5.1",
-        "vue2-google-maps": "^0.10.7",
-        "vuex": "^3.6.2"
+        "vue": "^3.2.38",
+        "vue-axios": "^3.4.1",
+        "vue-router": "^4.1.5",
+        "vue3-loading-overlay": "^0.0.0",
+        "vuex": "^4.0.2"
     }
 }

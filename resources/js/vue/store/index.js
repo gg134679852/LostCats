@@ -1,55 +1,43 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import {apiHelper} from './../utils/helpers'
-const getToken = () => localStorage.getItem('token')
+import { createStore } from 'vuex'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store ({
-  state:{
-     currentUser: {
+export default createStore({
+  state: {
+    currentUser: {
       id: -1,
       name: '',
-      email: ''
+      email: '',
+      isAdmin: false,
+      token: ''
     },
-    favoriteCats:[],
-    isAuthenticated: false,
-    isAdmin:''
+    favoriteCats: [],
+    isAuthenticated: false
   },
-  mutations:{
-     setUser (state, currentUser) {
-          state.currentUser = {
+  getters: {
+  },
+  mutations: {
+    setUser(state, payLoad) {
+      state.currentUser = {
         ...state.currentUser,
-        ...currentUser.user
+        ...payLoad.user
       }
-      state.favoriteCats = currentUser.favoriteCats
+      state.favoriteCats = payLoad.favoriteCats
       state.isAuthenticated = true
-      state.isAdmin = currentUser.isAdmin
     },
-    revokeAuthentication (state) {
+    revokeAuthentication(state) {
       state.currentUser = {}
       state.favoriteCats = []
       state.isAuthenticated = false
       localStorage.removeItem('token')
     }
   },
-  actions:{
-     fetchCurrentUser ({ commit }) {
-    apiHelper.get('CurrentUser',{
-      headers: { Authorization: `Bearer ${getToken()}`}})
-  .then((obj)=>{
-    const { id, name, email } = obj.data.user
-    const favoriteCats = obj.data.favoriteCats
-        commit('setUser', {
-          id,
-          name,
-          email,
-          favoriteCats
-        })
-  })
-  .catch((error)=>{
-    console.log(error)
-  })
+  actions: {
+    setUser({ commit }, value) {
+      const { token } = value
+      const { favoriteCats } = value.userData
+      const { email, name, id, isAdmin } = value.userData.user
+      commit('setUser', { favoriteCats, user: { token, email, name, id, isAdmin } })
+    }
+  },
+  modules: {
   }
- }
 })

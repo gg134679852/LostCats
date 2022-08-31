@@ -1,14 +1,17 @@
 <template>
-  <main role="main">
-      <NavBar/>
-   <router-view></router-view>
-</main>
+  <router-view/>
 </template>
 <script>
-import NavBar from './../components/NavBar.vue'
+import { Toast } from '../utils/helpers'
 export default {
-   components:{
-     NavBar
-   }
+  provide () {
+    return {
+      Toast
+    }
+  }
 }
 </script>
+<style lang="scss">
+@import '../scss/all.scss';
+@import '../../../css/app.scss';
+</style>

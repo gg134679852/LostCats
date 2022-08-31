@@ -1,13 +1,8 @@
 <template>
-  <h1>admin</h1>
+ <h1>home</h1>
 </template>
-
 <script>
+// @ is an alias to /src
 export default {
-
 }
 </script>
-
-<style>
-
-</style>

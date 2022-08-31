@@ -1,25 +1,18 @@
 require('./bootstrap');
 
-import Vue from 'vue'
-import store from './vue/store/index'
-import router from './vue/router/routes'
-import App from './vue/views/App'
-import * as VueGoogleMaps from 'vue2-google-maps';
+import { createApp } from 'vue'
+import App from './vue/views/App.vue'
+import router from './vue/router'
+import store from './vue/store'
+import VueAxios from 'vue-axios'
+import Loading from 'vue3-loading-overlay'
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
+import { axiosHelper } from './vue/utils/helpers'
+require('./bootstrap')
 
-const swal = (window.swal = require("sweetalert2"));
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: process.env.MIX_API_KEY,
-    libraries: 'places'
-  }
-})
-
-const app = new Vue ({
-  el:'#app',
-  components:{
-    App
-  },
-  router,
-  store
-}).$mount('#app');
+const app = createApp(App)
+app.use(VueAxios, { $axiosHelper: axiosHelper })
+app.use(store)
+app.use(router)
+app.component('loading-icon', Loading)
+app.mount('#app')

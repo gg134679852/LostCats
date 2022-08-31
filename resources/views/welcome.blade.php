@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{mix('/css/app.css')}}"/>
     </head>
-    <body class="antialiased">
-        <div id="app">
-            <app></app>
-        </div>
+     <body>
+        <div id="app"></div>
     </body>
     <script src="{{ mix('/js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
