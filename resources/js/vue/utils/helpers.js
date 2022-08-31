@@ -5,8 +5,10 @@ import Swal from 'sweetalert2'
 
 const baseURL = 'http://127.0.0.1:8000/'
 
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 export const axiosHelper = axios.create({
-  baseURL
+  baseURL,
+  headers: { withCredentials: true }
 })
 
 export const Toast = Swal.mixin({

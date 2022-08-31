@@ -20376,11 +20376,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_CatInfoModal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CatInfoModal");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading_icon, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading_icon, {
     active: $data.isLoading
   }, null, 8
   /* PROPS */
-  , ["active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  , ["active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-primary",
     onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
@@ -20416,7 +20416,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_8)])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CatInfoModal, {
+  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CatInfoModal, {
     "cat-info-modal-switcher": $data.catInfoModalSwitcher,
     "is-loading": $data.isLoading,
     "cat-info-data": $data.catInfoData,
@@ -20426,7 +20426,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onUploadImage: $options.uploadImage
   }, null, 8
   /* PROPS */
-  , ["cat-info-modal-switcher", "is-loading", "cat-info-data", "onCancelFormValueEnter", "onFormValueEnter", "onSwitcher", "onUploadImage"])]);
+  , ["cat-info-modal-switcher", "is-loading", "cat-info-data", "onCancelFormValueEnter", "onFormValueEnter", "onSwitcher", "onUploadImage"])], 64
+  /* STABLE_FRAGMENT */
+  );
 }
 
 /***/ }),
@@ -20638,8 +20640,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue3_loading_overlay__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue3-loading-overlay */ "./node_modules/vue3-loading-overlay/dist/index.js");
 /* harmony import */ var vue3_loading_overlay_dist_vue3_loading_overlay_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue3-loading-overlay/dist/vue3-loading-overlay.css */ "./node_modules/vue3-loading-overlay/dist/vue3-loading-overlay.css");
 /* harmony import */ var _vue_utils_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./vue/utils/helpers */ "./resources/js/vue/utils/helpers.js");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
 
 
 
@@ -20674,10 +20674,10 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+// window.axios = require('axios')
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+// axios.defaults.withCredentials = true
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -20861,8 +20861,12 @@ __webpack_require__.r(__webpack_exports__);
  // const baseURL = 'https://serene-oasis-02398.herokuapp.com/'
 
 var baseURL = 'http://127.0.0.1:8000/';
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.headers.common["X-Requested-With"]) = 'XMLHttpRequest';
 var axiosHelper = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-  baseURL: baseURL
+  baseURL: baseURL,
+  headers: {
+    withCredentials: true
+  }
 });
 var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().mixin({
   toast: true,

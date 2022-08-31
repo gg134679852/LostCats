@@ -15,7 +15,7 @@ export default createStore({
   getters: {
   },
   mutations: {
-    setUser(state, payLoad) {
+    setUser (state, payLoad) {
       state.currentUser = {
         ...state.currentUser,
         ...payLoad.user
@@ -23,7 +23,7 @@ export default createStore({
       state.favoriteCats = payLoad.favoriteCats
       state.isAuthenticated = true
     },
-    revokeAuthentication(state) {
+    revokeAuthentication (state) {
       state.currentUser = {}
       state.favoriteCats = []
       state.isAuthenticated = false
@@ -31,7 +31,7 @@ export default createStore({
     }
   },
   actions: {
-    setUser({ commit }, value) {
+    setUser ({ commit }, value) {
       const { token } = value
       const { favoriteCats } = value.userData
       const { email, name, id, isAdmin } = value.userData.user
