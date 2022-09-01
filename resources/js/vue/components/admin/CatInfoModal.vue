@@ -23,7 +23,7 @@
                 </label>
                 <input type="file" id="customFile" class="form-control" @change="uploadImage">
               </div>
-              <img class="img-fluid" alt="">
+              <img class="img-fluid" :src="catInfoData.album_file" alt="">
               <!-- 延伸技巧，多圖 -->
               <div class="mt-5">
                 <div class="mb-3 input-group">

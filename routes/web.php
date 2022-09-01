@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
     Route::get('/CurrentUser', 'userControllers@getCurrentUser');
     Route::post('/spgateway/donate', 'donateController@Donate');
+    Route::post('admin/animalData/createCatData', 'animalDataController@createCatData');
+    Route::post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
 });
 
 Route::get('/{any}', function () {

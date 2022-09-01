@@ -122,13 +122,18 @@ export default {
       this.catInfoData[key] = value
     },
     uploadImage (value) {
-      this.isLoading = true
-      this.$axiosHelper.post('api/animalData/uploadImage', {
-        headers: { withCredentials: true, Accept: 'application/json', Authorization: `Bearer ${this.$store.state.currentUser.token}` }
-      })
-        .then((obj) => {
-          console.log(obj.data)
+      if (value) {
+        this.isLoading = true
+        const responseData = new FormData()
+        responseData.append('image', value)
+        this.$axiosHelper.post('admin/animalData/uploadImage', responseData, {
+          headers: { withCredentials: true, Accept: 'application/json', Authorization: `Bearer ${this.$store.state.currentUser.token}` }
         })
+          .then((obj) => {
+            this.catInfoData.album_file = obj.data.image
+            this.isLoading = false
+          })
+      }
     }
   }
 }

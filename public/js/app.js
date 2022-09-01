@@ -19709,16 +19709,23 @@ __webpack_require__.r(__webpack_exports__);
       this.catInfoData[key] = value;
     },
     uploadImage: function uploadImage(value) {
-      this.isLoading = true;
-      this.$axiosHelper.post('api/animalData/uploadImage', {
-        headers: {
-          withCredentials: true,
-          Accept: 'application/json',
-          Authorization: "Bearer ".concat(this.$store.state.currentUser.token)
-        }
-      }).then(function (obj) {
-        console.log(obj.data);
-      });
+      var _this2 = this;
+
+      if (value) {
+        this.isLoading = true;
+        var responseData = new FormData();
+        responseData.append('image', value);
+        this.$axiosHelper.post('admin/animalData/uploadImage', responseData, {
+          headers: {
+            withCredentials: true,
+            Accept: 'application/json',
+            Authorization: "Bearer ".concat(this.$store.state.currentUser.token)
+          }
+        }).then(function (obj) {
+          _this2.catInfoData.album_file = obj.data.image;
+          _this2.isLoading = false;
+        });
+      }
     }
   }
 });
@@ -19908,12 +19915,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  "class": "img-fluid",
-  alt: ""
-}, null, -1
-/* HOISTED */
-);
+var _hoisted_13 = ["src"];
 
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mt-5\"><div class=\"mb-3 input-group\"><input type=\"url\" class=\"form-control form-control\" placeholder=\"請輸入連結\"><button type=\"button\" class=\"btn btn-outline-danger\"> 移除 </button></div><div><button class=\"btn btn-outline-primary btn-sm d-block w-100\"> 新增圖片 </button></div></div>", 1);
 
@@ -20193,7 +20195,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 32
   /* HYDRATE_EVENTS */
-  )]), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 延伸技巧，多圖 "), _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "img-fluid",
+    src: $props.catInfoData.album_file,
+    alt: ""
+  }, null, 8
+  /* PROPS */
+  , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 延伸技巧，多圖 "), _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "animal_id",
