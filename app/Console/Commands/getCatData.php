@@ -52,7 +52,7 @@ class getCatData extends Command
                 "animal_id" => $cat['animal_id'],
                 "animal_sex" => $cat['animal_sex'] === 'F' ? '女生' : '男生',
                 "animal_bodytype" => $cat['animal_bodytype'],
-                "animal_colour" => $cat['animal_colour'],
+                "animal_color" => $cat['animal_colour'],
                 "animal_age" => $cat['animal_age'] === '' ? '歲數未知' : $cat['animal_age'],
                 "animal_sterilization" => $cat['animal_sterilization'] === 'F' ? '未絕育' : '已絕育',
                 "animal_bacterin" => $cat['animal_bacterin'] === 'F' ? '未打狂犬病疫苗' : '已打狂犬病疫苗',
