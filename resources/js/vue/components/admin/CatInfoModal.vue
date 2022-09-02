@@ -1,11 +1,11 @@
 <template>
-  <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
     aria-hidden="true" ref="modal">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
           <h5 class="modal-title" id="exampleModalLabel">
-            <span>新增貓咪資料</span>
+            <span>{{ modalType === 'createNewCatData' ? '新增貓咪資料':'編輯貓咪資料'}}</span>
           </h5>
         </div>
         <div class="modal-body">
@@ -117,9 +117,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
-              @click="closeModal('none', 'newCatInfo')">取消
+              @click="closeModal('none', 'closeModal')">關閉視窗
             </button>
-            <button type="button" class="btn btn-primary" @click.prevent="uploadNewCatData" >確認</button>
+            <button type="button" class="btn btn-primary" @click.prevent="confirmInfoData('newData')" v-if="modalType === 'createNewCatData'" >確認</button>
+             <button type="button" class="btn btn-primary" @click.prevent="confirmInfoData('updateData')" v-else >確認</button>
           </div>
         </div>
       </div>
@@ -141,6 +142,10 @@ export default {
     isLoading: {
       type: Boolean,
       required: true
+    },
+    modalType: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -151,7 +156,6 @@ export default {
   methods: {
     closeModal (id, type) {
       this.$emit('switcher', id, type)
-      this.$emit('cancelFormValueEnter')
     },
     passValue (e) {
       const key = e.target.id
@@ -161,8 +165,17 @@ export default {
     uploadImage (value) {
       this.$emit('uploadImage', value.target.files[0])
     },
-    uploadNewCatData () {
-      this.$emit('uploadNewCatData')
+    confirmInfoData (type) {
+      switch (type) {
+        case 'newData':{
+          this.$emit('uploadNewCatData')
+          break
+        }
+        case 'updateData':{
+          this.$emit('updateCatData')
+          break
+        }
+      }
     }
   },
   mounted () {

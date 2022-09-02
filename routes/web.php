@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/spgateway/donate', 'donateController@Donate');
     Route::post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
     Route::post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
+    Route::put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
 });
 
 Route::get('/{any}', function () {

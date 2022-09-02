@@ -69,6 +69,7 @@ class animalDataController extends Controller
         return [$AnimalData, $addressResponse];
 
     }
+
     public function createNewCatData(Request $request)
     {
         $validatedData = $request->validateWithBag('post', [
@@ -104,6 +105,7 @@ class animalDataController extends Controller
         ])->save();
         return dd($createNewCatData);
     }
+
     public function uploadImage(Request $request)
     {
         $image = base64_encode(file_get_contents($request->file('image')->path()));
@@ -134,4 +136,25 @@ class animalDataController extends Controller
         }
     }
 
+    public function updateCatData(Request $request)
+    {
+        $validatedData = $request->validateWithBag('post', [
+            "animal_id" => ['required'],
+            "album_file" => [],
+            "animal_age" => ['required'],
+            "animal_bacterin" => ['required'],
+            "animal_bodytype" => ['required'],
+            "animal_color" => ['required'],
+            "animal_foundplace" => ['required'],
+            "animal_remark" => [],
+            "animal_sex" => ['required'],
+            "animal_sterilization" => ['required'],
+            "shelter_address" => ['required'],
+            "shelter_name" => ['required'],
+            "shelter_tel" => ['required'],
+        ]);
+        $updateCatData = AnimalData::where('animal_id', $validatedData['animal_id'])->update($validatedData);
+
+        return dd($updateCatData);
+    }
 }

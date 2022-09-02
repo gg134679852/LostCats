@@ -1,7 +1,7 @@
 <template>
   <loading-icon :active="isLoading" />
   <div class="text-end mt-3">
-    <button type="button" class="btn btn-primary" @click.prevent="switcher('none','newCatInfo')">新增商品</button>
+    <button type="button" class="btn btn-primary" @click.prevent="switcher('none','createNewCatData')">新增資料</button>
     <table class="table mt-4">
       <thead>
         <tr>
@@ -32,17 +32,25 @@
           <td>{{ item.animal_sterilization }}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-primary btn-sm" :id="item.id">編輯</button>
-              <button class="btn btn-outline-danger btn-sm" :id="item.id">刪除</button>
+              <button class="btn btn-outline-primary btn-sm" @click.prevent="switcher(item.animal_id,'updateCatData')">編輯</button>
+              <button class="btn btn-outline-danger btn-sm" >刪除</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <CatInfoModal :cat-info-modal-switcher="catInfoModalSwitcher" :is-loading="isLoading" :cat-info-data="catInfoData"
-    @cancel-form-value-enter="cancelFormValueEnter" @form-value-enter="formValueEnter" @switcher="switcher"
-    @upload-image="uploadImage" @upload-new-cat-data="uploadNewCatData" />
+  <CatInfoModal
+  :cat-info-modal-switcher="catInfoModalSwitcher"
+  :is-loading="isLoading"
+  :cat-info-data="catInfoData"
+  :modal-type="modalType"
+  @form-value-enter="formValueEnter"
+  @switcher="switcher"
+  @upload-image="uploadImage"
+  @upload-new-cat-data="uploadNewCatData"
+  @updateCatData="updateCatData"
+  />
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'
@@ -82,7 +90,8 @@ export default {
         animal_id: '編號'
       },
       isLoading: false,
-      catInfoModalSwitcher: 'hide'
+      catInfoModalSwitcher: 'hide',
+      modalType: ''
     })
   },
   created () {
@@ -101,23 +110,6 @@ export default {
           console.log(err)
           this.isLoading = false
         })
-    },
-    cancelFormValueEnter () {
-      this.catInfoData = {
-        animal_id: 0,
-        album_file: '',
-        animal_age: '',
-        animal_bacterin: '',
-        animal_bodytype: '',
-        animal_color: '',
-        animal_place: '',
-        animal_remark: '',
-        animal_sex: '',
-        animal_sterilization: '',
-        shelter_address: '',
-        shelter_name: '',
-        shelter_tel: ''
-      }
     },
     formValueEnter (key, value) {
       this.catInfoData[key] = value
@@ -148,8 +140,29 @@ export default {
         })
         .catch((err) => {
           if (err.response.data.errors) {
-            const objectKey = Object.keys(this.inputName)
             const errorMessage = err.response.data.errors
+            const objectKey = Object.keys(errorMessage)
+            objectKey.forEach((key) => {
+              return this.Toast.fire({
+                icon: 'warning',
+                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+              })
+            })
+            this.isLoading = false
+          }
+        })
+    },
+    updateCatData () {
+      this.isLoading = true
+      this.$axiosHelper.put('admin/animalData/updateCatData', this.catInfoData)
+        .then((obj) => {
+          console.log(obj)
+          this.isLoading = false
+        })
+        .catch((err) => {
+          if (err.response.data.errors) {
+            const errorMessage = err.response.data.errors
+            const objectKey = Object.keys(errorMessage)
             objectKey.forEach((key) => {
               return this.Toast.fire({
                 icon: 'warning',
@@ -162,13 +175,38 @@ export default {
     },
     switcher (id, type) {
       if (id !== 'none') {
-        const index = this.catData.findIndex((obj) => obj.id === id)
-        const targetData = this.catData[index]
+        const index = this.catData.findIndex((obj) => obj.animal_id === id)
+        const targetData = { ...this.catData[index] }
         this.catInfoData = targetData
       }
       switch (type) {
-        case 'newCatInfo': {
+        case 'createNewCatData': {
           this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.modalType = 'createNewCatData'
+          break
+        }
+        case 'updateCatData': {
+          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.modalType = 'updateCatData'
+          break
+        }
+        case 'closeModal': {
+          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.catInfoData = {
+            animal_id: '',
+            album_file: '',
+            animal_age: '',
+            animal_bacterin: '',
+            animal_bodytype: '',
+            animal_color: '',
+            animal_place: '',
+            animal_remark: '',
+            animal_sex: '',
+            animal_sterilization: '',
+            shelter_address: '',
+            shelter_name: '',
+            shelter_tel: ''
+          }
           break
         }
       }
