@@ -42,7 +42,7 @@
   </div>
   <CatInfoModal :cat-info-modal-switcher="catInfoModalSwitcher" :is-loading="isLoading" :cat-info-data="catInfoData"
     @cancel-form-value-enter="cancelFormValueEnter" @form-value-enter="formValueEnter" @switcher="switcher"
-    @upload-image="uploadImage" />
+    @upload-image="uploadImage" @upload-new-cat-data="uploadNewCatData" />
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'
@@ -60,13 +60,26 @@ export default {
         animal_bacterin: '',
         animal_bodytype: '',
         animal_color: '',
-        animal_place: '',
+        animal_foundplace: '',
         animal_remark: '',
         animal_sex: '',
         animal_sterilization: '',
         shelter_address: '',
         shelter_name: '',
         shelter_tel: ''
+      },
+      inputName: {
+        shelter_address: '收容所地址',
+        shelter_tel: '收容所電話',
+        shelter_name: '收容所名稱',
+        animal_foundplace: '發現地點',
+        animal_bacterin: '是否已施打狂犬病疫苗',
+        animal_sterilization: '是否已絕育',
+        animal_bodytype: '體型',
+        animal_color: '顏色',
+        animal_age: '年紀',
+        animal_sex: '性別',
+        animal_id: '編號'
       },
       isLoading: false,
       catInfoModalSwitcher: 'hide'
@@ -75,6 +88,7 @@ export default {
   created () {
     this.getCatData()
   },
+  inject: ['Toast'],
   methods: {
     getCatData () {
       this.isLoading = true
@@ -87,19 +101,6 @@ export default {
           console.log(err)
           this.isLoading = false
         })
-    },
-    switcher (id, type) {
-      if (id !== 'none') {
-        const index = this.catData.findIndex((obj) => obj.id === id)
-        const targetData = this.catData[index]
-        this.catInfoData = targetData
-      }
-      switch (type) {
-        case 'newCatInfo': {
-          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
-          break
-        }
-      }
     },
     cancelFormValueEnter () {
       this.catInfoData = {
@@ -133,6 +134,43 @@ export default {
             this.catInfoData.album_file = obj.data.image
             this.isLoading = false
           })
+          .catch((err) => {
+            console.log(err)
+            this.isLoading = false
+          })
+      }
+    },
+    uploadNewCatData () {
+      this.isLoading = true
+      this.$axiosHelper.post('admin/animalData/createNewCatData', this.catInfoData)
+        .then((obj) => {
+          console.log(obj)
+        })
+        .catch((err) => {
+          if (err.response.data.errors) {
+            const objectKey = Object.keys(this.inputName)
+            const errorMessage = err.response.data.errors
+            objectKey.forEach((key) => {
+              return this.Toast.fire({
+                icon: 'warning',
+                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+              })
+            })
+            this.isLoading = false
+          }
+        })
+    },
+    switcher (id, type) {
+      if (id !== 'none') {
+        const index = this.catData.findIndex((obj) => obj.id === id)
+        const targetData = this.catData[index]
+        this.catInfoData = targetData
+      }
+      switch (type) {
+        case 'newCatInfo': {
+          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          break
+        }
       }
     }
   }

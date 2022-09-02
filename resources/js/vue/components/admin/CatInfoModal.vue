@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel"
     aria-hidden="true" ref="modal">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
@@ -9,7 +9,6 @@
           </h5>
         </div>
         <div class="modal-body">
-          <loading-icon :active="isLoading" />
           <div class="row">
             <div class="col-sm-4">
               <div class="mb-3">
@@ -19,25 +18,10 @@
               </div>
               <div class="mb-3">
                 <label for="customFile" class="form-label">或 上傳圖片
-                  <i class="fas fa-spinner fa-spin"></i>
                 </label>
                 <input type="file" id="customFile" class="form-control" @change="uploadImage">
               </div>
               <img class="img-fluid" :src="catInfoData.album_file" alt="">
-              <!-- 延伸技巧，多圖 -->
-              <div class="mt-5">
-                <div class="mb-3 input-group">
-                  <input type="url" class="form-control form-control" placeholder="請輸入連結">
-                  <button type="button" class="btn btn-outline-danger">
-                    移除
-                  </button>
-                </div>
-                <div>
-                  <button class="btn btn-outline-primary btn-sm d-block w-100">
-                    新增圖片
-                  </button>
-                </div>
-              </div>
             </div>
             <div class="col-sm-8">
               <div class="mb-3">
@@ -71,9 +55,13 @@
                     :value="catInfoData.animal_color">
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="animal_foundplace" class="form-label">發現地點</label>
-                  <input type="text" class="form-control" id="animal_foundplace" placeholder="請輸入發現地點"
-                    @input="passValue" :value="catInfoData.animal_foundplace">
+                  <label for="animal_bodytype" class="form-label">體型</label>
+                   <select class="form-select" id="animal_bodytype" @change="passValue" :value="catInfoData.animal_bodytype">
+                    <option value=""></option>
+                    <option value="小型">小型</option>
+                    <option value="中型">中型</option>
+                    <option value="大型">大型</option>
+                  </select>
                 </div>
               </div>
               <div class="row gx-2">
@@ -96,6 +84,12 @@
                   </select>
                 </div>
               </div>
+               <div class="mb-3">
+                <label for="animal_foundplace" class="form-label">發現地點</label>
+                <input type="text" class="form-control" id="animal_foundplace" placeholder="請輸入發現地點"
+                    @input="passValue" :value="catInfoData.animal_foundplace">
+              </div>
+               <hr>
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
                   <label for="shelter_name" class="form-label">收容所名稱</label>
@@ -125,7 +119,7 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
               @click="closeModal('none', 'newCatInfo')">取消
             </button>
-            <button type="button" class="btn btn-primary">確認</button>
+            <button type="button" class="btn btn-primary" @click.prevent="uploadNewCatData" >確認</button>
           </div>
         </div>
       </div>
@@ -166,6 +160,9 @@ export default {
     },
     uploadImage (value) {
       this.$emit('uploadImage', value.target.files[0])
+    },
+    uploadNewCatData () {
+      this.$emit('uploadNewCatData')
     }
   },
   mounted () {

@@ -19602,6 +19602,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     uploadImage: function uploadImage(value) {
       this.$emit('uploadImage', value.target.files[0]);
+    },
+    uploadNewCatData: function uploadNewCatData() {
+      this.$emit('uploadNewCatData');
     }
   },
   mounted: function mounted() {
@@ -19643,13 +19646,26 @@ __webpack_require__.r(__webpack_exports__);
         animal_bacterin: '',
         animal_bodytype: '',
         animal_color: '',
-        animal_place: '',
+        animal_foundplace: '',
         animal_remark: '',
         animal_sex: '',
         animal_sterilization: '',
         shelter_address: '',
         shelter_name: '',
         shelter_tel: ''
+      },
+      inputName: {
+        shelter_address: '收容所地址',
+        shelter_tel: '收容所電話',
+        shelter_name: '收容所名稱',
+        animal_foundplace: '發現地點',
+        animal_bacterin: '是否已施打狂犬病疫苗',
+        animal_sterilization: '是否已絕育',
+        animal_bodytype: '體型',
+        animal_color: '顏色',
+        animal_age: '年紀',
+        animal_sex: '性別',
+        animal_id: '編號'
       },
       isLoading: false,
       catInfoModalSwitcher: 'hide'
@@ -19658,6 +19674,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getCatData();
   },
+  inject: ['Toast'],
   methods: {
     getCatData: function getCatData() {
       var _this = this;
@@ -19670,23 +19687,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
         _this.isLoading = false;
       });
-    },
-    switcher: function switcher(id, type) {
-      if (id !== 'none') {
-        var index = this.catData.findIndex(function (obj) {
-          return obj.id === id;
-        });
-        var targetData = this.catData[index];
-        this.catInfoData = targetData;
-      }
-
-      switch (type) {
-        case 'newCatInfo':
-          {
-            this.catInfoModalSwitcher === 'hide' ? this.catInfoModalSwitcher = 'show' : this.catInfoModalSwitcher = 'hide';
-            break;
-          }
-      }
     },
     cancelFormValueEnter: function cancelFormValueEnter() {
       this.catInfoData = {
@@ -19724,7 +19724,47 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (obj) {
           _this2.catInfoData.album_file = obj.data.image;
           _this2.isLoading = false;
+        })["catch"](function (err) {
+          console.log(err);
+          _this2.isLoading = false;
         });
+      }
+    },
+    uploadNewCatData: function uploadNewCatData() {
+      var _this3 = this;
+
+      this.isLoading = true;
+      this.$axiosHelper.post('admin/animalData/createNewCatData', this.catInfoData).then(function (obj) {
+        console.log(obj);
+      })["catch"](function (err) {
+        if (err.response.data.errors) {
+          var objectKey = Object.keys(_this3.inputName);
+          var errorMessage = err.response.data.errors;
+          objectKey.forEach(function (key) {
+            return _this3.Toast.fire({
+              icon: 'warning',
+              title: "".concat(_this3.inputName[key], " ").concat(errorMessage[key][0].split(' ')[2])
+            });
+          });
+          _this3.isLoading = false;
+        }
+      });
+    },
+    switcher: function switcher(id, type) {
+      if (id !== 'none') {
+        var index = this.catData.findIndex(function (obj) {
+          return obj.id === id;
+        });
+        var targetData = this.catData[index];
+        this.catInfoData = targetData;
+      }
+
+      switch (type) {
+        case 'newCatInfo':
+          {
+            this.catInfoModalSwitcher === 'hide' ? this.catInfoModalSwitcher = 'show' : this.catInfoModalSwitcher = 'hide';
+            break;
+          }
       }
     }
   }
@@ -19860,6 +19900,7 @@ var _hoisted_1 = {
   id: "exampleModal",
   tabindex: "-1",
   "data-bs-backdrop": "static",
+  "data-keyboard": "false",
   "aria-labelledby": "exampleModalLabel",
   "aria-hidden": "true",
   ref: "modal"
@@ -19909,273 +19950,297 @@ var _hoisted_11 = {
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "customFile",
   "class": "form-label"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("或 上傳圖片 "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-spinner fa-spin"
-})], -1
+}, "或 上傳圖片 ", -1
 /* HOISTED */
 );
 
 var _hoisted_13 = ["src"];
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mt-5\"><div class=\"mb-3 input-group\"><input type=\"url\" class=\"form-control form-control\" placeholder=\"請輸入連結\"><button type=\"button\" class=\"btn btn-outline-danger\"> 移除 </button></div><div><button class=\"btn btn-outline-primary btn-sm d-block w-100\"> 新增圖片 </button></div></div>", 1);
-
-var _hoisted_15 = {
+var _hoisted_14 = {
   "class": "col-sm-8"
 };
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "mb-3"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_id",
   "class": "form-label"
 }, "編號", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = ["value"];
-var _hoisted_19 = {
+var _hoisted_17 = ["value"];
+var _hoisted_18 = {
   "class": "row gx-2"
 };
-var _hoisted_20 = {
+var _hoisted_19 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_sex",
   "class": "form-label"
 }, "性別", -1
 /* HOISTED */
 );
 
-var _hoisted_22 = ["value"];
+var _hoisted_21 = ["value"];
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: ""
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "男生"
 }, "男生", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "女生"
 }, "女生", -1
 /* HOISTED */
 );
 
-var _hoisted_26 = [_hoisted_23, _hoisted_24, _hoisted_25];
-var _hoisted_27 = {
+var _hoisted_25 = [_hoisted_22, _hoisted_23, _hoisted_24];
+var _hoisted_26 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_age",
   "class": "form-label"
 }, "年紀", -1
 /* HOISTED */
 );
 
-var _hoisted_29 = ["value"];
+var _hoisted_28 = ["value"];
 
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: ""
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "幼年"
 }, "幼年", -1
 /* HOISTED */
 );
 
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "成年"
 }, "成年", -1
 /* HOISTED */
 );
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "歲數未知"
 }, "歲數未知", -1
 /* HOISTED */
 );
 
-var _hoisted_34 = [_hoisted_30, _hoisted_31, _hoisted_32, _hoisted_33];
-var _hoisted_35 = {
+var _hoisted_33 = [_hoisted_29, _hoisted_30, _hoisted_31, _hoisted_32];
+var _hoisted_34 = {
   "class": "row gx-2"
 };
-var _hoisted_36 = {
+var _hoisted_35 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_color",
   "class": "form-label"
 }, "顏色", -1
 /* HOISTED */
 );
 
-var _hoisted_38 = ["value"];
-var _hoisted_39 = {
+var _hoisted_37 = ["value"];
+var _hoisted_38 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "animal_foundplace",
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "animal_bodytype",
   "class": "form-label"
-}, "發現地點", -1
+}, "體型", -1
 /* HOISTED */
 );
 
-var _hoisted_41 = ["value"];
-var _hoisted_42 = {
+var _hoisted_40 = ["value"];
+
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "小型"
+}, "小型", -1
+/* HOISTED */
+);
+
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "中型"
+}, "中型", -1
+/* HOISTED */
+);
+
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "大型"
+}, "大型", -1
+/* HOISTED */
+);
+
+var _hoisted_45 = [_hoisted_41, _hoisted_42, _hoisted_43, _hoisted_44];
+var _hoisted_46 = {
   "class": "row gx-2"
 };
-var _hoisted_43 = {
+var _hoisted_47 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_sterilization",
   "class": "form-label"
 }, "是否已絕育", -1
 /* HOISTED */
 );
 
-var _hoisted_45 = ["value"];
+var _hoisted_49 = ["value"];
 
-var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: ""
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "已絕育"
 }, "已絕育", -1
 /* HOISTED */
 );
 
-var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "未絕育"
 }, "未絕育", -1
 /* HOISTED */
 );
 
-var _hoisted_49 = [_hoisted_46, _hoisted_47, _hoisted_48];
-var _hoisted_50 = {
+var _hoisted_53 = [_hoisted_50, _hoisted_51, _hoisted_52];
+var _hoisted_54 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_bacterin",
   "class": "form-label"
 }, "是否已施打狂犬病疫苗", -1
 /* HOISTED */
 );
 
-var _hoisted_52 = ["value"];
+var _hoisted_56 = ["value"];
 
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: ""
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "已打狂犬病疫苗"
 }, "已打狂犬病疫苗", -1
 /* HOISTED */
 );
 
-var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "未打狂犬病疫苗"
 }, "未打狂犬病疫苗", -1
 /* HOISTED */
 );
 
-var _hoisted_56 = [_hoisted_53, _hoisted_54, _hoisted_55];
-var _hoisted_57 = {
+var _hoisted_60 = [_hoisted_57, _hoisted_58, _hoisted_59];
+var _hoisted_61 = {
+  "class": "mb-3"
+};
+
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "animal_foundplace",
+  "class": "form-label"
+}, "發現地點", -1
+/* HOISTED */
+);
+
+var _hoisted_63 = ["value"];
+
+var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_65 = {
   "class": "row gx-2"
 };
-var _hoisted_58 = {
+var _hoisted_66 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "shelter_name",
   "class": "form-label"
 }, "收容所名稱", -1
 /* HOISTED */
 );
 
-var _hoisted_60 = ["value"];
-var _hoisted_61 = {
+var _hoisted_68 = ["value"];
+var _hoisted_69 = {
   "class": "mb-3 col-md-6"
 };
 
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "shelter_tel",
   "class": "form-label"
 }, "收容所電話", -1
 /* HOISTED */
 );
 
-var _hoisted_63 = ["value"];
-var _hoisted_64 = {
+var _hoisted_71 = ["value"];
+var _hoisted_72 = {
   "class": "mb-3"
 };
 
-var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "shelter_address",
   "class": "form-label"
 }, "收容所地址", -1
 /* HOISTED */
 );
 
-var _hoisted_66 = ["value"];
+var _hoisted_74 = ["value"];
 
-var _hoisted_67 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1
+var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_68 = {
+var _hoisted_76 = {
   "class": "mb-3"
 };
 
-var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "animal_remark",
   "class": "form-label"
 }, "補充註記", -1
 /* HOISTED */
 );
 
-var _hoisted_70 = ["value"];
-var _hoisted_71 = {
+var _hoisted_78 = ["value"];
+var _hoisted_79 = {
   "class": "modal-footer"
 };
-
-var _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "button",
-  "class": "btn btn-primary"
-}, "確認", -1
-/* HOISTED */
-);
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_loading_icon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading-icon");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading_icon, {
-    active: $props.isLoading
-  }, null, 8
-  /* PROPS */
-  , ["active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "album_file",
@@ -20201,7 +20266,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     alt: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 延伸技巧，多圖 "), _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_13)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "animal_id",
@@ -20212,25 +20277,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.catInfoData.animal_id
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_18)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_17)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     id: "animal_sex",
     onChange: _cache[3] || (_cache[3] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.animal_sex
-  }, _hoisted_26, 40
+  }, _hoisted_25, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_22)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_21)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     id: "animal_age",
     onChange: _cache[4] || (_cache[4] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.animal_age
-  }, _hoisted_34, 40
+  }, _hoisted_33, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_29)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "animal_color",
@@ -20241,87 +20306,102 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.catInfoData.animal_color
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_38)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "text",
-    "class": "form-control",
-    id: "animal_foundplace",
-    placeholder: "請輸入發現地點",
-    onInput: _cache[6] || (_cache[6] = function () {
+  , _hoisted_37)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "form-select",
+    id: "animal_bodytype",
+    onChange: _cache[6] || (_cache[6] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
-    value: $props.catInfoData.animal_foundplace
-  }, null, 40
+    value: $props.catInfoData.animal_bodytype
+  }, _hoisted_45, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_41)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_40)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     id: "animal_sterilization",
     onChange: _cache[7] || (_cache[7] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.animal_sterilization
-  }, _hoisted_49, 40
+  }, _hoisted_53, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_45)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  , _hoisted_49)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [_hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     id: "animal_bacterin",
     onChange: _cache[8] || (_cache[8] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.animal_bacterin
-  }, _hoisted_56, 40
+  }, _hoisted_60, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_52)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_56)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    id: "animal_foundplace",
+    placeholder: "請輸入發現地點",
+    onInput: _cache[9] || (_cache[9] = function () {
+      return $options.passValue && $options.passValue.apply($options, arguments);
+    }),
+    value: $props.catInfoData.animal_foundplace
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_63)]), _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [_hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "shelter_name",
     placeholder: "請輸入收容所名稱",
-    onInput: _cache[9] || (_cache[9] = function () {
+    onInput: _cache[10] || (_cache[10] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.shelter_name
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_60)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_68)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "shelter_tel",
     placeholder: "請輸入收容所電話",
-    onInput: _cache[10] || (_cache[10] = function () {
+    onInput: _cache[11] || (_cache[11] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.shelter_tel
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_63)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [_hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_71)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "shelter_address",
     placeholder: "請輸入收容所地址",
-    onInput: _cache[11] || (_cache[11] = function () {
+    onInput: _cache[12] || (_cache[12] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.shelter_address
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_66)]), _hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [_hoisted_69, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  , _hoisted_74)]), _hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [_hoisted_77, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     type: "text",
     "class": "form-control",
     id: "animal_remark",
     placeholder: "請輸入補充註記",
-    onInput: _cache[12] || (_cache[12] = function () {
+    onInput: _cache[13] || (_cache[13] = function () {
       return $options.passValue && $options.passValue.apply($options, arguments);
     }),
     value: $props.catInfoData.animal_remark
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_70)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  , _hoisted_78)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-outline-secondary",
     "data-bs-dismiss": "modal",
-    onClick: _cache[13] || (_cache[13] = function ($event) {
+    onClick: _cache[14] || (_cache[14] = function ($event) {
       return $options.closeModal('none', 'newCatInfo');
     })
-  }, "取消 "), _hoisted_72])])])])], 512
+  }, "取消 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn btn-primary",
+    onClick: _cache[15] || (_cache[15] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.uploadNewCatData && $options.uploadNewCatData.apply($options, arguments);
+    }, ["prevent"]))
+  }, "確認")])])])])], 512
   /* NEED_PATCH */
   );
 }
@@ -20431,10 +20511,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onCancelFormValueEnter: $options.cancelFormValueEnter,
     onFormValueEnter: $options.formValueEnter,
     onSwitcher: $options.switcher,
-    onUploadImage: $options.uploadImage
+    onUploadImage: $options.uploadImage,
+    onUploadNewCatData: $options.uploadNewCatData
   }, null, 8
   /* PROPS */
-  , ["cat-info-modal-switcher", "is-loading", "cat-info-data", "onCancelFormValueEnter", "onFormValueEnter", "onSwitcher", "onUploadImage"])], 64
+  , ["cat-info-modal-switcher", "is-loading", "cat-info-data", "onCancelFormValueEnter", "onFormValueEnter", "onSwitcher", "onUploadImage", "onUploadNewCatData"])], 64
   /* STABLE_FRAGMENT */
   );
 }

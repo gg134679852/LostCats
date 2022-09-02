@@ -69,9 +69,40 @@ class animalDataController extends Controller
         return [$AnimalData, $addressResponse];
 
     }
-    public function createCatData(Request $request)
+    public function createNewCatData(Request $request)
     {
-        return dd($request);
+        $validatedData = $request->validateWithBag('post', [
+            "animal_id" => ['required'],
+            "album_file" => [],
+            "animal_age" => ['required'],
+            "animal_bacterin" => ['required'],
+            "animal_bodytype" => ['required'],
+            "animal_color" => ['required'],
+            "animal_foundplace" => ['required'],
+            "animal_remark" => [],
+            "animal_sex" => ['required'],
+            "animal_sterilization" => ['required'],
+            "shelter_address" => ['required'],
+            "shelter_name" => ['required'],
+            "shelter_tel" => ['required'],
+        ]);
+        $createNewCatData = AnimalData::create([
+            "animal_id" => $validatedData["animal_id"],
+            "album_file" => $validatedData["album_file"],
+            "animal_age" => $validatedData["animal_age"],
+            "animal_bacterin" => $validatedData["animal_bacterin"],
+            "animal_bodytype" => $validatedData["animal_bodytype"],
+            "animal_color" => $validatedData["animal_color"],
+            "animal_foundplace" => $validatedData["animal_foundplace"],
+            "animal_remark" => $validatedData["animal_remark"],
+            "animal_sex" => $validatedData["animal_sex"],
+            "animal_sterilization" => $validatedData["animal_sterilization"],
+            "shelter_address" => $validatedData["shelter_address"],
+            'short_address' => mb_substr($validatedData['shelter_address'], 0, 3, 'UTF-8'),
+            "shelter_name" => $validatedData["shelter_name"],
+            "shelter_tel" => $validatedData["shelter_tel"],
+        ])->save();
+        return dd($createNewCatData);
     }
     public function uploadImage(Request $request)
     {
