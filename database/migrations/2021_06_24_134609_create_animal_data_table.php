@@ -19,7 +19,7 @@ class CreateAnimalDataTable extends Migration
             $table->string('animal_sex',6);
             $table->string('animal_age',12);
             $table->string('animal_bodytype',6);
-            $table->string('animal_colour',16);
+            $table->string('animal_color',16);
             $table->string('animal_sterilization',9);
             $table->string('animal_bacterin',21);
             $table->string('animal_foundplace',100);
