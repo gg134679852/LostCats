@@ -40,6 +40,10 @@
       </tbody>
     </table>
   </div>
+   <PaginationComponent
+    :pagination-links="paginationLinks"
+    @get-pagination-url="getPaginationUrl"
+   />
   <CatInfoModal
   :cat-info-modal-switcher="catInfoModalSwitcher"
   :is-loading="isLoading"
@@ -54,9 +58,11 @@
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'
+import PaginationComponent from '../PaginationComponent.vue'
 export default {
   components: {
-    CatInfoModal
+    CatInfoModal,
+    PaginationComponent
   },
   data () {
     return ({
@@ -89,6 +95,7 @@ export default {
         animal_sex: '性別',
         animal_id: '編號'
       },
+      paginationLinks: [],
       isLoading: false,
       catInfoModalSwitcher: 'hide',
       modalType: ''
@@ -104,6 +111,7 @@ export default {
       this.$axiosHelper.get('api/animalData')
         .then((obj) => {
           this.catData = obj.data.responseData.catData.data
+          this.paginationLinks = obj.data.responseData.catData.links
           this.isLoading = false
         })
         .catch((err) => {
@@ -220,7 +228,16 @@ export default {
           break
         }
       }
+    },
+    getPaginationUrl (url) {
+      this.isLoading = true
+      this.$axiosHelper.get(url).then((obj) => {
+        this.catData = obj.data.responseData.catData.data
+        this.paginationLinks = obj.data.responseData.catData.links
+        this.isLoading = false
+      })
     }
+
   }
 }
 </script>
