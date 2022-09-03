@@ -135,14 +135,15 @@ class animalDataController extends Controller
 
         if ($responseData['success'] === true) {
             return response()->json([
-                'success' => 'true',
+                'icon' => 'success',
+                'message' => '上傳成功',
                 'image' => $responseData["data"]["link"],
             ]);
         } else {
             return response()->json([
-                'success' => 'false',
+                'icon' => 'error',
+                'message' => '上傳失敗，請排除錯誤',
             ]);
-
         }
     }
 
@@ -163,7 +164,7 @@ class animalDataController extends Controller
             "shelter_name" => ['required'],
             "shelter_tel" => ['required'],
         ]);
-        
+
         $id = $request->input('id');
 
         $updateCatData = AnimalData::where('id', $id)->update($validatedData);

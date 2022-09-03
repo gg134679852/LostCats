@@ -123,7 +123,10 @@ export default {
           headers: { withCredentials: true, Accept: 'application/json', Authorization: `Bearer ${this.$store.state.currentUser.token}` }
         })
           .then((obj) => {
-            this.catInfoData.album_file = obj.data.image
+            this.Toast.fire({
+              icon: obj.data.icon,
+              title: obj.data.message
+            })
             this.isLoading = false
           })
           .catch((err) => {

@@ -19727,7 +19727,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             Authorization: "Bearer ".concat(this.$store.state.currentUser.token)
           }
         }).then(function (obj) {
-          _this2.catInfoData.album_file = obj.data.image;
+          _this2.Toast.fire({
+            icon: obj.data.icon,
+            title: obj.data.message
+          });
+
           _this2.isLoading = false;
         })["catch"](function (err) {
           console.log(err);
