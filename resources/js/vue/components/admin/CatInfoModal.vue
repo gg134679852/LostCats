@@ -1,6 +1,7 @@
 <template>
   <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
     aria-hidden="true" ref="modal">
+    <loading-icon :active="isLoading" />
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
