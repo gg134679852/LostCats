@@ -103,7 +103,17 @@ class animalDataController extends Controller
             "shelter_name" => $validatedData["shelter_name"],
             "shelter_tel" => $validatedData["shelter_tel"],
         ])->save();
-        return dd($createNewCatData);
+        if ($createNewCatData) {
+            return response()->json([
+                'icon' => 'success',
+                'message' => '創建檔案成功',
+            ]);
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'message' => '創建檔案失敗，請排除錯誤',
+            ]);
+        }
     }
 
     public function uploadImage(Request $request)
@@ -153,8 +163,21 @@ class animalDataController extends Controller
             "shelter_name" => ['required'],
             "shelter_tel" => ['required'],
         ]);
-        $updateCatData = AnimalData::where('animal_id', $validatedData['animal_id'])->update($validatedData);
+        
+        $id = $request->input('id');
 
-        return dd($updateCatData);
+        $updateCatData = AnimalData::where('id', $id)->update($validatedData);
+
+        if ($updateCatData === 1) {
+            return response()->json([
+                'icon' => 'success',
+                'message' => '更新檔案成功',
+            ]);
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'message' => '更新檔案失敗，請排除錯誤',
+            ]);
+        }
     }
 }

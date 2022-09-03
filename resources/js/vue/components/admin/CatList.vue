@@ -136,7 +136,11 @@ export default {
       this.isLoading = true
       this.$axiosHelper.post('admin/animalData/createNewCatData', this.catInfoData)
         .then((obj) => {
-          console.log(obj)
+          this.Toast.fire({
+            icon: obj.data.icon,
+            title: obj.data.message
+          })
+          this.isLoading = false
         })
         .catch((err) => {
           if (err.response.data.errors) {
@@ -156,7 +160,10 @@ export default {
       this.isLoading = true
       this.$axiosHelper.put('admin/animalData/updateCatData', this.catInfoData)
         .then((obj) => {
-          console.log(obj)
+          this.Toast.fire({
+            icon: obj.data.icon,
+            title: obj.data.message
+          })
           this.isLoading = false
         })
         .catch((err) => {

@@ -19740,7 +19740,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.isLoading = true;
       this.$axiosHelper.post('admin/animalData/createNewCatData', this.catInfoData).then(function (obj) {
-        console.log(obj);
+        _this3.Toast.fire({
+          icon: obj.data.icon,
+          title: obj.data.message
+        });
+
+        _this3.isLoading = false;
       })["catch"](function (err) {
         if (err.response.data.errors) {
           var errorMessage = err.response.data.errors;
@@ -19760,7 +19765,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.isLoading = true;
       this.$axiosHelper.put('admin/animalData/updateCatData', this.catInfoData).then(function (obj) {
-        console.log(obj);
+        _this4.Toast.fire({
+          icon: obj.data.icon,
+          title: obj.data.message
+        });
+
         _this4.isLoading = false;
       })["catch"](function (err) {
         if (err.response.data.errors) {
