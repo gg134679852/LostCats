@@ -19,7 +19,7 @@ Route::get('/facebook/callback', 'userControllers@faceBookLoginCallBack');
 Route::post('/spgateway/callback', 'donateController@callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/logout', 'userControllers@logout');
+    Route::post('/logout', 'userControllers@logout');
     Route::post('{id}/addFavorite', 'userControllers@addFavorite');
     Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
     Route::get('/CurrentUser', 'userControllers@getCurrentUser');
