@@ -124,6 +124,10 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
+          this.Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請查看開發者工具'
+          })
           console.log(err)
           this.isLoading = false
         })
@@ -147,6 +151,10 @@ export default {
             this.isLoading = false
           })
           .catch((err) => {
+            this.Toast.fire({
+              icon: 'error',
+              title: '發生錯誤，請查看開發者工具'
+            })
             console.log(err)
             this.isLoading = false
           })
@@ -215,6 +223,10 @@ export default {
           this.isLoading = false
         })
         .catch((err) => {
+          this.Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請查看開發者工具'
+          })
           console.log(err)
           this.isLoading = false
         })
@@ -264,11 +276,20 @@ export default {
     },
     getPaginationUrl (url) {
       this.isLoading = true
-      this.$axiosHelper.get(url).then((obj) => {
-        this.catData = obj.data.responseData.catData.data
-        this.paginationLinks = obj.data.responseData.catData.links
-        this.isLoading = false
-      })
+      this.$axiosHelper.get(url)
+        .then((obj) => {
+          this.catData = obj.data.responseData.catData.data
+          this.paginationLinks = obj.data.responseData.catData.links
+          this.isLoading = false
+        })
+        .catch((err) => {
+          this.Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請查看開發者工具'
+          })
+          console.log(err)
+          this.isLoading = false
+        })
     }
 
   }

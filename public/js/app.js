@@ -19793,6 +19793,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.paginationLinks = obj.data.responseData.catData.links;
         _this.isLoading = false;
       })["catch"](function (err) {
+        _this.Toast.fire({
+          icon: 'error',
+          title: '發生錯誤，請查看開發者工具'
+        });
+
         console.log(err);
         _this.isLoading = false;
       });
@@ -19821,6 +19826,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this2.isLoading = false;
         })["catch"](function (err) {
+          _this2.Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請查看開發者工具'
+          });
+
           console.log(err);
           _this2.isLoading = false;
         });
@@ -19895,6 +19905,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this5.isLoading = false;
       })["catch"](function (err) {
+        _this5.Toast.fire({
+          icon: 'error',
+          title: '發生錯誤，請查看開發者工具'
+        });
+
         console.log(err);
         _this5.isLoading = false;
       });
@@ -19961,6 +19976,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$axiosHelper.get(url).then(function (obj) {
         _this6.catData = obj.data.responseData.catData.data;
         _this6.paginationLinks = obj.data.responseData.catData.links;
+        _this6.isLoading = false;
+      })["catch"](function (err) {
+        _this6.Toast.fire({
+          icon: 'error',
+          title: '發生錯誤，請查看開發者工具'
+        });
+
+        console.log(err);
         _this6.isLoading = false;
       });
     }
