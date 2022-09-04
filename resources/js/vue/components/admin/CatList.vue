@@ -33,7 +33,7 @@
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-primary btn-sm" @click.prevent="switcher(item.animal_id,'updateCatData')">編輯</button>
-              <button class="btn btn-outline-danger btn-sm" >刪除</button>
+              <button class="btn btn-outline-danger btn-sm" @click.prevent="switcher(item.animal_id,'deleteCatData')">刪除</button>
             </div>
           </td>
         </tr>
@@ -55,14 +55,22 @@
   @upload-new-cat-data="uploadNewCatData"
   @updateCatData="updateCatData"
   />
+  <DelModal
+  :del-modal-switcher="delModalSwitcher"
+  :animal-id="catInfoData.animal_id"
+  @delete-cat-data="deleteCatData"
+  @switcher="switcher"
+  />
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'
 import PaginationComponent from '../PaginationComponent.vue'
+import DelModal from '../DelModal.vue'
 export default {
   components: {
     CatInfoModal,
-    PaginationComponent
+    PaginationComponent,
+    DelModal
   },
   data () {
     return ({
@@ -98,6 +106,7 @@ export default {
       paginationLinks: [],
       isLoading: false,
       catInfoModalSwitcher: 'hide',
+      delModalSwitcher: 'hide',
       modalType: ''
     })
   },
@@ -191,6 +200,25 @@ export default {
           }
         })
     },
+    deleteCatData (id) {
+      const index = this.catData.findIndex((obj) => obj.animal_id === id)
+      this.isLoading = true
+      this.$axiosHelper.delete(`admin/animalData/deleteCatData?id=${id}`)
+        .then((obj) => {
+          this.Toast.fire({
+            icon: obj.data.icon,
+            title: obj.data.message
+          })
+          if (obj.data.icon === 'success') {
+            this.catData.splice(index, 1)
+          }
+          this.isLoading = false
+        })
+        .catch((err) => {
+          console.log(err)
+          this.isLoading = false
+        })
+    },
     switcher (id, type) {
       if (id !== 'none') {
         const index = this.catData.findIndex((obj) => obj.animal_id === id)
@@ -199,17 +227,22 @@ export default {
       }
       switch (type) {
         case 'createNewCatData': {
-          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.catInfoModalSwitcher = 'show'
           this.modalType = 'createNewCatData'
           break
         }
         case 'updateCatData': {
-          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.catInfoModalSwitcher = 'show'
           this.modalType = 'updateCatData'
           break
         }
+        case 'deleteCatData' : {
+          this.delModalSwitcher = 'show'
+          break
+        }
         case 'closeModal': {
-          this.catInfoModalSwitcher === 'hide' ? (this.catInfoModalSwitcher = 'show') : (this.catInfoModalSwitcher = 'hide')
+          this.catInfoModalSwitcher = 'hide'
+          this.delModalSwitcher = 'hide'
           this.catInfoData = {
             animal_id: '',
             album_file: '',

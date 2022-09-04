@@ -181,4 +181,23 @@ class animalDataController extends Controller
             ]);
         }
     }
+
+    public function deleteCatData(Request $request)
+    {
+        $id = $request->input('id');
+        $deleteCatData = AnimalData::where('animal_id', $id)->delete();
+
+        if ($deleteCatData === 1) {
+            return response()->json([
+                'icon' => 'success',
+                'message' => '刪除檔案成功',
+            ]);
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'message' => '刪除檔案失敗，請排除錯誤',
+            ]);
+        }
+
+    }
 }

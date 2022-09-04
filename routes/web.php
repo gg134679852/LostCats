@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
     Route::post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
     Route::put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
+    Route::delete('admin/animalData/deleteCatData', 'animalDataController@deleteCatData');
 });
 
 Route::get('/{any}', function () {
