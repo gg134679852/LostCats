@@ -19814,9 +19814,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         responseData.append('image', value);
         this.$axiosHelper.post('admin/animalData/uploadImage', responseData, {
           headers: {
-            withCredentials: true,
-            Accept: 'application/json',
-            Authorization: "Bearer ".concat(this.$store.state.currentUser.token)
+            Accept: 'application/json'
           }
         }).then(function (obj) {
           _this2.Toast.fire({
@@ -19824,6 +19822,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             title: obj.data.message
           });
 
+          _this2.catInfoData.album_file = obj.data.image;
           _this2.isLoading = false;
         })["catch"](function (err) {
           _this2.Toast.fire({

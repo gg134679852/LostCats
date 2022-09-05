@@ -141,13 +141,14 @@ export default {
         const responseData = new FormData()
         responseData.append('image', value)
         this.$axiosHelper.post('admin/animalData/uploadImage', responseData, {
-          headers: { withCredentials: true, Accept: 'application/json', Authorization: `Bearer ${this.$store.state.currentUser.token}` }
+          headers: { Accept: 'application/json' }
         })
           .then((obj) => {
             this.Toast.fire({
               icon: obj.data.icon,
               title: obj.data.message
             })
+            this.catInfoData.album_file = obj.data.image
             this.isLoading = false
           })
           .catch((err) => {
