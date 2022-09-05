@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
-
 class userControllers extends Controller
 {
     public function singup(Request $request)
@@ -19,14 +18,14 @@ class userControllers extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
         ]);
 
         User::create([
             'name' => $validateData['name'],
             'email' => $validateData['email'],
             'password' => Hash::make($validateData['password']),
-            'isAdmin'=> false
+            'isAdmin' => false,
         ]);
     }
     public function login(Request $request)
@@ -51,13 +50,15 @@ class userControllers extends Controller
             ]);
         }
     }
-    public function faceBookLogin(){
-      return Socialite::driver('facebook')->redirect();
+    public function faceBookLogin()
+    {
+        return Socialite::driver('facebook')->redirect();
     }
-    public function faceBookLoginCallBack(){
-      $user = Socialite::driver('facebook')->user();
+    public function faceBookLoginCallBack()
+    {
+        $user = Socialite::driver('facebook')->user();
 
-      return response(dump($user));
+        return response(dump($user));
     }
     public function logout()
     {
@@ -84,17 +85,20 @@ class userControllers extends Controller
         $lastData = AnimalData::all()->last();
 
         if ($id > $lastData['id'] || $id <= -1) {
-            return response([
-                'status' => 'error',
-            ], 401);
+            return response()->json([
+                'icon' => 'error',
+                'message' => '找不到編號，請重新操作',
+            ]);
         } else {
             FavoriteCat::create([
                 'user_id' => $user['id'],
                 'animal_data_id' => $id,
             ]);
-            return response([
-                'status' => 'success',
-            ], 201);
+            return response()->json([
+                'icon' => 'success',
+                'message' => '已加入最愛',
+            ]);
+
         }
     }
     public function removeFavorite($id)
@@ -104,15 +108,16 @@ class userControllers extends Controller
         $cat = FavoriteCat::where('user_id', $user['id'])->get()->firstWhere('animal_data_id', $id);
 
         if ($cat) {
-            $cat->delete();
-            return response([
-                'status' => 'success',
-            ], 201);
-        } else {
-            return response([
-                'status' => 'error',
-            ], 401);
+            return response()->json([
+                'icon' => 'success',
+                'message' => '成功刪除',
+            ]);
 
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'message' => '刪除失敗，請重新操作',
+            ]);
         }
     }
 }
