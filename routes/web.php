@@ -24,10 +24,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
     Route::get('/CurrentUser', 'userControllers@getCurrentUser');
     Route::post('/spgateway/donate', 'donateController@Donate');
-    Route::post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
-    Route::post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
-    Route::put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
-    Route::delete('admin/animalData/deleteCatData', 'animalDataController@deleteCatData');
+    Route::middleware('adminChecker')->post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
+    Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
+    Route::middleware('adminChecker')->put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
+    Route::middleware('adminChecker')->delete('admin/animalData/deleteCatData', 'animalDataController@deleteCatData');
 });
 
 Route::get('/{any}', function () {
