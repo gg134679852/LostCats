@@ -20,10 +20,10 @@ Route::post('/spgateway/callback', 'donateController@callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', 'userControllers@logout');
-    Route::post('{id}/addFavorite', 'userControllers@addFavorite');
-    Route::delete('{id}/removeFavorite', 'userControllers@removeFavorite');
     Route::get('/CurrentUser', 'userControllers@getCurrentUser');
-    Route::post('/spgateway/donate', 'donateController@Donate');
+    Route::middleware('userChecker')->post('{id}/addFavorite', 'userControllers@addFavorite');
+    Route::middleware('userChecker')->delete('{id}/removeFavorite', 'userControllers@removeFavorite');
+    Route::middleware('userChecker')->post('/spgateway/donate', 'donateController@Donate');
     Route::middleware('adminChecker')->post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
     Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
     Route::middleware('adminChecker')->put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
