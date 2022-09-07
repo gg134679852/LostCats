@@ -127,3 +127,12 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+img {
+  min-width: 100%;
+  height: auto;
+}
+
+*,*::before,*::after{
+  box-sizing: border-box;
+}
