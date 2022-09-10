@@ -1,9 +1,10 @@
 <template>
-  <NavBarVue />
- <h1>home</h1>
+<div class="banner">
+<h1>找到屬於你的，喵星人</h1>
+</div>
+<NavBarVue />
 </template>
 <script>
-// @ is an alias to /src
 import NavBarVue from '../components/NavBar.vue'
 export default {
   components: {
@@ -11,3 +12,6 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  @import'../scss/HomeView.scss';
+</style>
