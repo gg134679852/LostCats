@@ -20238,7 +20238,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "navbar navbar-expand-lg navbar-light bg-light"
+  "class": "navbar navbar-expand-lg navbar-light bg-light border-bottom"
 };
 var _hoisted_2 = {
   "class": "container-fluid"
@@ -21156,6 +21156,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _public_img_silvana_carlos_RThwIDHHV90_unsplash_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../public/img/silvana-carlos-RThwIDHHV90-unsplash.jpg */ "./public/img/silvana-carlos-RThwIDHHV90-unsplash.jpg");
+/* harmony import */ var _public_img_carolina_sanchez_Lh_TJTQVPjM_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../public/img/carolina-sanchez-Lh_TJTQVPjM-unsplash.jpg */ "./public/img/carolina-sanchez-Lh_TJTQVPjM-unsplash.jpg");
+/* harmony import */ var _public_img_japheth_mast_Ga6z9QD8yvw_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../public/img/japheth-mast-Ga6z9QD8yvw-unsplash.jpg */ "./public/img/japheth-mast-Ga6z9QD8yvw-unsplash.jpg");
+
+
+
 
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -21164,7 +21170,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ㄎㄛ ");
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"benefit-content-title\"><h2>『 變成貓奴，好處多多 』</h2></div><div class=\"benefit-content__wrap\"><div class=\"benefit-content\"><img src=\"" + _public_img_silvana_carlos_RThwIDHHV90_unsplash_jpg__WEBPACK_IMPORTED_MODULE_1__.default + "\" alt=\"喵星人與人類\"><hr><div class=\"benefit-content__text\"><h2>緩解身心壓力和焦慮</h2><br><p>根據科學家表示,如果每天花15到30分鐘撫摸貓咪或是和貓咪互動,我們將會更快樂。與狗狗相比,貓咪是較低維護的寵物,意味著飼養貓的壓力較小,對於無法花大量時間陪伴的人,貓咪會是理想的寵物喔!</p></div></div><div class=\"benefit-content\"><img src=\"" + _public_img_carolina_sanchez_Lh_TJTQVPjM_unsplash_jpg__WEBPACK_IMPORTED_MODULE_2__.default + "\" alt=\"喵星人與人類\"><hr><div class=\"benefit-content__text\"><h2>貓咪滿足陪伴的需求</h2><br><p> 貓咪看似冷淡無情，其實他們可是非常有感情的喔！貓咪可以滿足我們陪伴的需求減少心靈孤單之外，貓咪也會讓人感受到類似伴侶的陪伴。</p></div></div><div class=\"benefit-content\"><img src=\"" + _public_img_japheth_mast_Ga6z9QD8yvw_unsplash_jpg__WEBPACK_IMPORTED_MODULE_3__.default + "\" alt=\"喵星人與人類\"><hr><div class=\"benefit-content__text\"><h2>貓咪撫平我們心靈的傷痛</h2><br><p>失去摯愛感到令人難以置信的痛苦，但最好的應對方法是擁有一隻寵物！貓咪已被證明可以幫助人們更快地克服失去的痛苦，並且表現出較少的身體疼痛。</p></div></div></div>", 2);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_NavBarVue = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("NavBarVue");
@@ -23651,7 +23657,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_public_img_cat2_webp__WEBPACK_IMPORTED_MODULE_2__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".banner {\n  width: 100vw;\n  height: 100vh;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-position: -265px 0px;\n  background-repeat: no-repeat;\n  background-size: cover;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.banner h1 {\n  color: azure;\n  font-size: 1.25rem;\n  padding: 25px;\n  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".banner {\n  width: 100vw;\n  height: 100vh;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.banner h1 {\n  color: azure;\n  font-size: 1.25rem;\n  padding: 25px;\n  background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));\n}\n.benefit-content__wrap {\n  width: 90%;\n  outline: 1px solid red;\n  margin: 10% auto;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  flex-wrap: wrap;\n}\n.benefit-content-title {\n  outline: 1px solid red;\n  padding-top: 25%;\n  padding-bottom: 25%;\n  text-align: center;\n  font-size: 1.5rem;\n  font-weight: bolder;\n}\n.benefit-content {\n  align-items: center;\n  margin: 5%;\n}\n.benefit-content img {\n  display: block;\n  width: 100%;\n  height: 100%;\n}\n.benefit-content__text h2 {\n  text-align: center;\n}\n.benefit-content__text p {\n  text-align: start;\n  line-height: 26px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23826,6 +23832,21 @@ module.exports = function (url, options) {
 
 /***/ }),
 
+/***/ "./public/img/carolina-sanchez-Lh_TJTQVPjM-unsplash.jpg":
+/*!**************************************************************!*\
+  !*** ./public/img/carolina-sanchez-Lh_TJTQVPjM-unsplash.jpg ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/carolina-sanchez-Lh_TJTQVPjM-unsplash.jpg?e88e302bd93f3370f152ed46dd8afc28");
+
+/***/ }),
+
 /***/ "./public/img/cat2.webp":
 /*!******************************!*\
   !*** ./public/img/cat2.webp ***!
@@ -23838,6 +23859,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/cat2.webp?e5ee41f1458467dbbbfa440ddec31475");
+
+/***/ }),
+
+/***/ "./public/img/japheth-mast-Ga6z9QD8yvw-unsplash.jpg":
+/*!**********************************************************!*\
+  !*** ./public/img/japheth-mast-Ga6z9QD8yvw-unsplash.jpg ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/japheth-mast-Ga6z9QD8yvw-unsplash.jpg?2f9b55b938094b9c130a590b4c5ffbab");
+
+/***/ }),
+
+/***/ "./public/img/silvana-carlos-RThwIDHHV90-unsplash.jpg":
+/*!************************************************************!*\
+  !*** ./public/img/silvana-carlos-RThwIDHHV90-unsplash.jpg ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/silvana-carlos-RThwIDHHV90-unsplash.jpg?0b389d17f434971a5224dcd7e63f93ec");
 
 /***/ }),
 
