@@ -83,7 +83,6 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  background-color: #f6f7f8;
   font-family: "Noto Sans TC", sans-serif;
 }
 
@@ -104,6 +103,7 @@ section {
 
 body {
   line-height: 1;
+  background-color: #f6f7f8;
 }
 
 ol,

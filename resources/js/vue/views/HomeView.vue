@@ -36,6 +36,12 @@
     </div>
   </div>
 </div>
+<div class="catListLink__wrap">
+  <div class="catListLink__content">
+     <h2>以領養代替購買，開始尋找喵星人吧</h2>
+ <button type="button" class="btn btn-success">開始</button>
+  </div>
+</div>
 </template>
 <script>
 import NavBarVue from '../components/NavBar.vue'

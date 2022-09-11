@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   background-image: url('../../../../public/img/cat2.webp');
-  background-position:center;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -22,7 +22,6 @@
 
 .benefit-content__wrap {
   width: 90%;
-  outline: 1px solid red;
   margin: 10% auto;
   display: flex;
   justify-content: space-between;
@@ -31,7 +30,6 @@
 }
 
 .benefit-content-title {
-  outline: 1px solid red;
   padding-top: 25%;
   padding-bottom: 25%;
   text-align: center;
@@ -42,6 +40,7 @@
 .benefit-content {
   align-items: center;
   margin: 5%;
+
   & img {
     display: block;
     width: 100%;
@@ -57,6 +56,30 @@
     & p {
       text-align: start;
       line-height: 26px;
+    }
+  }
+}
+
+.catListLink__wrap {
+  background-image: url('../../../../public/img/humberto-arellano-N_G2Sqdy9QY-unsplash.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+
+}
+
+.catListLink {
+  &__content {
+    padding: 150px 10px;
+    background: linear-gradient(180deg,
+        rgba(0, 0, 0, .3),
+        rgba(0, 0, 0, .3));
+        text-align: center;
+
+    & h2 {
+       color: azure;
+       margin-bottom: 15px;
     }
   }
 }
