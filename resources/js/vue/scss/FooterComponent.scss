@@ -1,0 +1,11 @@
+footer {
+  height: 100px;
+  background-color: #212529;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & h2 {
+    color: azure;
+  }
+}
