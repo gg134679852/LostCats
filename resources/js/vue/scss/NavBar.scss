@@ -111,7 +111,23 @@ nav {
     &__linkList {
       &__desktop {
         display: block;
+        width: 40%;
+        padding: 25px;
+
+        & ul {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          & li a {
+            color: azure;
+          }
+        }
       }
+    }
+
+    &__mobile {
+      display: none;
     }
   }
 }

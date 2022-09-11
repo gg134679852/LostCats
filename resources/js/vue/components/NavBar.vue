@@ -9,13 +9,13 @@
     <div class="navbar__mobile__burger-button"></div>
   </div>
 <div class="navbar__linkList__desktop">
-  <ul class="navbar-nav">
-    <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">喵星人列表</a>
-        </li>
+  <ul>
     <li>
-   <a class="nav-link" aria-current="page" href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
-          <a class="nav-link" aria-current="page" href="#" v-else>登陸頁面</a>
+     <a aria-current="page" href="#">喵星人列表</a>
+    </li>
+    <li>
+     <a href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
+     <a href="#" v-else>登陸</a>
     </li>
   </ul>
 </div>
