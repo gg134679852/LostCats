@@ -5,6 +5,9 @@
 <NavBarVue />
 <div class="benefit-content-title">
 <h2>『 變成貓奴，好處多多 』</h2>
+<div class="benefit-content-title__image">
+  <img src="../../../../public/img/manja-vitolic-gKXKBY-C-Dk-unsplash.webp">
+</div>
 </div>
 <div class="benefit-content__wrap">
   <div class="benefit-content">
