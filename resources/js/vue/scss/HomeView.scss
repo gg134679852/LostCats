@@ -77,16 +77,14 @@
   }
 }
 
-.catListLink__wrap {
+.singUpLink__wrap {
   background-image: url('../../../../public/img/humberto-arellano-N_G2Sqdy9QY-unsplash.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-
 }
-
-.catListLink {
+.singUpLink {
   &__content {
     padding: 150px 10px;
     background: linear-gradient(180deg,
@@ -97,6 +95,34 @@
     & h2 {
       color: azure;
       margin-bottom: 15px;
+      font-size: 2rem;
+    }
+  }
+}
+.userComment__title {
+  text-align: center;
+  font-size: 1.50rem;
+  margin-top: 10px;
+}
+
+.userComment {
+  margin-top: 20px;
+
+  & li {
+    border: 1px solid rgb(175, 173, 173);
+    border-radius: 1.5%;
+    text-align: center;
+    padding: 30px;
+    margin: 5% auto;
+    width: 95%;
+
+    & .userComment__comment {
+      & .userComment__comment__warp {
+        & p {
+          line-height: 26px;
+          text-align: start;
+        }
+      }
     }
   }
 }
@@ -123,43 +149,55 @@
       margin-bottom: 30%;
     }
   }
+.benefit-content {
+  & li {
+    display: flex;
+    align-items: center;
+  }
+
+  & li:nth-child(1),
+  & li:nth-child(3) {
+    flex-direction: row-reverse;
+  }
+
+  &__image {
+    width: 50%;
+  }
+
+  &__text {
+    width: 50%;
+
+    &__wrap {
+      padding: 16%;
+
+      & h2 {
+        font-size: 1.3rem;
+      }
+
+      & p {
+        font-size: 24px;
+      }
+    }
+  }
+}
+  .userComment {
+    display: flex;
+
+    & li {
+      width: 30;
+      margin: 10px;
+      & .userComment__image{
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 992px) {
   .benefit-content-title {
-      &__image {
-        margin-bottom: 28%;
-      }
-    }
-  .benefit-content {
-    & li {
-      display: flex;
-      align-items: center;
-    }
-
-    & li:nth-child(1),
-    & li:nth-child(3) {
-      flex-direction: row-reverse;
-    }
-
     &__image {
-      width: 45%;
-    }
-
-    &__text {
-      width: 50%;
-
-      &__wrap {
-        padding: 16%;
-
-        & h2 {
-          font-size: 1rem;
-        }
-
-        & p {
-          font-size: 20px;
-        }
-      }
+      margin-bottom: 28%;
     }
   }
 }

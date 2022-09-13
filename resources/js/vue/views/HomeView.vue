@@ -50,11 +50,55 @@
     </li>
   </ul>
 </div>
-<div class="catListLink__wrap">
-  <div class="catListLink__content">
-     <h2>以領養代替購買，開始尋找喵星人吧</h2>
- <button type="button" class="btn btn-success">開始</button>
+<div class="singUpLink__wrap">
+  <div class="singUpLink__content">
+     <h2>註冊會員</h2>
+     <h2>收藏喜歡的喵星人</h2>
+ <button type="button" class="btn btn-success">註冊</button>
   </div>
+</div>
+<div class="userComment__title">
+  <h2>使用者感想</h2>
+</div>
+<div class="userComment__warp">
+  <ul class="userComment">
+    <li>
+    <div class="userComment__image">
+      <img src="../../../../public/img/avatar.png">
+    </div>
+    <div class="userComment__comment">
+      <div class="userComment__comment__warp">
+        <h2>Jack</h2>
+          <hr>
+         <p>謝謝這個平台，可以讓我經由捐獻來幫助台灣各地的貓星人，支持以收養代替購買</p>
+      </div>
+    </div>
+  </li>
+     <li>
+    <div class="userComment__image">
+      <img src="../../../../public/img/avatar.png">
+    </div>
+    <div class="userComment__comment">
+      <div class="userComment__comment__warp">
+        <h2>Ken</h2>
+          <hr>
+         <p>謝謝這個網站，讓我找到命中注定的喵星人，變成貓奴感覺真好！</p>
+      </div>
+    </div>
+  </li>
+     <li>
+    <div class="userComment__image">
+      <img src="../../../../public/img/avatar.png">
+    </div>
+    <div class="userComment__comment">
+      <div class="userComment__comment__warp">
+        <h2>Jerry</h2>
+          <hr>
+         <p>多虧了收藏功能，可以讓我追蹤想收養的的貓咪的狀態，搬家之後有了空間，終於可以變成貓奴了</p>
+      </div>
+    </div>
+  </li>
+  </ul>
 </div>
 </template>
 <script>
