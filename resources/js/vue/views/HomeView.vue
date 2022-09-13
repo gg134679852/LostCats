@@ -6,7 +6,7 @@
 <div class="benefit-content-title">
 <h2>『 變成貓奴，好處多多 』</h2>
 <div class="benefit-content-title__image">
-  <img data-aos="animate__animated animate__backInUp" src="../../../../public/img/manja-vitolic-gKXKBY-C-Dk-unsplash.webp">
+  <img data-aos="fade-up" data-aos-anchor-placement="center-bottom" src="../../../../public/img/manja-vitolic-gKXKBY-C-Dk-unsplash.webp">
 </div>
 </div>
 <div class="benefit-content__wrap">
