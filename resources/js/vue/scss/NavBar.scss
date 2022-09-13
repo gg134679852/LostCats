@@ -13,6 +13,7 @@ nav {
   &__web-name {
     & h3 {
       color: azure;
+      padding-left: 10px;
     }
   }
 
@@ -109,6 +110,11 @@ nav {
 
 @media screen and (min-width: 768px) {
   .navbar {
+    &__web-name {
+        & h3 {
+         font-size: 1.25rem;
+        }
+      }
     &__linkList {
       &__desktop {
         display: block;
@@ -122,6 +128,7 @@ nav {
 
           & li a {
             color: azure;
+            font-size: 1.25rem;
           }
         }
       }
