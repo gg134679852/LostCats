@@ -5,6 +5,8 @@ import store from './vue/store'
 import VueAxios from 'vue-axios'
 import Loading from 'vue3-loading-overlay'
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
+import '../../node_modules/aos/dist/aos.css'
+import 'animate.css'
 import { axiosHelper } from './vue/utils/helpers'
 
 require('./bootstrap')

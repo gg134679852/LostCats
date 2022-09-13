@@ -1,12 +1,12 @@
 <template>
 <div class="banner">
-<h1>找到屬於你的，喵星人</h1>
+<h1 class="animate__animated animate__bounceIn">找到屬於你的，喵星人</h1>
 </div>
 <NavBarVue />
 <div class="benefit-content-title">
 <h2>『 變成貓奴，好處多多 』</h2>
 <div class="benefit-content-title__image">
-  <img src="../../../../public/img/manja-vitolic-gKXKBY-C-Dk-unsplash.webp">
+  <img data-aos="animate__animated animate__backInUp" src="../../../../public/img/manja-vitolic-gKXKBY-C-Dk-unsplash.webp">
 </div>
 </div>
 <div class="benefit-content__wrap">
@@ -48,9 +48,13 @@
 </template>
 <script>
 import NavBarVue from '../components/NavBar.vue'
+import AOS from 'aos'
 export default {
   components: {
     NavBarVue
+  },
+  mounted () {
+    AOS.init()
   }
 }
 </script>
