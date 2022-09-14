@@ -10,6 +10,9 @@
   </div>
 <div class="navbar__linkList__desktop">
   <ul>
+     <li>
+      <a class="nav-link" aria-current="page" href="#">關於我們</a>
+    </li>
     <li>
      <a aria-current="page" href="#">喵星人列表</a>
     </li>
@@ -21,12 +24,15 @@
 </div>
 <div class="navbar__linkList__mobile" :class="{open:isOpen}">
   <ul class="navbar-nav">
+     <li>
+      <a class="nav-link" aria-current="page" href="#">關於我們</a>
+    </li>
     <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">喵星人列表</a>
-        </li>
+      <a class="nav-link" aria-current="page" href="#">喵星人列表</a>
+    </li>
     <li>
-   <a class="nav-link" aria-current="page" href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
-          <a class="nav-link" aria-current="page" href="#" v-else>登陸頁面</a>
+      <a class="nav-link" aria-current="page" href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
+      <a class="nav-link" aria-current="page" href="#" v-else>登陸頁面</a>
     </li>
   </ul>
 </div>
