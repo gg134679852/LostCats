@@ -3,11 +3,16 @@ import HomeView from '../views/HomeView.vue'
 import LoginPage from '../views/LoginPage.vue'
 import DashBoard from '../views/admin/DashBoard.vue'
 import CatList from '../components/admin/CatList.vue'
+import AboutUs from '../views/AboutUs.vue'
 import store from '../store/index'
 const routes = [
   {
     path: '/',
     component: HomeView
+  },
+  {
+    path: '/aboutUs',
+    component: AboutUs
   },
   {
     path: '/login',
