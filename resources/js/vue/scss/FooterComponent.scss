@@ -1,11 +1,46 @@
 footer {
-  height: 100px;
   background-color: #212529;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
 
-  & h2 {
-    color: azure;
+.footer {
+  &__wrap {
+    margin: 0 auto;
+  }
+
+  &__links {
+    padding: 2%;
+
+    & li a {
+      color: azure;
+      font-size: 1rem;
+    }
+
+    & ul {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+
+  &__shelterInfo {
+    padding: 5%;
+
+    & h2 {
+      color: azure;
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
+  }
+
+  &__socialLinks {
+    & ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+    & li{
+        color: azure;
+        font-size: 1rem;
+      }
   }
 }
