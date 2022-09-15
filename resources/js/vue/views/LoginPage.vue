@@ -1,36 +1,89 @@
 <template>
-  <div class="container mt-5">
-    <loading-icon :active="isLoading" />
-    <form class="row justify-content-center" @submit.stop.prevent="signIn">
+   <NavBarVue />
+  <loading-icon :active="isLoading" />
+    <div class="formBody">
+    <div class="formBody__login" v-if="formType === 'login'">
+      <div class="formBody__login__form">
+       <form class="row justify-content-center" @submit.stop.prevent="login">
       <div class="col-md-6">
-        <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
         <div class="mb-2">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus
+          <label for="inputEmail" class="form-label">電子郵件</label>
+          <input type="email" id="inputEmail" class="form-control" required autofocus
             v-model="loginData.email" />
         </div>
         <div class="mb-2">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required
+          <label for="inputPassword" class="form-label">密碼</label>
+          <input type="password" id="inputPassword" class="form-control" required
             v-model="loginData.password" />
         </div>
-
-        <div class="text-end mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit" @click.stop.prevent="login">登入</button>
+        <div class="text-center mt-4">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
         </div>
       </div>
     </form>
-  </div>
+    </div>
+    <div class="formBody__login__bottom">
+       <h2>還不是會員？</h2>
+       <a class="formBody__login__button" href="#"  @click.stop.prevent="switcher('singUp')">註冊</a>
+    </div>
+    </div>
+    <div class="formBody__singUp" v-else-if="formType === 'singUp'">
+        <div class="formBody__singUp__form">
+       <form class="row justify-content-center" @submit.stop.prevent="singUp">
+      <div class="col-md-6">
+          <div class="mb-2">
+          <label for="inputName" class="form-label">名稱</label>
+          <input type="text" id="inputName" class="form-control"  required autofocus
+            v-model="singUpData.name" />
+          </div>
+        <div class="mb-2">
+          <label for="inputEmail" class="form-label">電子郵件</label>
+          <input type="email" id="inputEmail" class="form-control"  required autofocus
+            v-model="singUpData.email" />
+        </div>
+        <div class="mb-2">
+          <label for="inputPassword" class="form-label">密碼</label>
+          <input type="password" id="inputPassword" class="form-control"  required
+            v-model="singUpData.password" />
+        </div>
+         <div class="mb-2">
+          <label for="inputPassword" class="form-label">確認密碼</label>
+          <input type="password" id="inputPassword" class="form-control"  required
+            v-model="singUpData.password_confirmation" />
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">註冊</button>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div class="formBody__singUp__bottom">
+       <h2>已經是會員？</h2>
+       <a class="formBody__singUp__button" href="#"  @click.stop.prevent="switcher('login')">登陸</a>
+    </div>
+     </div>
+    </div>
 </template>
 <script>
+import NavBarVue from '../components/NavBar.vue'
 export default {
+  components: {
+    NavBarVue
+  },
   data () {
     return {
       loginData: {
         email: '',
         password: ''
       },
-      isLoading: false
+      singUpData: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      },
+      isLoading: false,
+      formType: 'login'
     }
   },
   inject: ['Toast'],
@@ -52,7 +105,50 @@ export default {
           }
           this.isLoading = false
         })
+    },
+    singUp () {
+      this.isLoading = true
+      this.$axiosHelper.post('singup', {
+        name: this.singUpData.name,
+        email: this.singUpData.email,
+        password: this.singUpData.password,
+        password_confirmation: this.singUpData.password_confirmation
+      })
+        .then((obj) => {
+          this.Toast.fire({
+            icon: 'success',
+            title: '成功註冊'
+          })
+          this.formType = 'login'
+        })
+        .catch(error => {
+          if (error.response) {
+            const input = ['password', 'email', 'name']
+            input.forEach((input) => {
+              this.isLoading = false
+              this.Toast.fire({
+                icon: 'warning',
+                title: error.response.data.errors[input][0]
+              })
+            })
+          }
+        })
+    },
+    switcher (type) {
+      switch (type) {
+        case 'singUp':{
+          this.formType = 'singUp'
+          break
+        }
+        case 'login':{
+          this.formType = 'login'
+          break
+        }
+      }
     }
   }
 }
 </script>
+<style lang="scss">
+  @import '../scss/LoginPage.scss';
+</style>

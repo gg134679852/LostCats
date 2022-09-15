@@ -1,0 +1,69 @@
+
+.formBody {
+  padding: 200px 0;
+  outline: 1px solid red;
+
+  &__login,
+  &__singUp {
+    width: 95%;
+    border: 1px solid rgb(175, 173, 173);
+    border-radius: 1.2%;
+    margin: 0 auto;
+    padding: 20px 0;
+
+    &__form {
+      width: 85%;
+      margin: 0 auto;
+    }
+
+    &__bottom {
+      display: flex;
+      width: 63%;
+      margin: 0 auto;
+      margin-top: 20px;
+
+      & h2,
+      & a {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+}
+
+@media screen and (min-width: 667px) {
+  .formBody {
+
+    &__login,
+    &__singUp {
+      &__bottom {
+        width: 41%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .formBody {
+    padding: 350px 0;
+    &__login,
+    &__singUp {
+      width: 70%;
+      &__bottom {
+        width: 37%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .formBody {
+    &__login,
+    &__singUp {
+      width: 35%;
+      &__bottom {
+        width: 37%;
+      }
+    }
+  }
+}
