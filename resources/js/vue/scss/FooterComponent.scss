@@ -5,42 +5,11 @@ footer {
 .footer {
   &__wrap {
     margin: 0 auto;
-  }
-
-  &__links {
-    padding: 2%;
-
-    & li a {
-      color: azure;
-      font-size: 1rem;
-    }
-
-    & ul {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-  }
-
-  &__shelterInfo {
-    padding: 5%;
-
+    padding: 20px;
     & h2 {
+      text-align: center;
       color: azure;
-      font-size: 1rem;
-      margin-bottom: 3px;
+      font-size: 1.25rem;
     }
-  }
-
-  &__socialLinks {
-    & ul {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
-    & li{
-        color: azure;
-        font-size: 1rem;
-      }
   }
 }
