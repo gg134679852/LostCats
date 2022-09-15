@@ -1,15 +1,19 @@
 .aboutUs-content {
   &__banner {
+    height: 50vh;
     background-image: url('../../../../public/img/mikhail-vasilyev-Qmox1MkYDnY-unsplash.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    position: relative;
 
     &__title {
-      padding: 25%;
+      position: absolute;
+      top: 40%;
+      left: 17%;
+
       & h2 {
-        width: 30%;
-        padding:9.5%;
+        padding: 20px;
         text-align: center;
         color: azure;
         font-size: 1.25rem;
@@ -20,22 +24,37 @@
     }
   }
 
-  &__warp {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 20%;
-    margin-bottom: 50%;
+  &__banner__bottom {
+    height: 50vh;
+      background-image: url('../../../../public/img/emre-153_VPk1NZQ-unsplash.jpg');
+      background-repeat: no-repeat;
+      background-position:center;
+      background-size:cover;
+      position: relative;
+      &__title {
+      height: 100%;
+      background: linear-gradient(180deg,
+            rgba(0, 0, 0, .3),
+            rgba(0, 0, 0, .3));
+            padding-top: 30px;
+          & h2 {
+            text-align: center;
+            color: azure;
+            font-size: 1.25rem;
+          }
+        }
   }
 
-  &__top {
+  &__wrap {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
     &__left {
-      width: auto;
-
-      & img {
-        height: 100%;
-      }
+      width: 85%;
+      margin: 0 auto;
     }
-
     &__right {
       padding: 10%;
 
@@ -50,24 +69,14 @@
         text-align: start;
       }
     }
-  }
-
-  &__bottom {
-    & h2 {
-      margin-top: 20px;
-      text-align: center;
-    }
-  }
 }
-@media screen and (min-width: 667px) {
+
+@media screen and (min-width: 992px) {
   .aboutUs-content {
-    &__bottom {
-        &__left {
-          & iframe{
-            width: 100%;
-           height: 400px;
-          }
-        }
-      }
+   display: flex;
+   justify-content: space-around;
+   &__left {
+    width: 100%;
+   }
   }
 }
