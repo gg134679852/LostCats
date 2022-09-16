@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Http;
 
 class animalDataController extends Controller
 {
-    public function getAnimalData()
+    public function getAnimalData(Request $request)
     {
         $short_address = AnimalData::select('short_address')->get()->toArray();
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
-        $responseData = AnimalData::paginate(18);
+        $requestData = $request->all();
+        $dataLength =  $requestData['dataLength'];
+        $responseData = AnimalData::paginate($dataLength);
         $shortAddress = [];
         $color = [];
 
