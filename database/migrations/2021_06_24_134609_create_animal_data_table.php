@@ -23,11 +23,9 @@ class CreateAnimalDataTable extends Migration
             $table->string('animal_sterilization',9);
             $table->string('animal_bacterin',21);
             $table->string('animal_foundplace',100);
-            $table->string('shelter_name',100);
             $table->string('album_file')->nullable($value = true);
-            $table->string('shelter_address');
-            $table->string('shelter_tel',15);
-            $table->string('animal_remark',100)->nullable($value = true);
+            $table->text('animal_remark')->nullable($value = true);
+            $table->foreignId('shelter_id')->constrained('shelter_list');
             $table->timestamps();
         });
     }

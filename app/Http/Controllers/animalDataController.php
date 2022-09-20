@@ -15,7 +15,7 @@ class animalDataController extends Controller
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
         $requestData = $request->all();
         $dataLength =  $requestData['dataLength'];
-        $responseData = AnimalData::paginate($dataLength);
+        $responseData = paginate($dataLength);
         $shortAddress = [];
         $color = [];
 
