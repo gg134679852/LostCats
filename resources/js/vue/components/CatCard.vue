@@ -28,7 +28,7 @@
         <div class="animalCard__info text-secondary">
           <h4 class="card-text">
       <i class="fas fa-paw"></i>性別:{{catInfoData.animal_sex}}</h4>
-    <h4 class="card-text"><i class="fas fa-paw"></i>所在地:{{catInfoData.shelter_address.slice(0,3)}}</h4>
+    <h4 class="card-text"><i class="fas fa-paw"></i>毛色:{{catInfoData.animal_color}}</h4>
         </div>
       </div>
     </div>

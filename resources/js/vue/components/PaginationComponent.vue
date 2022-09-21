@@ -1,7 +1,18 @@
 <template>
   <div class="pagination__container">
-    <ul class="pagination">
-        <li :class="['page-item', { active: pagination.active}]" v-for="(pagination ,index) in paginationLinks"
+  <div class="pagination__mobile__wrap" v-if="dataLength === 16">
+   <button type="pagination__mobile__button button" class="btn btn-outline-primary btn-lg"
+   @click.stop.prevent="paginationButtonClick(paginationLinks.prevPageUrl)"
+   :disabled="! paginationLinks.prevPageUrl"
+   >&laquo;</button>
+   <h2 class="pagination__mobile__count">{{paginationLinks.currentPage}}/{{paginationLinks.lastPage}}</h2>
+   <button type="pagination__mobile__button button" class="btn btn-outline-primary btn-lg"
+   @click.stop.prevent="paginationButtonClick(paginationLinks.nextPageUrl)"
+   :disabled="! paginationLinks.nextPageUrl"
+   >&raquo;</button>
+   </div>
+    <ul class="pagination" v-else>
+        <li :class="['page-item', { active: pagination.active}]" v-for="(pagination ,index) in paginationLinks.links"
           :key="index">
           <button :class="['page-link', { disabled: pagination.url === null}]" v-if="index === 0"
             @click.stop.prevent="paginationButtonClick(pagination.url)">&laquo;</button>
@@ -17,13 +28,17 @@
 export default {
   props: {
     paginationLinks: {
-      type: Array,
+      type: Object,
+      required: true
+    },
+    dataLength: {
+      type: Number,
       required: true
     }
   },
   methods: {
     paginationButtonClick (url) {
-      this.$emit('getPaginationUrl', url)
+      this.$emit('fetchAnimalData', 'pageClick', url)
     }
   }
 }

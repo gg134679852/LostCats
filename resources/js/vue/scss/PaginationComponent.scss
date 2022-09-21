@@ -3,3 +3,17 @@
   display: flex;
   justify-content: center;
 }
+
+.pagination {
+  &__mobile {
+    &__wrap{
+      width: 55%;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      & h2{
+        margin: 20px auto;
+      }
+    }
+  }
+}

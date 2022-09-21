@@ -1,0 +1,15 @@
+.catList {
+  &__wrap {
+    outline: 1px solid red;
+  }
+}
+
+.catFilter {
+  &__wrap {
+    margin: 10px;
+
+    & button {
+      background-color:#212529;
+    }
+  }
+}
