@@ -15,15 +15,9 @@ class animalDataController extends Controller
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
         $requestData = $request->all();
         $dataLength =  $requestData['dataLength'];
-        $responseData = paginate($dataLength);
-        $shortAddress = [];
+        $responseData = AnimalData::paginate($dataLength);
         $color = [];
 
-        foreach ($short_address as $data) {
-            if (in_array($data['short_address'], $shortAddress) !== true) {
-                array_push($shortAddress, $data['short_address']);
-            }
-        }
         foreach ($animal_color as $data) {
 
             if (in_array($data['animal_color'], $color) !== true) {
@@ -36,7 +30,7 @@ class animalDataController extends Controller
                 'success' => 'true',
                 'responseData' => [
                     'catData' => $responseData,
-                    'selectOption' => ['shortAddress' => $shortAddress, 'color' => $color]],
+                    'selectOption' => ['color' => $color]],
             ]);
     }
 
