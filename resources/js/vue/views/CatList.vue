@@ -14,6 +14,10 @@
    </div>
    <FilterModal
    :filter-modal-switcher="filterModalSwitcher"
+   :shelter-name="shelterName"
+   :color="color"
+   @switcher="Switcher"
+   @shelter-filter="shelterFilter"
    />
 </template>
 <script>
@@ -41,6 +45,8 @@ export default {
     return ({
       catInfoData: [],
       paginationLinks: {},
+      shelterList: [],
+      shelterName: [],
       color: [],
       dataLength: 0,
       filterModalSwitcher: 'hide',
@@ -48,7 +54,7 @@ export default {
     })
   },
   methods: {
-    fetchAnimalData (type, url) {
+    fetchAnimalData (type, url, condition) {
       this.isLoading = true
       switch (type) {
         case 'pageClick':{
@@ -56,7 +62,7 @@ export default {
           break
         }
         case 'filterData':{
-          url = `${url}?dataLength=${this.dataLength}`
+          url = `api/animalData/getFilter/${condition.short_address}/${condition.animal_sex}/${condition.animal_color}`
           break
         }
         default:{
@@ -66,8 +72,10 @@ export default {
       }
       this.$axiosHelper.get(url)
         .then((obj) => {
-          const { catData, selectOption } = obj.data.responseData
+          const { catData, selectOption, shelterList } = obj.data.responseData
           this.catInfoData = catData.data
+          this.shelterList = shelterList
+          this.shelterName = this.shelterList.map(data => data.shelter_name)
           this.paginationLinks = {
             links: catData.links,
             currentPage: catData.current_page,
@@ -132,6 +140,19 @@ export default {
           this.dataLength = 18
           break
         }
+      }
+    },
+    shelterFilter (city) {
+      if (city === '') {
+        this.shelterName = this.shelterList.map(data => data.shelter_name)
+      }
+      if (city !== '') {
+        this.shelterName = []
+        this.shelterList.forEach((data) => {
+          if (data.shelter_city === city) {
+            this.shelterName.push(data.shelter_name)
+          }
+        })
       }
     },
     Switcher (type) {

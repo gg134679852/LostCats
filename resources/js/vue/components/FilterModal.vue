@@ -1,17 +1,69 @@
 <template>
-  <div class="modal modal-fullscreen" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" ref="modal">
-  <div class="modal-dialog">
+  <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" ref="modal">
+  <div class="modal-dialog" :class="{ 'modal-fullscreen' : dataLength === 16}">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">過濾器</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
       </div>
       <div class="modal-body">
-        <p>Modal body text goes here.</p>
+        <form @submit.prevent="">
+           <div class="row gx-2">
+            <div class="mb-3 col-md-6">
+              <label for="animal_sex" class="form-label">性別</label>
+              <select class="form-select" id="animal_sex" v-model="formData.animal_sex">
+                  <option value="">選擇性別</option>
+                  <option value="男生">男生</option>
+                  <option value="女生">女生</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="color" class="form-label">毛色</label>
+              <select class="form-select" id="color" v-model="formData.animal_color">
+                  <option value="">選擇毛色</option>
+                  <option :value="color" v-for="(color,index) in color" :key="index">{{color}}</option>
+              </select>
+            </div>
+          </div>
+           <div class="mb-3">
+              <label for="shelter_city" class="form-label">地區</label>
+             <select  v-model="formData.shelter_city" class="form-select" id="shelter_city" @change="shelterFilter">
+                  <option value="">選擇縣市</option>
+                  <option value="臺北市">臺北市</option>
+                  <option value="基隆市">基隆市</option>
+                  <option value="新北市">新北市</option>
+                  <option value="宜蘭縣">宜蘭縣</option>
+                  <option value="桃園市" >桃園市</option>
+                  <option value="新竹市" >新竹市</option>
+                  <option value="新竹縣" >新竹縣</option>
+                  <option value="苗栗縣" >苗栗縣</option>
+                  <option value="台中市" >台中市</option>
+                  <option value="彰化縣" >彰化縣</option>
+                  <option value="南投縣" >南投縣</option>
+                  <option value="嘉義市" >嘉義市</option>
+                  <option value="嘉義縣" >嘉義縣</option>
+                  <option value="雲林縣" >雲林縣</option>
+                  <option value="台南市" >台南市</option>
+                  <option value="高雄市" >高雄市</option>
+                  <option value="澎湖縣" >澎湖縣</option>
+                  <option value="金門縣" >金門縣</option>
+                  <option value="屏東縣" >屏東縣</option>
+                  <option value="台東縣" >台東縣</option>
+                  <option value="花蓮縣" >花蓮縣</option>
+                  <option value="連江縣" >連江縣</option>
+            </select>
+            </div>
+           <div class="mb-3">
+                <label for="shelter_name" class="form-label">收容所</label>
+                 <select class="form-select" id="shelter_name" v-model="formData.shelter_name">
+                 <option value="">選擇收容所</option>
+                 <option :value="name" v-for="(name,index) in shelter_name_option" :key="index">{{name}}</option>
+              </select>
+              </div>
+          <button type="submit" class="btn btn-primary">送出</button>
+       </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -24,20 +76,50 @@ export default {
     filterModalSwitcher: {
       type: String,
       required: true
+    },
+    shelterName: {
+      type: Array,
+      required: true
+    },
+    color: {
+      type: Array,
+      required: true
+    },
+    dataLength: {
+      type: Number,
+      required: true
     }
   },
   data () {
     return ({
-      modal: {}
+      modal: {},
+      formData: {
+        animal_sex: '',
+        shelter_city: '',
+        animal_color: '',
+        shelter_name: ''
+      },
+      shelter_city_option: '',
+      shelter_name_option: []
     })
   },
-  methods: {},
+  methods: {
+    closeModal () {
+      this.$emit('Switcher', 'filter')
+    },
+    shelterFilter (e) {
+      this.$emit('shelterFilter', e.target.value)
+    }
+  },
   mounted () {
     this.modal = new Modal(this.$refs.modal)
   },
   watch: {
     filterModalSwitcher (newValue, oldValue) {
       return newValue === 'show' ? this.modal.show() : this.modal.hide()
+    },
+    shelterName (newValue, oldValue) {
+      this.shelter_name_option = this.shelterName
     }
   }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AnimalDataResource;
 use App\Models\AnimalData;
+use App\Models\ShelterList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -11,10 +12,10 @@ class animalDataController extends Controller
 {
     public function getAnimalData(Request $request)
     {
-        $short_address = AnimalData::select('short_address')->get()->toArray();
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
+        $shelter_list = ShelterList::get()->toArray();
         $requestData = $request->all();
-        $dataLength =  $requestData['dataLength'];
+        $dataLength = $requestData['dataLength'];
         $responseData = AnimalData::paginate($dataLength);
         $color = [];
 
@@ -23,20 +24,23 @@ class animalDataController extends Controller
             if (in_array($data['animal_color'], $color) !== true) {
                 array_push($color, $data['animal_color']);
             }
-        }
+        } 
 
         return response()->json(
             [
                 'success' => 'true',
                 'responseData' => [
                     'catData' => $responseData,
-                    'selectOption' => ['color' => $color]],
+                    'shelterList' => $shelter_list,
+                    'selectOption' => ['color' => $color]
+                ],
             ]);
     }
 
-    public function getAnimalDataFilter($address, $sex, $color)
+    public function getAnimalDataFilter($city,$address, $sex, $color)
     {
 
+        
         $requestData = ["short_address" => $address, "animal_sex" => $sex, "animal_color" => $color];
 
         $whereData = array_filter($requestData, function ($item) {return $item !== "0";});
