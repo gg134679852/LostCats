@@ -16,7 +16,7 @@ class animalDataController extends Controller
         $shelter_list = ShelterList::get()->toArray();
         $requestData = $request->all();
         $dataLength = $requestData['dataLength'];
-        $responseData = AnimalData::paginate($dataLength);
+        $responseData = AnimalData::paginate($dataLength)->withQueryString();
         $color = [];
 
         foreach ($animal_color as $data) {
@@ -24,7 +24,7 @@ class animalDataController extends Controller
             if (in_array($data['animal_color'], $color) !== true) {
                 array_push($color, $data['animal_color']);
             }
-        } 
+        }
 
         return response()->json(
             [
@@ -32,29 +32,30 @@ class animalDataController extends Controller
                 'responseData' => [
                     'catData' => $responseData,
                     'shelterList' => $shelter_list,
-                    'selectOption' => ['color' => $color]
+                    'selectOption' => ['color' => $color],
                 ],
             ]);
     }
 
-    public function getAnimalDataFilter($city,$address, $sex, $color)
+    public function getAnimalDataFilter(Request $request)
     {
+        $allRequestData = $request->all();
+        $dataLength = $allRequestData['dataLength'];
+        $requestCatData = ["animal_sex" => $allRequestData['animal_sex'], "animal_color" => $allRequestData['animal_color']];
+        $requestShelterData = ["shelter_city" => $allRequestData['shelter_city'], "shelter_name" => $allRequestData['shelter_name']];
 
-        
-        $requestData = ["short_address" => $address, "animal_sex" => $sex, "animal_color" => $color];
+        $whereCatData = array_filter($requestCatData, function ($item) {return $item !== "0";});
+        $whereShelterData = array_filter($requestShelterData, function ($item) {return $item !== "0";});
 
-        $whereData = array_filter($requestData, function ($item) {return $item !== "0";});
-
-        $responseData =
-        AnimalData::where($whereData)->paginate(18);
+        $findShelterQuery = ShelterList::select('id')->where($whereShelterData);
+        $findAllCat = $findShelterQuery->with(['cat'=> function($q) use ($whereCatData){$q->where($whereCatData);}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
 
         return response()->json(
             [
                 'success' => 'true',
                 'responseData' => [
-                    'catData' => $responseData],
+                    'catData' => $findAllCat],
             ]);
-
     }
 
     public function getAnimalDetailData($id, $address)

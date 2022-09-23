@@ -19,4 +19,8 @@ class AnimalData extends Model
        return $this->belongsToMany(User::class, 'favorite_cats');
 
    }
+   public function shelter()
+   {
+       return $this->belongsTo(ShelterList::class);
+   }
 }

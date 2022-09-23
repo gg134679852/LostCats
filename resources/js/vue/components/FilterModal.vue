@@ -7,12 +7,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
       </div>
       <div class="modal-body">
-        <form @submit.prevent="">
+        <form @submit.prevent="fetchAnimalData">
            <div class="row gx-2">
             <div class="mb-3 col-md-6">
               <label for="animal_sex" class="form-label">性別</label>
               <select class="form-select" id="animal_sex" v-model="formData.animal_sex">
-                  <option value="">選擇性別</option>
+                  <option value="0">選擇性別</option>
                   <option value="男生">男生</option>
                   <option value="女生">女生</option>
               </select>
@@ -20,7 +20,7 @@
             <div class="mb-3 col-md-6">
               <label for="color" class="form-label">毛色</label>
               <select class="form-select" id="color" v-model="formData.animal_color">
-                  <option value="">選擇毛色</option>
+                  <option value="0">選擇毛色</option>
                   <option :value="color" v-for="(color,index) in color" :key="index">{{color}}</option>
               </select>
             </div>
@@ -28,7 +28,7 @@
            <div class="mb-3">
               <label for="shelter_city" class="form-label">地區</label>
              <select  v-model="formData.shelter_city" class="form-select" id="shelter_city" @change="shelterFilter">
-                  <option value="">選擇縣市</option>
+                  <option value="0">選擇縣市</option>
                   <option value="臺北市">臺北市</option>
                   <option value="基隆市">基隆市</option>
                   <option value="新北市">新北市</option>
@@ -56,7 +56,7 @@
            <div class="mb-3">
                 <label for="shelter_name" class="form-label">收容所</label>
                  <select class="form-select" id="shelter_name" v-model="formData.shelter_name">
-                 <option value="">選擇收容所</option>
+                 <option value="0">選擇收容所</option>
                  <option :value="name" v-for="(name,index) in shelter_name_option" :key="index">{{name}}</option>
               </select>
               </div>
@@ -105,10 +105,13 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$emit('Switcher', 'filter')
+      this.$emit('switcher', 'filter')
     },
     shelterFilter (e) {
       this.$emit('shelterFilter', e.target.value)
+    },
+    fetchAnimalData () {
+      this.$emit('fetchAnimalData', 'filterData', '', this.formData)
     }
   },
   mounted () {

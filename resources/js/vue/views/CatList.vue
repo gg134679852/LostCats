@@ -16,8 +16,10 @@
    :filter-modal-switcher="filterModalSwitcher"
    :shelter-name="shelterName"
    :color="color"
+   :data-length="dataLength"
    @switcher="Switcher"
    @shelter-filter="shelterFilter"
+   @fetch-animal-data="fetchAnimalData"
    />
 </template>
 <script>
@@ -58,42 +60,83 @@ export default {
       this.isLoading = true
       switch (type) {
         case 'pageClick':{
-          url = `${url}&dataLength=${this.dataLength}`
+          this.$axiosHelper.get(url)
+            .then((obj) => {
+              const { catData } = obj.data.responseData
+              this.catInfoData = catData.data
+              this.paginationLinks = {
+                links: catData.links,
+                currentPage: catData.current_page,
+                prevPageUrl: catData.prev_page_url,
+                nextPageUrl: catData.next_page_url,
+                lastPage: catData.last_page
+              }
+              this.isLoading = false
+            })
+            .catch((err) => {
+              this.Toast.fire({
+                icon: 'error',
+                title: '發生錯誤，請查看開發者工具'
+              })
+              console.log(err)
+              this.isLoading = false
+            })
           break
         }
         case 'filterData':{
-          url = `api/animalData/getFilter/${condition.short_address}/${condition.animal_sex}/${condition.animal_color}`
+          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&dataLength=${this.dataLength}`
+          this.$axiosHelper.get(url)
+            .then((obj) => {
+              const { catData } = obj.data.responseData
+              this.catInfoData = catData.data
+              this.paginationLinks = {
+                links: catData.links,
+                currentPage: catData.current_page,
+                prevPageUrl: catData.prev_page_url,
+                nextPageUrl: catData.next_page_url,
+                lastPage: catData.last_page
+              }
+              this.isLoading = false
+            })
+            .catch((err) => {
+              this.Toast.fire({
+                icon: 'error',
+                title: '發生錯誤，請查看開發者工具'
+              })
+              console.log(err)
+              this.isLoading = false
+            })
           break
         }
         default:{
           url = `api/animalData?dataLength=${this.dataLength}`
+          this.$axiosHelper.get(url)
+            .then((obj) => {
+              const { catData, selectOption, shelterList } = obj.data.responseData
+              this.catInfoData = catData.data
+              this.shelterList = shelterList
+              this.shelterName = this.shelterList.map(data => data.shelter_name)
+              this.paginationLinks = {
+                links: catData.links,
+                currentPage: catData.current_page,
+                prevPageUrl: catData.prev_page_url,
+                nextPageUrl: catData.next_page_url,
+                lastPage: catData.last_page
+              }
+              this.color = selectOption.color
+              this.isLoading = false
+            })
+            .catch((err) => {
+              this.Toast.fire({
+                icon: 'error',
+                title: '發生錯誤，請查看開發者工具'
+              })
+              console.log(err)
+              this.isLoading = false
+            })
           break
         }
       }
-      this.$axiosHelper.get(url)
-        .then((obj) => {
-          const { catData, selectOption, shelterList } = obj.data.responseData
-          this.catInfoData = catData.data
-          this.shelterList = shelterList
-          this.shelterName = this.shelterList.map(data => data.shelter_name)
-          this.paginationLinks = {
-            links: catData.links,
-            currentPage: catData.current_page,
-            prevPageUrl: catData.prev_page_url,
-            nextPageUrl: catData.next_page_url,
-            lastPage: catData.last_page
-          }
-          this.color = selectOption.color
-          this.isLoading = false
-        })
-        .catch((err) => {
-          this.Toast.fire({
-            icon: 'error',
-            title: '發生錯誤，請查看開發者工具'
-          })
-          console.log(err)
-          this.isLoading = false
-        })
       document.documentElement.scrollTop = 0
     },
     getFavoriteCatId (id) {
