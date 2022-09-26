@@ -179,8 +179,12 @@ export default {
           this.dataLength = 16
           break
         }
-        case window.innerWidth >= 768:{
+        case window.innerWidth >= 992:{
           this.dataLength = 20
+          break
+        }
+        case window.innerWidth >= 768:{
+          this.dataLength = 18
           break
         }
       }
