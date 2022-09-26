@@ -94,10 +94,10 @@ export default {
     return ({
       modal: {},
       formData: {
-        animal_sex: '',
-        shelter_city: '',
-        animal_color: '',
-        shelter_name: ''
+        animal_sex: '0',
+        shelter_city: '0',
+        animal_color: '0',
+        shelter_name: '0'
       },
       shelter_city_option: '',
       shelter_name_option: []
@@ -105,9 +105,17 @@ export default {
   },
   methods: {
     closeModal () {
+      this.formData =
+      {
+        animal_sex: '0',
+        shelter_city: '0',
+        animal_color: '0',
+        shelter_name: '0'
+      }
       this.$emit('switcher', 'filter')
     },
     shelterFilter (e) {
+      this.formData.shelter_name = '0'
       this.$emit('shelterFilter', e.target.value)
     },
     fetchAnimalData () {
