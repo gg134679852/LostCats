@@ -180,7 +180,7 @@ export default {
           break
         }
         case window.innerWidth >= 768:{
-          this.dataLength = 18
+          this.dataLength = 20
           break
         }
       }
