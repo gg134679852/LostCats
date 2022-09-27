@@ -4,12 +4,8 @@
     class="animalCard__wrapper"
     v-for="catInfoData in catInfoData"
     :key="catInfoData.id"
-    @click.stop.prevent="clickInfoButton(catInfoData.id)"
+    @click.stop.prevent="clickCard(catInfoData.animal_id)"
   >
-  <button type="button" class="animalCard__info-button" data-bs-toggle="modal" data-bs-target="#AnimalDetailModal"
-  :id="catInfoData.id"
-       @click.stop.prevent="getAnimalId(catInfoData.id,catInfoData.shelter_name)"
-    ></button>
   <template v-if="isAuthenticated">
     <button class="animalCard__like-button"  @click.stop.prevent="addFavorite(catInfoData.id)"
      v-if="!isFavorite(catInfoData.id)"><i class="far fa-heart"></i></button>
@@ -54,6 +50,9 @@ export default {
     this.fetchFavoriteCats()
   },
   methods: {
+    clickCard (id) {
+      this.$emit('switcher', 'catInfo', id)
+    },
     fetchFavoriteCats () {
       if (this.isAuthenticated) {
         if (this.favoriteId.length === 0) {
@@ -84,9 +83,6 @@ export default {
     },
     isFavorite (id) {
       return this.favoriteId.includes(id)
-    },
-    clickInfoButton (id) {
-      document.querySelector(`.animalCard__info-button[id="${id}"]`).click()
     }
   },
   watch: {

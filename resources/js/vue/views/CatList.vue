@@ -5,7 +5,10 @@
    <div class="catFilter__wrap">
     <button type="button" class="btn btn-secondary" @click.prevent="Switcher('filter')"><i class="fas fa-filter"></i>過濾器</button>
    </div>
-    <CatCard :cat-info-data="catInfoData" />
+    <CatCard
+    :cat-info-data="catInfoData"
+    @switcher="Switcher"
+    />
      <PaginationComponent
      :pagination-links="paginationLinks"
      :data-length="dataLength"
@@ -21,18 +24,26 @@
    @shelter-filter="shelterFilter"
    @fetch-animal-data="fetchAnimalData"
    />
+   <CatInfoModal
+   :cat-info-modal-switcher="catInfoModalSwitcher"
+   :show-cat-data="showCatData"
+   :data-length="dataLength"
+   @switcher="Switcher"
+   />
 </template>
 <script>
 import NavBarVue from '../components/NavBar.vue'
 import CatCard from '../components/CatCard.vue'
 import FilterModal from '../components/FilterModal.vue'
+import CatInfoModal from '../components/CatInfoModal.vue'
 import PaginationComponent from '../components/PaginationComponent.vue'
 export default {
   components: {
     CatCard,
     NavBarVue,
     FilterModal,
-    PaginationComponent
+    PaginationComponent,
+    CatInfoModal
   },
   created () {
     this.screenRuler()
@@ -46,12 +57,25 @@ export default {
   data () {
     return ({
       catInfoData: [],
+      showCatData: {
+        album_file: '',
+        animal_age: '',
+        animal_bacterin: '',
+        animal_bodytype: '',
+        animal_color: '',
+        animal_foundplace: '',
+        animal_id: '',
+        animal_remark: '',
+        animal_sex: '',
+        animal_sterilization: ''
+      },
       paginationLinks: {},
       shelterList: [],
       shelterName: [],
       color: [],
       dataLength: 0,
       filterModalSwitcher: 'hide',
+      catInfoModalSwitcher: 'hide',
       isLoading: false
     })
   },
@@ -202,12 +226,23 @@ export default {
         })
       }
     },
-    Switcher (type) {
+    Switcher (type, id) {
+      if (id !== 'none') {
+        const index = this.catInfoData.findIndex((obj) => obj.animal_id === id)
+        const targetData = { ...this.catInfoData[index] }
+        this.showCatData = targetData
+      }
       switch (type) {
         case 'filter':{
           this.filterModalSwitcher === 'hide'
             ? this.filterModalSwitcher = 'show'
             : this.filterModalSwitcher = 'hide'
+          break
+        }
+        case 'catInfo':{
+          this.catInfoModalSwitcher === 'hide'
+            ? this.catInfoModalSwitcher = 'show'
+            : this.catInfoModalSwitcher = 'hide'
           break
         }
       }

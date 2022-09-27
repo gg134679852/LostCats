@@ -1,0 +1,36 @@
+.catInfoModal {
+  &__info {
+    &__img {
+      & img {
+        width: 450px;
+        height: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    &__content {
+      &__text {
+        & h2 {
+          padding-top: 15px;
+          padding-bottom: 15px;
+        }
+      }
+
+      & h6 {
+        font-size: .7rem;
+      }
+    }
+
+    &__info-box {
+      border-left: 3px solid #212529;
+      &__wrap {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(50%, 50%));
+        gap: .5rem;
+      }
+      &__text{
+        margin-left: 5px;
+      }
+    }
+  }
+}
