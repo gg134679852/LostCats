@@ -6,29 +6,29 @@
     <button type="button" class="btn btn-secondary" @click.prevent="Switcher('filter')"><i class="fas fa-filter"></i>過濾器</button>
    </div>
     <CatCard
-    :cat-info-data="catInfoData"
-    @switcher="Switcher"
+      :cat-info-data="catInfoData"
+      @switcher="Switcher"
     />
      <PaginationComponent
-     :pagination-links="paginationLinks"
-     :data-length="dataLength"
-     @fetch-animal-data="fetchAnimalData"
+      :pagination-links="paginationLinks"
+      :data-length="dataLength"
+      @fetch-animal-data="fetchAnimalData"
      />
    </div>
    <FilterModal
-   :filter-modal-switcher="filterModalSwitcher"
-   :shelter-name="shelterName"
-   :color="color"
-   :data-length="dataLength"
-   @switcher="Switcher"
-   @shelter-filter="shelterFilter"
-   @fetch-animal-data="fetchAnimalData"
+      :filter-modal-switcher="filterModalSwitcher"
+      :shelter-name="shelterName"
+      :color="color"
+      :data-length="dataLength"
+      @switcher="Switcher"
+      @shelter-filter="shelterFilter"
+      @fetch-animal-data="fetchAnimalData"
    />
    <CatInfoModal
-   :cat-info-modal-switcher="catInfoModalSwitcher"
-   :show-cat-data="showCatData"
-   :data-length="dataLength"
-   @switcher="Switcher"
+      :cat-info-modal-switcher="catInfoModalSwitcher"
+      :show-cat-data="showCatData"
+      :data-length="dataLength"
+      @switcher="Switcher"
    />
 </template>
 <script>
@@ -67,7 +67,16 @@ export default {
         animal_id: '',
         animal_remark: '',
         animal_sex: '',
-        animal_sterilization: ''
+        animal_sterilization: '',
+        shelterData: {
+          id: '',
+          shelter_address: '',
+          shelter_city: '',
+          shelter_lat: 0,
+          shelter_lng: 0,
+          shelter_name: '',
+          shelter_tel: ''
+        }
       },
       paginationLinks: {},
       shelterList: [],
@@ -226,10 +235,13 @@ export default {
         })
       }
     },
-    Switcher (type, id) {
-      if (id !== 'none') {
-        const index = this.catInfoData.findIndex((obj) => obj.animal_id === id)
-        const targetData = { ...this.catInfoData[index] }
+    Switcher (type, catDataId, shelterDataId) {
+      if (catDataId !== 'none' && shelterDataId !== 'none') {
+        const catDataIndex = this.catInfoData.findIndex((obj) => obj.animal_id === catDataId)
+        const shelterDataIndex = this.shelterList.findIndex((obj) => obj.id === shelterDataId)
+        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.shelterList[shelterDataIndex] } }
+        targetData.shelterData.shelter_lat = Number(targetData.shelterData.shelter_lat)
+        targetData.shelterData.shelter_lng = Number(targetData.shelterData.shelter_lng)
         this.showCatData = targetData
       }
       switch (type) {

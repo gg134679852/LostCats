@@ -4,7 +4,7 @@
     class="animalCard__wrapper"
     v-for="catInfoData in catInfoData"
     :key="catInfoData.id"
-    @click.stop.prevent="clickCard(catInfoData.animal_id)"
+    @click.stop.prevent="clickCard(catInfoData.animal_id,catInfoData.shelter_id)"
   >
   <template v-if="isAuthenticated">
     <button class="animalCard__like-button"  @click.stop.prevent="addFavorite(catInfoData.id)"
@@ -50,8 +50,8 @@ export default {
     this.fetchFavoriteCats()
   },
   methods: {
-    clickCard (id) {
-      this.$emit('switcher', 'catInfo', id)
+    clickCard (catDataId, shelterDataId) {
+      this.$emit('switcher', 'catInfo', catDataId, shelterDataId)
     },
     fetchFavoriteCats () {
       if (this.isAuthenticated) {
