@@ -25,6 +25,14 @@ export default {
         this.mapHeight = 200
         break
       }
+      case 18:{
+        this.mapHeight = 450
+        break
+      }
+      case 20:{
+        this.mapHeight = 450
+        break
+      }
     }
   },
   data () {
@@ -32,6 +40,24 @@ export default {
       mapHeight: 0,
       mapWidth: 0
     })
+  },
+  watch: {
+    dataLength (newValue, oldValue) {
+      switch (newValue) {
+        case 16:{
+          this.mapHeight = 200
+          break
+        }
+        case 18:{
+          this.mapHeight = 450
+          break
+        }
+        case 20:{
+          this.mapHeight = 450
+          break
+        }
+      }
+    }
   }
 }
 </script>

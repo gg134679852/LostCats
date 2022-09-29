@@ -2,6 +2,7 @@
   &__catInfo {
     &__content {
       &__text {
+
         &__id,
         &__remark {
           & h2 {
@@ -47,12 +48,6 @@
 
   &__shelterInfo {
     &__info-box {
-      // &__wrap {
-      //   display: flex;
-      //   flex-direction: column;
-      //   justify-content: space-evenly;
-      // }
-
       &__text {
         border-left: 3px solid #212529;
         margin-left: 5px;
@@ -72,6 +67,7 @@
       &__img {
         width: 60%;
         margin: 0 auto;
+
         & img {
           width: 100%;
           height: 250px;
