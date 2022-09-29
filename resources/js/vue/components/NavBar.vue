@@ -11,28 +11,28 @@
 <div class="navbar__linkList__desktop">
   <ul>
      <li>
-      <a class="nav-link" aria-current="page" href="#">關於我們</a>
+      <a class="nav-link" aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
     </li>
     <li>
-     <a aria-current="page" href="#">喵星人列表</a>
+     <a aria-current="page" href="#" @click.prevent="linkClick('/catList')">喵星人列表</a>
     </li>
     <li>
-     <a href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
+     <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/login')">會員頁面</a>
      <a href="#" v-else>登陸</a>
     </li>
   </ul>
 </div>
 <div class="navbar__linkList__mobile" :class="{open:isOpen}">
   <ul class="navbar-nav">
-     <li>
-      <a class="nav-link" aria-current="page" href="#">關於我們</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" aria-current="page" href="#">喵星人列表</a>
+   <li>
+      <a class="nav-link" aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
     </li>
     <li>
-      <a class="nav-link" aria-current="page" href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
-      <a class="nav-link" aria-current="page" href="#" v-else>登陸頁面</a>
+     <a aria-current="page" href="#" @click.prevent="linkClick('/catList')">喵星人列表</a>
+    </li>
+    <li>
+     <a href="#" v-if="this.$store.state.isAuthenticated">會員頁面</a>
+     <a href="#" v-else @click.prevent="linkClick('/login')">登陸</a>
     </li>
   </ul>
 </div>
@@ -48,6 +48,9 @@ export default {
   methods: {
     burgerButtonClick () {
       this.isOpen === false ? this.isOpen = true : this.isOpen = false
+    },
+    linkClick (url) {
+      this.$router.push(url)
     }
   }
 }
