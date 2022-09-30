@@ -5,6 +5,7 @@ import DashBoard from '../views/admin/DashBoard.vue'
 import adminCatList from '../components/admin/CatList.vue'
 import AboutUs from '../views/AboutUs.vue'
 import store from '../store/index'
+import UserPage from '../views/UserPage.vue'
 import userCatList from '../views/CatList.vue'
 const routes = [
   {
@@ -33,6 +34,21 @@ const routes = [
   {
     path: '/catList',
     component: userCatList
+  },
+  {
+    path: '/userPage',
+    component: UserPage,
+    beforeEnter: (to, from, next) => {
+      if (store.state.isAuthenticated) {
+        if (store.state.currentUser.isAdmin) {
+          next({ path: '/admin/dashboard' })
+        } else {
+          next()
+        }
+      } else {
+        next({ path: '/login' })
+      }
+    }
   },
   {
     path: '/admin/dashboard',
