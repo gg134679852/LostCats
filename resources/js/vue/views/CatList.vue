@@ -8,6 +8,8 @@
     <CatCard
       :cat-info-data="catInfoData"
       @switcher="Switcher"
+      @add-favorite="addFavorite"
+      @remove-favorite="removeFavorite"
     />
      <PaginationComponent
       :pagination-links="paginationLinks"
@@ -172,7 +174,7 @@ export default {
       }
       document.documentElement.scrollTop = 0
     },
-    getFavoriteCatId (id) {
+    addFavorite (id) {
       this.$axiosHelper
         .post(`${id}/addFavorite`)
         .then(() => {
@@ -189,7 +191,7 @@ export default {
           console.log(error)
         })
     },
-    getRemoveFavoriteCatId (id) {
+    removeFavorite (id) {
       this.$axiosHelper
         .delete(`${id}/removeFavorite`)
         .then(() => {

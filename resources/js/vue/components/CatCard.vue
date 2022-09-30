@@ -62,9 +62,6 @@ export default {
         }
       }
     },
-    getAnimalId (id, address) {
-      this.$emit('get-Animal-Id', id, address)
-    },
     addFavorite (id) {
       if (this.favoriteId.length === 16) {
         Toast.fire({
@@ -73,13 +70,13 @@ export default {
         })
       } else {
         this.favoriteId.push(id)
-        this.$emit('get-Favorite-Cat-Id', id)
+        this.$emit('addFavorite', id)
       }
     },
     removeFavorite (id) {
       const target = this.favoriteId.indexOf(id)
       this.favoriteId.splice(target, 1)
-      this.$emit('get-Remove-Favorite-Cat-Id', id)
+      this.$emit('removeFavorite', id)
     },
     isFavorite (id) {
       return this.favoriteId.includes(id)
