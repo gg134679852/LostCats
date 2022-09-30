@@ -33,7 +33,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { Toast } from './../utils/helpers'
 export default {
   props: {
     catInfoData: {
@@ -41,6 +40,7 @@ export default {
       required: true
     }
   },
+  inject: ['Toast'],
   data () {
     return {
       favoriteId: []
@@ -64,19 +64,47 @@ export default {
     },
     addFavorite (id) {
       if (this.favoriteId.length === 16) {
-        Toast.fire({
+        this.Toast.fire({
           icon: 'warning',
           title: '達到收藏上限'
         })
       } else {
         this.favoriteId.push(id)
-        this.$emit('addFavorite', id)
+        this.$axiosHelper
+          .post(`${id}/addFavorite`)
+          .then(() => {
+            this.Toast.fire({
+              icon: 'success',
+              title: '成功加入最愛'
+            })
+          })
+          .catch((error) => {
+            this.Toast.fire({
+              icon: 'warning',
+              title: '發生錯誤 請稍後在試'
+            })
+            console.log(error)
+          })
       }
     },
     removeFavorite (id) {
       const target = this.favoriteId.indexOf(id)
       this.favoriteId.splice(target, 1)
-      this.$emit('removeFavorite', id)
+      this.$axiosHelper
+        .delete(`${id}/removeFavorite`)
+        .then(() => {
+          this.Toast.fire({
+            icon: 'success',
+            title: '成功移除最愛'
+          })
+        })
+        .catch((error) => {
+          this.Toast.fire({
+            icon: 'warning',
+            title: '發生錯誤 請稍後在試'
+          })
+          console.log(error)
+        })
     },
     isFavorite (id) {
       return this.favoriteId.includes(id)

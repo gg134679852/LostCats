@@ -8,8 +8,6 @@
     <CatCard
       :cat-info-data="catInfoData"
       @switcher="Switcher"
-      @add-favorite="addFavorite"
-      @remove-favorite="removeFavorite"
     />
      <PaginationComponent
       :pagination-links="paginationLinks"
@@ -173,40 +171,6 @@ export default {
         }
       }
       document.documentElement.scrollTop = 0
-    },
-    addFavorite (id) {
-      this.$axiosHelper
-        .post(`${id}/addFavorite`)
-        .then(() => {
-          this.Toast.fire({
-            icon: 'success',
-            title: '成功加入最愛'
-          })
-        })
-        .catch((error) => {
-          this.Toast.fire({
-            icon: 'warning',
-            title: '發生錯誤 請稍後在試'
-          })
-          console.log(error)
-        })
-    },
-    removeFavorite (id) {
-      this.$axiosHelper
-        .delete(`${id}/removeFavorite`)
-        .then(() => {
-          this.Toast.fire({
-            icon: 'success',
-            title: '成功移除最愛'
-          })
-        })
-        .catch((error) => {
-          this.Toast.fire({
-            icon: 'warning',
-            title: '發生錯誤 請稍後在試'
-          })
-          console.log(error)
-        })
     },
     screenRuler () {
       switch (true) {

@@ -105,7 +105,7 @@ class userControllers extends Controller
     {
         $user = Auth::user();
 
-        $cat = FavoriteCat::where('user_id', $user['id'])->get()->firstWhere('animal_data_id', $id);
+        $cat = FavoriteCat::where(['user_id'=>$user['id'],'animal_data_id'=>$id])->delete();
 
         if ($cat) {
             return response()->json([
