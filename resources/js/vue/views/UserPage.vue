@@ -1,40 +1,49 @@
 <template>
+  <NavBar />
   <div class="container">
-    <div class="userCard">
+    <div class="userPage__userCard">
       <img src="../../../../public/img/avatar.png" />
       <div class="userInfo">
         <h5>{{ this.currentUser.name }}</h5>
         <h5>{{ this.currentUser.email }}</h5>
       </div>
     </div>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">最愛喵星人</a>
-      </li>
-    </ul>
-    <!-- <div class="mt-5 text-center">
-      <AnimalCard
-        :catInfoDatas="this.catDatas"
-        @get-Animal-Id="fetchAnimalDetailData"
-        @get-Remove-Favorite-Cat-Id="getRemoveFavoriteCatId"
-      />
-    </div> -->
+    <div class="userPage__dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    頁面選項
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('CatCard')">最愛喵星人</a></li>
+    <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+  </ul>
+    </div>
+  <div class="userPage__components__warp">
+    <div class="userPage__components__CatCard" v-if="currenComponent === 'CatCard'">
+     <CatCard :cat-info-data="catInfoData"/>
+    </div>
+   </div>
   </div>
+  <CatInfoModal />
 </template>
 <script>
-// import CatCard from './../components/CatCard.vue'
+import CatCard from './../components/CatCard.vue'
+import CatInfoModal from '../components/CatInfoModal.vue'
+import NavBar from '../components/NavBar.vue'
 import { Toast } from './../utils/helpers'
 import { mapState } from 'vuex'
 const getToken = () => localStorage.getItem('token')
 
 export default {
   components: {
-    // CatCard
+    NavBar,
+    CatCard,
+    CatInfoModal
   },
   data () {
     return {
-      catDatas: [],
-      catData: {
+      catInfoData: [],
+      showData: {
         id: -1,
         animal_id: -1,
         album_file: '',
@@ -54,7 +63,8 @@ export default {
           lng: -1
         }
       },
-      modalIsLoading: true
+      currenComponent: '',
+      catInfoModalSwitcher: 'hide'
     }
   },
   created () {
@@ -62,10 +72,10 @@ export default {
   },
   methods: {
     copyFavoriteCats () {
-      this.catDatas = [...this.favoriteCats]
+      this.catInfoData = [...this.favoriteCats]
     },
     getRemoveFavoriteCatId (id) {
-      this.catDatas = this.catDatas.filter((data) => data.id !== id)
+      this.catInfoData = this.catInfoData.filter((data) => data.id !== id)
 
       this.$axiosHelper
         .delete(`${id}/removeFavorite`, {
@@ -98,6 +108,14 @@ export default {
         }
         this.modalIsLoading = false
       })
+    },
+    switchComponent (type) {
+      switch (type) {
+        case 'CatCard':{
+          this.currenComponent = 'CatCard'
+          break
+        }
+      }
     }
   },
   watch: {
