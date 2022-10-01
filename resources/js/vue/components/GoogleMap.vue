@@ -14,26 +14,13 @@ export default {
       type: Object,
       required: true
     },
-    dataLength: {
-      type: Number,
+    screenSize: {
+      type: String,
       required: true
     }
   },
   created () {
-    switch (this.dataLength) {
-      case 16:{
-        this.mapHeight = 200
-        break
-      }
-      case 18:{
-        this.mapHeight = 450
-        break
-      }
-      case 20:{
-        this.mapHeight = 450
-        break
-      }
-    }
+    this.mapSize()
   },
   data () {
     return ({
@@ -41,21 +28,28 @@ export default {
       mapWidth: 0
     })
   },
-  watch: {
-    dataLength (newValue, oldValue) {
-      switch (newValue) {
-        case 16:{
+  methods: {
+    mapSize () {
+      switch (this.screenSize) {
+        case 'Small':{
           this.mapHeight = 200
           break
         }
-        case 18:{
+        case 'Middle':{
           this.mapHeight = 450
           break
         }
-        case 20:{
+        case 'Big':{
           this.mapHeight = 450
           break
         }
+      }
+    }
+  },
+  watch: {
+    screenSize (newValue, oldValue) {
+      if (newValue) {
+        this.mapSize()
       }
     }
   }

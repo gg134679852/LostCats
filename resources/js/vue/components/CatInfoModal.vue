@@ -1,6 +1,6 @@
 <template>
 <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" ref="modal">
-  <div class="modal-dialog" :class="{ 'modal-fullscreen' : dataLength === 16||dataLength === 18,'modal-lg':dataLength === 20}">
+  <div class="modal-dialog" :class="{ 'modal-fullscreen' : screenSize === 'Small'||screenSize === 'Middle','modal-lg':screenSize === 'Big'}">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">喵星人資訊</h5>
@@ -70,7 +70,7 @@
               </div>
            </div>
           <div class="catInfoModal__info__map">
-            <GoogleMap :shelter-data="showCatData.shelterData" :data-length="dataLength" />
+            <GoogleMap :shelter-data="showCatData.shelterData" :screen-size="screenSize" />
           </div>
        </div>
       </div>
@@ -96,8 +96,8 @@ export default {
       type: Object,
       required: true
     },
-    dataLength: {
-      type: Number,
+    screenSize: {
+      type: String,
       required: true
     }
   },

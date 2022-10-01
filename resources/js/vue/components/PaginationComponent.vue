@@ -1,6 +1,6 @@
 <template>
   <div class="pagination__container">
-  <div class="pagination__mobile__wrap" v-if="dataLength === 16">
+  <div class="pagination__mobile__wrap" v-if="screenSize === 'Small'">
    <button type="pagination__mobile__button button" class="btn btn-outline-primary btn-lg"
    @click.stop.prevent="paginationButtonClick(paginationLinks.prevPageUrl)"
    :disabled="! paginationLinks.prevPageUrl"
@@ -31,8 +31,8 @@ export default {
       type: Object,
       required: true
     },
-    dataLength: {
-      type: Number,
+    screenSize: {
+      type: String,
       required: true
     }
   },

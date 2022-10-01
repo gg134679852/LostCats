@@ -1,6 +1,6 @@
 <template>
   <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" ref="modal">
-  <div class="modal-dialog" :class="{ 'modal-fullscreen' : dataLength === 16}">
+  <div class="modal-dialog" :class="{ 'modal-fullscreen' : screenSize === 'Small'}">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">過濾器</h5>
@@ -85,8 +85,8 @@ export default {
       type: Array,
       required: true
     },
-    dataLength: {
-      type: Number,
+    screenSize: {
+      type: String,
       required: true
     }
   },

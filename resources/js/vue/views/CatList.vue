@@ -11,7 +11,7 @@
     />
      <PaginationComponent
       :pagination-links="paginationLinks"
-      :data-length="dataLength"
+      :screen-size="screenSize"
       @fetch-animal-data="fetchAnimalData"
      />
    </div>
@@ -19,7 +19,7 @@
       :filter-modal-switcher="filterModalSwitcher"
       :shelter-name="shelterName"
       :color="color"
-      :data-length="dataLength"
+      :screen-size="screenSize"
       @switcher="Switcher"
       @shelter-filter="shelterFilter"
       @fetch-animal-data="fetchAnimalData"
@@ -27,7 +27,7 @@
    <CatInfoModal
       :cat-info-modal-switcher="catInfoModalSwitcher"
       :show-cat-data="showCatData"
-      :data-length="dataLength"
+      :screen-size="screenSize"
       @switcher="Switcher"
    />
 </template>
@@ -82,7 +82,7 @@ export default {
       shelterList: [],
       shelterName: [],
       color: [],
-      dataLength: 0,
+      screenSize: '',
       filterModalSwitcher: 'hide',
       catInfoModalSwitcher: 'hide',
       isLoading: false
@@ -117,7 +117,7 @@ export default {
           break
         }
         case 'filterData':{
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&dataLength=${this.dataLength}`
+          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
               const { catData } = obj.data.responseData
@@ -142,7 +142,7 @@ export default {
           break
         }
         default:{
-          url = `api/animalData?dataLength=${this.dataLength}`
+          url = `api/animalData?screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
               const { catData, selectOption, shelterList } = obj.data.responseData
@@ -175,15 +175,15 @@ export default {
     screenRuler () {
       switch (true) {
         case window.innerWidth <= 767:{
-          this.dataLength = 16
+          this.screenSize = 'Small'
           break
         }
         case window.innerWidth >= 992:{
-          this.dataLength = 20
+          this.screenSize = 'Big'
           break
         }
         case window.innerWidth >= 768:{
-          this.dataLength = 18
+          this.screenSize = 'Middle'
           break
         }
       }
@@ -227,7 +227,7 @@ export default {
     }
   },
   watch: {
-    dataLength (newValue, oldValue) {
+    screenSize (newValue, oldValue) {
       if (oldValue !== newValue) {
         this.fetchAnimalData()
       }

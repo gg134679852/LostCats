@@ -15,9 +15,25 @@ class animalDataController extends Controller
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
         $shelter_list = ShelterList::get()->toArray();
         $requestData = $request->all();
-        $dataLength = $requestData['dataLength'];
-        $responseData = AnimalData::paginate($dataLength)->withQueryString();
         $color = [];
+        $screenSize = $requestData['screenSize'];
+        $dataLength = 0;
+
+        switch ($screenSize) {
+            case 'Small':
+                $dataLength = 16;
+                break;
+
+            case 'Middle':
+                $dataLength = 18;
+                break;
+
+            case 'Big':
+               $dataLength = 20;
+                break;
+        };
+
+        $responseData = AnimalData::paginate($dataLength)->withQueryString();
 
         foreach ($animal_color as $data) {
 
@@ -48,7 +64,7 @@ class animalDataController extends Controller
         $whereShelterData = array_filter($requestShelterData, function ($item) {return $item !== "0";});
 
         $findShelterQuery = ShelterList::select('id')->where($whereShelterData);
-        $findAllCat = $findShelterQuery->with(['cat'=> function($q) use ($whereCatData){$q->where($whereCatData);}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
+        $findAllCat = $findShelterQuery->with(['cat' => function ($q) use ($whereCatData) {$q->where($whereCatData);}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
 
         return response()->json(
             [
