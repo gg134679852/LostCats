@@ -42,9 +42,10 @@ class userControllers extends Controller
             $token = $user->createToken('token');
 
             Auth::loginUsingId($user['id'], $remember = false);
+            $favoriteCats =  $user->cat()->with('shelter')->get()->toArray();
 
             return response(['icon' => 'success', 'message' => '登陸成功', 'userData' => ['user' => $user,
-                'favoriteCats' => $user->cat()->get(),
+                'favoriteCats' =>  $favoriteCats,
                 'isAuthenticated' => Auth::check()],
                 'token' => $token->plainTextToken,
             ]);

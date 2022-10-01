@@ -16,6 +16,14 @@
     width: 40%;
     margin: 20px auto;
   }
+  &__navTab{
+    padding: 23px;
+  }
+  &__components{
+    &__warp{
+      padding-bottom: 31%;
+    }
+  }
 }
 
 @media screen and (min-width:1024px) {
