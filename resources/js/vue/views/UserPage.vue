@@ -24,7 +24,12 @@
     </div>
    </div>
   </div>
-  <CatInfoModal />
+  <CatInfoModal
+    :cat-info-modal-switcher="catInfoModalSwitcher"
+    :show-cat-data="showCatData"
+    :screen-size="screenSize"
+    @switcher="Switcher"
+  />
 </template>
 <script>
 import CatCard from './../components/CatCard.vue'
@@ -43,7 +48,7 @@ export default {
   data () {
     return {
       catInfoData: [],
-      showData: {
+      showCatData: {
         id: -1,
         animal_id: -1,
         album_file: '',
@@ -64,11 +69,18 @@ export default {
         }
       },
       currenComponent: '',
+      screenSize: '',
       catInfoModalSwitcher: 'hide'
     }
   },
   created () {
     this.copyFavoriteCats()
+    this.screenRuler()
+  },
+  mounted () {
+    window.onresize = () => {
+      this.screenRuler()
+    }
   },
   methods: {
     copyFavoriteCats () {
@@ -116,11 +128,27 @@ export default {
           break
         }
       }
+    },
+    screenRuler () {
+      switch (true) {
+        case window.innerWidth <= 767:{
+          this.screenSize = 'Small'
+          break
+        }
+        case window.innerWidth >= 992:{
+          this.screenSize = 'Big'
+          break
+        }
+        case window.innerWidth >= 768:{
+          this.screenSize = 'Middle'
+          break
+        }
+      }
     }
   },
   watch: {
     favoriteCats: function () {
-      this.catDatas = [...this.favoriteCats]
+      this.catInfoData = [...this.favoriteCats]
     }
   },
   computed: {
