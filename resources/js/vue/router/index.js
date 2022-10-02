@@ -79,4 +79,13 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (store.state.isAuthenticated) {
+    store.dispatch('fetchCurrentUser')
+  } else {
+    next()
+  }
+  next()
+})
+
 export default router

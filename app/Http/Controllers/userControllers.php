@@ -73,9 +73,10 @@ class userControllers extends Controller
     public function getCurrentUser()
     {
         $user = Auth::user();
+        $favoriteCats = $user->cat()->with('shelter')->get()->toArray();
 
         return ['user' => $user, 'isAuthenticated' => Auth::check(),
-            'favoriteCats' => User::find($user['id'])->cat()->get(),
+            'favoriteCats' => $favoriteCats,
         ];
     }
 

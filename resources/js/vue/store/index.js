@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-
+import { axiosHelper } from '../utils/helpers'
 export default createStore({
   state: {
     currentUser: {
@@ -33,6 +33,18 @@ export default createStore({
       }
       state.favoriteCats = []
       state.isAuthenticated = false
+    },
+    fetchCurrentUser (state) {
+      axiosHelper('CurrentUser')
+        .then((obj) => {
+          const { user, favoriteCats, isAuthenticated } = obj.data
+          state.currentUser = {
+            ...state.currentUser,
+            ...user
+          }
+          state.favoriteCats = favoriteCats
+          state.isAuthenticated = isAuthenticated
+        })
     }
   },
   actions: {
@@ -44,6 +56,9 @@ export default createStore({
     },
     revokeAuthentication ({ commit }) {
       commit('revokeAuthentication')
+    },
+    fetchCurrentUser ({ commit }) {
+      commit('fetchCurrentUser')
     }
   },
   modules: {
