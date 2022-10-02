@@ -1,27 +1,37 @@
-
 .userPage {
   &__userCard {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-  
-      & img {
-        width: 200px;
-        height: 200px;
-      }
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    & img {
+      width: 200px;
+      height: 200px;
     }
+  }
+
   &__dropdown {
     width: 40%;
     margin: 20px auto;
   }
-  &__navTab{
+
+  &__navTab {
     padding: 23px;
   }
-  &__components{
-    &__warp{
-      padding-bottom: 31%;
+
+  &__components {
+    &__CatCard {
+      padding-bottom: 81%;
+      &__message {
+        text-align: center;
+        & h2 {
+          font-size: 1rem;
+          padding-top: 20%;
+          padding-bottom: 81%;
+        }
+      }
     }
   }
 }

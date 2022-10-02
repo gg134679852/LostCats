@@ -33,10 +33,15 @@
    </div>
   <div class="userPage__components__warp">
     <div class="userPage__components__CatCard" v-if="currenComponent === 'CatCard'">
-     <CatCard
-     :cat-info-data="catInfoData"
-     @switcher="Switcher"
-     />
+      <div class="userPage__components__CatCard__message" v-if="catInfoData.length === 0">
+          <h2>尚無任何收藏</h2>
+      </div>
+      <template v-else>
+         <CatCard
+            :cat-info-data="catInfoData"
+            @switcher="Switcher"
+         />
+      </template>
     </div>
    </div>
     <CatInfoModal
