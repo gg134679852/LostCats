@@ -18,6 +18,9 @@
     }
 
     &__img {
+      display: flex;
+      flex-direction: column;
+
       & img {
         width: 450px;
         height: 400px;
@@ -25,11 +28,24 @@
       }
     }
 
+    &__buttonGroup {
+      height: 55px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      & button {
+        width: 45%;
+        height: 80%;
+      }
+    }
+
     &__info-box {
 
       &__wrap {
         display: grid;
-        grid-template-columns: repeat(2, minmax(50%, 50%));
+        grid-template-columns: repeat(2,1fr);
         gap: .5rem;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -64,12 +80,13 @@
 @media screen and (min-width:768px) {
   .catInfoModal {
     &__catInfo {
+      display: flex;
+      &__content{
+        padding-left: 20px;
+      }
       &__img {
-        width: 60%;
-        margin: 0 auto;
-
         & img {
-          width: 100%;
+          width: 250px;
           height: 250px;
         }
       }

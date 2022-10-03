@@ -15,7 +15,10 @@
                 :src="showCatData.album_file"
                 onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
               />
-            <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">捐款</button>
+              <div class="catInfoModal__catInfo__buttonGroup">
+                  <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">捐款</button>
+                   <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">收藏</button>
+              </div>
           </div>
           <div class="catInfoModal__catInfo__content">
               <div class="catInfoModal__catInfo__content__text__id">
@@ -26,6 +29,12 @@
                 <div class="catInfoModal__catInfo__info-box__text">
                     <h6>性別</h6>
                   <h2>{{showCatData.animal_sex}}</h2>
+                </div>
+              </div>
+               <div class="catInfoModal__catInfo__info-box">
+                <div class="catInfoModal__catInfo__info-box__text">
+                   <h6>體型</h6>
+                  <h2>{{showCatData.animal_bodytype}}</h2>
                 </div>
               </div>
                <div class="catInfoModal__catInfo__info-box">
@@ -47,12 +56,12 @@
                </div>
               </div>
              </div>
-               <div class="catInfoModal__catInfo__content__text__remark">
+          </div>
+          </div>
+           <div class="catInfoModal__catInfo__content__text__remark">
                 <h3>註記:</h3>
                 <h2>{{showCatData.animal_remark}}</h2>
               </div>
-          </div>
-          </div>
           <hr>
            <div class="catInfoModal__shelterInfo__info-box__wrap">
              <div class="catInfoModal__shelterInfo__info-box">
