@@ -35,7 +35,7 @@ class donateController extends Controller
 
         $return_str = http_build_query($trade_info_arr);
 
-        $TradeInfo = trim(bin2hex(openssl_encrypt($this->addpadding($return_str), 'aes-256-cbc', $mer_key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $mer_iv)));
+        $TradeInfo = bin2hex(openssl_encrypt($return_str, 'aes-256-cbc', $mer_key, OPENSSL_RAW_DATA, $mer_iv));
 
         $shaData = 'HashKey=' . $mer_key . '&' . $TradeInfo . '&HashIV=' . $mer_iv;
 
@@ -69,13 +69,6 @@ class donateController extends Controller
         return view('donateCallBackPage',$returnData);
     }
 
-    public function addpadding($string, $blocksize = 32)
-    {
-        $len = strlen($string);
-        $pad = $blocksize - ($len % $blocksize);
-        $string .= str_repeat(chr($pad), $pad);
-        return $string;
-    }
 
     public function strippadding($string)
     {

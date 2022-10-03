@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
       </div>
       <div class="modal-body">
-       <div class="catInfoModal__wrap">
+       <div class="catInfoModal__wrap" v-if="modalType === 'catInfoModal'">
         <div class="catInfoModal__catInfo">
           <div class="catInfoModal__catInfo__img">
             <img
@@ -15,6 +15,7 @@
                 :src="showCatData.album_file"
                 onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'"
               />
+            <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">捐款</button>
           </div>
           <div class="catInfoModal__catInfo__content">
               <div class="catInfoModal__catInfo__content__text__id">
@@ -73,8 +74,90 @@
             <GoogleMap :shelter-data="showCatData.shelterData" :screen-size="screenSize" />
           </div>
        </div>
+       <div class="catInfoModal__donateInfo__wrap" v-if="modalType === 'donateInfoModal'">
+        <form v-if="tradeData.MerchantID === ''">
+        <div class="mb-3">
+          <label class="form-label">捐款金額</label>
+           <input
+            type="number"
+            max="5000"
+            class="form-control"
+            placeholder="金額不可小於500"
+            v-model="donateInfo.price"
+            required
+            />
+
+        </div>
+        <div class="mb-3">
+          <label class="form-label">姓名</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="donateInfo.name"
+            required
+            />
+        </div>
+        <div class="mb-3">
+           <label for="exampleFormControlInput1" class="form-label">電子郵件</label>
+           <input
+            type="email"
+            class="form-control"
+            v-model="donateInfo.email"
+            required
+            />
+        </div>
+         <div class="mb-3">
+           <label for="exampleFormControlInput1" class="form-label">電話</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="donateInfo.phone"
+              required
+            />
+
+        </div>
+        </form>
+          <div class="text-center" v-else>
+                <h3>捐款金額{{donateInfo.price}}</h3>
+                <br />
+                <h3>捐款至{{showCatData.shelterData.shelter_name}}</h3>
+                <form
+                  name="Spgateway"
+                  :action="tradeData.PayGateWay"
+                  method="POST" target="_blank"
+                >
+                  <input
+                    type="hidden"
+                    name="MerchantID"
+                    :value="tradeData.MerchantID"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="TradeInfo"
+                    :value="tradeData.TradeInfo"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="TradeSha"
+                    :value="tradeData.TradeSha"
+                  /><br />
+                  <input
+                    type="hidden"
+                    name="Version"
+                    :value="tradeData.Version"
+                  /><br />
+                  <button type="submit" class="btn btn-primary" @click="closeModal">
+                    開始捐款程序
+                  </button>
+                </form>
+              </div>
+       </div>
       </div>
       <div class="modal-footer">
+         <div class="catInfoModal__donateInfo__buttons__wrap" v-if="modalType === 'donateInfoModal'">
+         <button type="button" class="btn btn-primary" @click="changeModal">返回</button>
+         <button type="button" class="btn btn-primary" @click.prevent.stop="sendDonate">送出</button>
+         </div>
       </div>
     </div>
   </div>
@@ -101,14 +184,51 @@ export default {
       required: true
     }
   },
+  inject: ['Toast'],
   data () {
     return ({
-      modal: {}
+      modal: {},
+      donateInfo: {
+        price: '',
+        name: '',
+        email: '',
+        phone: ''
+      },
+      tradeData: {
+        PayGateWay: '',
+        MerchantID: '',
+        TradeInfo: '',
+        TradeSha: '',
+        Version: ''
+      },
+      modalType: 'catInfoModal'
     })
   },
   methods: {
     closeModal () {
       this.$emit('switcher', 'catInfo', 'none')
+    },
+    changeModal () {
+      this.modalType === 'catInfoModal' ? this.modalType = 'donateInfoModal' : this.modalType = 'catInfoModal'
+    },
+    sendDonate () {
+      if (this.donateInfo.price < 0 || this.donateInfo.price < 500) {
+        this.Toast.fire({
+          icon: 'warning',
+          title: '金額錯誤'
+        })
+      } else {
+        this.$axiosHelper
+          .post('spgateway/donate', {
+            data: {
+              ...this.donateInfo,
+              shelter_name: this.showCatData.shelterData.shelter_name
+            }
+          })
+          .then((obj) => {
+            this.tradeData = { ...this.tradeData, ...obj.data }
+          })
+      }
     }
   },
   mounted () {
