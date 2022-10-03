@@ -20,6 +20,9 @@
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>
      <a href="#" v-else @click.prevent="linkClick('/login')">登陸</a>
     </li>
+     <li v-if="this.$store.state.isAuthenticated">
+     <a href="#" @click.prevent="logout">登出</a>
+    </li>
   </ul>
 </div>
 <div class="navbar__linkList__mobile" :class="{open:isOpen}">
@@ -34,12 +37,16 @@
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>
      <a href="#" v-else @click.prevent="linkClick('/login')">登陸</a>
     </li>
+     <li v-if="this.$store.state.isAuthenticated">
+     <a href="#" @click.prevent="logout">登出</a>
+    </li>
   </ul>
 </div>
 </nav>
 </template>
 <script>
 export default {
+  inject: ['Toast'],
   data () {
     return ({
       isOpen: false
@@ -51,6 +58,18 @@ export default {
     },
     linkClick (url) {
       this.$router.push(url)
+    },
+    logout () {
+      this.$axiosHelper
+        .post('logout')
+        .then(() => {
+          this.$store.commit('revokeAuthentication')
+          this.Toast.fire({
+            icon: 'success',
+            title: '成功登出'
+          })
+          this.$router.push('/')
+        })
     }
   }
 }
