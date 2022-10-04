@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AnimalDataResource;
 use App\Models\AnimalData;
 use App\Models\ShelterList;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class animalDataController extends Controller
 {
-    public function getAnimalData(Request $request)
+    public function dataLengthCalculator($screenSize)
     {
-        $animal_color = AnimalData::select('animal_color')->get()->toArray();
-        $shelter_list = ShelterList::get()->toArray();
-        $requestData = $request->all();
-        $color = [];
-        $screenSize = $requestData['screenSize'];
-        $dataLength = 0;
+        $dataLength = '';
 
         switch ($screenSize) {
             case 'Small':
@@ -29,11 +22,21 @@ class animalDataController extends Controller
                 break;
 
             case 'Big':
-               $dataLength = 20;
+                $dataLength = 20;
                 break;
         };
+      return $dataLength;
+    }
+    public function getAnimalData(Request $request)
+    {
+        $animal_color = AnimalData::select('animal_color')->get()->toArray();
+        $shelter_list = ShelterList::get()->toArray();
+        $requestData = $request->all();
+        $color = [];
+        $screenSize = $requestData['screenSize'];
+        $dataLength = $this->dataLengthCalculator($screenSize);
 
-        $responseData = AnimalData::paginate($dataLength)->withQueryString();
+        $responseData = AnimalData::with('shelter')->paginate($dataLength)->withQueryString();
 
         foreach ($animal_color as $data) {
 
@@ -56,7 +59,8 @@ class animalDataController extends Controller
     public function getAnimalDataFilter(Request $request)
     {
         $allRequestData = $request->all();
-        $dataLength = $allRequestData['dataLength'];
+        $screenSize = $allRequestData['screenSize'];
+        $dataLength = $this->dataLengthCalculator($screenSize);
         $requestCatData = ["animal_sex" => $allRequestData['animal_sex'], "animal_color" => $allRequestData['animal_color']];
         $requestShelterData = ["shelter_city" => $allRequestData['shelter_city'], "shelter_name" => $allRequestData['shelter_name']];
 
@@ -64,7 +68,7 @@ class animalDataController extends Controller
         $whereShelterData = array_filter($requestShelterData, function ($item) {return $item !== "0";});
 
         $findShelterQuery = ShelterList::select('id')->where($whereShelterData);
-        $findAllCat = $findShelterQuery->with(['cat' => function ($q) use ($whereCatData) {$q->where($whereCatData);}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
+        $findAllCat = $findShelterQuery->with(['cat' => function ($q) use ($whereCatData) {$q->where($whereCatData)->with('shelter');}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
 
         return response()->json(
             [
@@ -72,19 +76,6 @@ class animalDataController extends Controller
                 'responseData' => [
                     'catData' => $findAllCat],
             ]);
-    }
-
-    public function getAnimalDetailData($id, $address)
-    {
-        $key = env('MIX_API_KEY');
-
-        $addressResponse = Http::get(
-            "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={$address}&inputtype=textquery&fields=geometry&key={$key}")->json();
-
-        $AnimalData = new AnimalDataResource(AnimalData::findOrFail($id));
-
-        return [$AnimalData, $addressResponse];
-
     }
 
     public function createNewCatData(Request $request)

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/animalData', 'animalDataController@getAnimalData');
 Route::get('/animalData/getSelect', 'animalDataController@getAnimalDataSelect');
 Route::get('/animalData/getFilter', 'animalDataController@getAnimalDataFilter');
-Route::get('/animalData/{id}/{address}/detail', 'animalDataController@getAnimalDetailData');
+
 
 
 
