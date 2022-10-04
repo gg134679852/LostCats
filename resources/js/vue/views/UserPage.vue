@@ -39,22 +39,15 @@
       <template v-else>
          <CatCard
             :cat-info-data="catInfoData"
-            @switcher="Switcher"
+            :screen-size="screenSize"
          />
       </template>
     </div>
    </div>
-    <CatInfoModal
-    :cat-info-modal-switcher="catInfoModalSwitcher"
-    :show-cat-data="showCatData"
-    :screen-size="screenSize"
-    @switcher="Switcher"
-  />
   </div>
 </template>
 <script>
 import CatCard from './../components/CatCard.vue'
-import CatInfoModal from '../components/CatInfoModal.vue'
 import NavBar from '../components/NavBar.vue'
 import { Toast } from './../utils/helpers'
 import { mapState } from 'vuex'
@@ -63,8 +56,7 @@ const getToken = () => localStorage.getItem('token')
 export default {
   components: {
     NavBar,
-    CatCard,
-    CatInfoModal
+    CatCard
   },
   data () {
     return {
@@ -91,8 +83,7 @@ export default {
         }
       },
       currenComponent: 'CatCard',
-      screenSize: '',
-      catInfoModalSwitcher: 'hide'
+      screenSize: ''
     }
   },
   created () {
@@ -163,23 +154,6 @@ export default {
         }
         case window.innerWidth >= 768:{
           this.screenSize = 'Middle'
-          break
-        }
-      }
-    },
-    Switcher (type, catDataId, shelterDataId) {
-      if (catDataId !== 'none' && shelterDataId !== 'none') {
-        const catDataIndex = this.catInfoData.findIndex((obj) => obj.animal_id === catDataId)
-        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.catInfoData[catDataIndex].shelter } }
-        targetData.shelterData.shelter_lat = Number(targetData.shelterData.shelter_lat)
-        targetData.shelterData.shelter_lng = Number(targetData.shelterData.shelter_lng)
-        this.showCatData = targetData
-      }
-      switch (type) {
-        case 'catInfo':{
-          this.catInfoModalSwitcher === 'hide'
-            ? this.catInfoModalSwitcher = 'show'
-            : this.catInfoModalSwitcher = 'hide'
           break
         }
       }

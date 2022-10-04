@@ -7,7 +7,6 @@
    </div>
     <CatCard
       :cat-info-data="catInfoData"
-      :shelter-list="shelterList"
       :screen-size="screenSize"
     />
      <PaginationComponent
