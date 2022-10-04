@@ -112,7 +112,7 @@ export default {
         animal_color: '0',
         shelter_name: '0'
       }
-      this.$emit('switcher', 'filter')
+      this.$emit('filterSwitcher')
     },
     shelterFilter (e) {
       this.formData.shelter_name = '0'

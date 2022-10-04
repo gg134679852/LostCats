@@ -3,11 +3,12 @@
   <loading-icon :active="isLoading" />
   <div class="catList__warp">
    <div class="catFilter__wrap">
-    <button type="button" class="btn btn-secondary" @click.prevent="Switcher('filter')"><i class="fas fa-filter"></i>過濾器</button>
+    <button type="button" class="btn btn-secondary" @click.prevent="filterSwitcher"><i class="fas fa-filter"></i>過濾器</button>
    </div>
     <CatCard
       :cat-info-data="catInfoData"
-      @switcher="Switcher"
+      :shelter-list="shelterList"
+      :screen-size="screenSize"
     />
      <PaginationComponent
       :pagination-links="paginationLinks"
@@ -20,30 +21,22 @@
       :shelter-name="shelterName"
       :color="color"
       :screen-size="screenSize"
-      @switcher="Switcher"
+      @filter-switcher="filterSwitcher"
       @shelter-filter="shelterFilter"
       @fetch-animal-data="fetchAnimalData"
-   />
-   <CatInfoModal
-      :cat-info-modal-switcher="catInfoModalSwitcher"
-      :show-cat-data="showCatData"
-      :screen-size="screenSize"
-      @switcher="Switcher"
    />
 </template>
 <script>
 import NavBarVue from '../components/NavBar.vue'
 import CatCard from '../components/CatCard.vue'
 import FilterModal from '../components/FilterModal.vue'
-import CatInfoModal from '../components/CatInfoModal.vue'
 import PaginationComponent from '../components/PaginationComponent.vue'
 export default {
   components: {
     CatCard,
     NavBarVue,
     FilterModal,
-    PaginationComponent,
-    CatInfoModal
+    PaginationComponent
   },
   created () {
     this.screenRuler()
@@ -57,34 +50,12 @@ export default {
   data () {
     return ({
       catInfoData: [],
-      showCatData: {
-        album_file: '',
-        animal_age: '',
-        animal_bacterin: '',
-        animal_bodytype: '',
-        animal_color: '',
-        animal_foundplace: '',
-        animal_id: '',
-        animal_remark: '',
-        animal_sex: '',
-        animal_sterilization: '',
-        shelterData: {
-          id: '',
-          shelter_address: '',
-          shelter_city: '',
-          shelter_lat: 0,
-          shelter_lng: 0,
-          shelter_name: '',
-          shelter_tel: ''
-        }
-      },
       paginationLinks: {},
       shelterList: [],
       shelterName: [],
       color: [],
       screenSize: '',
       filterModalSwitcher: 'hide',
-      catInfoModalSwitcher: 'hide',
       isLoading: false
     })
   },
@@ -201,29 +172,10 @@ export default {
         })
       }
     },
-    Switcher (type, catDataId, shelterDataId) {
-      if (catDataId !== 'none' && shelterDataId !== 'none') {
-        const catDataIndex = this.catInfoData.findIndex((obj) => obj.animal_id === catDataId)
-        const shelterDataIndex = this.shelterList.findIndex((obj) => obj.id === shelterDataId)
-        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.shelterList[shelterDataIndex] } }
-        targetData.shelterData.shelter_lat = Number(targetData.shelterData.shelter_lat)
-        targetData.shelterData.shelter_lng = Number(targetData.shelterData.shelter_lng)
-        this.showCatData = targetData
-      }
-      switch (type) {
-        case 'filter':{
-          this.filterModalSwitcher === 'hide'
-            ? this.filterModalSwitcher = 'show'
-            : this.filterModalSwitcher = 'hide'
-          break
-        }
-        case 'catInfo':{
-          this.catInfoModalSwitcher === 'hide'
-            ? this.catInfoModalSwitcher = 'show'
-            : this.catInfoModalSwitcher = 'hide'
-          break
-        }
-      }
+    filterSwitcher () {
+      this.filterModalSwitcher === 'hide'
+        ? this.filterModalSwitcher = 'show'
+        : this.filterModalSwitcher = 'hide'
     }
   },
   watch: {

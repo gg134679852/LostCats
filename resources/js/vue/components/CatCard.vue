@@ -4,7 +4,7 @@
     class="animalCard__wrapper"
     v-for="catInfoData in catInfoData"
     :key="catInfoData.id"
-    @click.stop.prevent="clickCard(catInfoData.animal_id,catInfoData.shelter_id)"
+    @click.stop.prevent="switcher(catInfoData.animal_id,catInfoData.shelter_id)"
   >
   <template v-if="isAuthenticated">
     <button class="animalCard__like-button"  @click.stop.prevent="addFavorite(catInfoData.id)"
@@ -30,29 +30,69 @@
     </div>
   </div>
 </div>
+<CatInfoModal
+  :show-cat-data="showCatData"
+  :screen-size="screenSize"
+  :cat-info-modal-switcher="catInfoModalSwitcher"
+  :favorite-id="favoriteId"
+  @add-favorite="addFavorite"
+  @remove-favorite="removeFavorite"
+  @switcher="switcher"
+/>
 </template>
 <script>
 import { mapState } from 'vuex'
+import CatInfoModal from './CatInfoModal.vue'
 export default {
   props: {
     catInfoData: {
       type: Array,
       required: true
+    },
+    shelterList: {
+      type: Array,
+      required: true
+    },
+    screenSize: {
+      type: String,
+      required: true
     }
+  },
+  components: {
+    CatInfoModal
   },
   inject: ['Toast'],
   data () {
-    return {
-      favoriteId: []
-    }
+    return ({
+      favoriteId: [],
+      showCatData: {
+        album_file: '',
+        animal_age: '',
+        animal_bacterin: '',
+        animal_bodytype: '',
+        animal_color: '',
+        animal_foundplace: '',
+        animal_id: '',
+        animal_remark: '',
+        animal_sex: '',
+        animal_sterilization: '',
+        shelterData: {
+          id: '',
+          shelter_address: '',
+          shelter_city: '',
+          shelter_lat: 0,
+          shelter_lng: 0,
+          shelter_name: '',
+          shelter_tel: ''
+        }
+      },
+      catInfoModalSwitcher: 'hide'
+    })
   },
   created () {
     this.fetchFavoriteCats()
   },
   methods: {
-    clickCard (catDataId, shelterDataId) {
-      this.$emit('switcher', 'catInfo', catDataId, shelterDataId)
-    },
     fetchFavoriteCats () {
       if (this.isAuthenticated) {
         if (this.favoriteId.length === 0) {
@@ -108,17 +148,19 @@ export default {
     },
     isFavorite (id) {
       return this.favoriteId.includes(id)
-    }
-  },
-  watch: {
-    favoriteCats: function () {
-      if (this.isAuthenticated) {
-        this.favoriteId = []
-
-        this.favoriteCats.forEach((data) => {
-          this.favoriteId.push(data.id)
-        })
+    },
+    switcher (catDataId, shelterDataId) {
+      if (catDataId !== 'none' && shelterDataId !== 'none') {
+        const catDataIndex = this.catInfoData.findIndex((obj) => obj.animal_id === catDataId)
+        const shelterDataIndex = this.shelterList.findIndex((obj) => obj.id === shelterDataId)
+        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.shelterList[shelterDataIndex] } }
+        targetData.shelterData.shelter_lat = Number(targetData.shelterData.shelter_lat)
+        targetData.shelterData.shelter_lng = Number(targetData.shelterData.shelter_lng)
+        this.showCatData = targetData
       }
+      this.catInfoModalSwitcher === 'hide'
+        ? this.catInfoModalSwitcher = 'show'
+        : this.catInfoModalSwitcher = 'hide'
     }
   },
   computed: {

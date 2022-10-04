@@ -17,7 +17,10 @@
               />
               <div class="catInfoModal__catInfo__buttonGroup">
                   <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">捐款</button>
-                   <button type="button" class="btn btn-success" @click="changeModal" v-if="this.$store.state.isAuthenticated">收藏</button>
+                  <template v-if="this.$store.state.isAuthenticated" >
+                    <button type="button" class="btn btn-like" @click="addFavorite(showCatData.id)" v-if="isFavorite(showCatData.id) === false">收藏</button>
+                     <button type="button" class="btn btn-like" @click="removeFavorite(showCatData.id)" v-else>已收藏</button>
+                  </template>
               </div>
           </div>
           <div class="catInfoModal__catInfo__content">
@@ -191,7 +194,12 @@ export default {
     screenSize: {
       type: String,
       required: true
+    },
+    favoriteId: {
+      type: Array,
+      required: true
     }
+
   },
   inject: ['Toast'],
   data () {
@@ -215,7 +223,7 @@ export default {
   },
   methods: {
     closeModal () {
-      this.$emit('switcher', 'catInfo', 'none')
+      this.$emit('switcher', 'none', 'none')
     },
     changeModal () {
       this.modalType === 'catInfoModal' ? this.modalType = 'donateInfoModal' : this.modalType = 'catInfoModal'
@@ -238,6 +246,15 @@ export default {
             this.tradeData = { ...this.tradeData, ...obj.data }
           })
       }
+    },
+    isFavorite (id) {
+      return this.favoriteId.includes(id)
+    },
+    addFavorite (id) {
+      this.$emit('addFavorite', id)
+    },
+    removeFavorite (id) {
+      this.$emit('removeFavorite', id)
     }
   },
   mounted () {
