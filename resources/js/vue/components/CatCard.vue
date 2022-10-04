@@ -49,10 +49,6 @@ export default {
       type: Array,
       required: true
     },
-    shelterList: {
-      type: Array,
-      required: true
-    },
     screenSize: {
       type: String,
       required: true
@@ -152,8 +148,7 @@ export default {
     switcher (catDataId, shelterDataId) {
       if (catDataId !== 'none' && shelterDataId !== 'none') {
         const catDataIndex = this.catInfoData.findIndex((obj) => obj.animal_id === catDataId)
-        const shelterDataIndex = this.shelterList.findIndex((obj) => obj.id === shelterDataId)
-        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.shelterList[shelterDataIndex] } }
+        const targetData = { ...this.catInfoData[catDataIndex], shelterData: { ...this.catInfoData[catDataIndex].shelter } }
         targetData.shelterData.shelter_lat = Number(targetData.shelterData.shelter_lat)
         targetData.shelterData.shelter_lng = Number(targetData.shelterData.shelter_lng)
         this.showCatData = targetData
