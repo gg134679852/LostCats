@@ -95,7 +95,8 @@
             max="5000"
             class="form-control"
             placeholder="金額不可小於500"
-            v-model="donateInfo.price"
+            name="price"
+            @input="enterFormData"
             required
             />
 
@@ -105,7 +106,8 @@
           <input
             type="text"
             class="form-control"
-            v-model="donateInfo.name"
+            name="name"
+            @input="enterFormData"
             required
             />
         </div>
@@ -114,7 +116,8 @@
            <input
             type="email"
             class="form-control"
-            v-model="donateInfo.email"
+            name="email"
+            @input="enterFormData"
             required
             />
         </div>
@@ -123,7 +126,8 @@
             <input
               type="text"
               class="form-control"
-              v-model="donateInfo.phone"
+              name="phone"
+              @input="enterFormData"
               required
             />
 
@@ -168,7 +172,7 @@
       <div class="modal-footer">
          <div class="catInfoModal__donateInfo__buttons__wrap" v-if="modalType === 'donateInfoModal'">
          <button type="button" class="btn btn-primary" @click="changeModal">返回</button>
-         <button type="button" class="btn btn-primary" @click.prevent.stop="sendDonate">送出</button>
+         <button type="button" class="btn btn-primary" @click.prevent.stop="sendDonate" v-if="tradeData. MerchantID === ''">送出</button>
          </div>
       </div>
     </div>
@@ -198,54 +202,34 @@ export default {
     favoriteId: {
       type: Array,
       required: true
+    },
+    donateInfo: {
+      type: Object,
+      required: true
+    },
+    tradeData: {
+      type: Object,
+      required: true
+    },
+    modalType: {
+      type: String,
+      required: true
     }
 
   },
   inject: ['Toast'],
   data () {
     return ({
-      modal: {},
-      donateInfo: {
-        price: '',
-        name: '',
-        email: '',
-        phone: ''
-      },
-      tradeData: {
-        PayGateWay: '',
-        MerchantID: '',
-        TradeInfo: '',
-        TradeSha: '',
-        Version: ''
-      },
-      modalType: 'catInfoModal'
+      modal: {}
+
     })
   },
   methods: {
     closeModal () {
       this.$emit('switcher', 'none', 'none')
     },
-    changeModal () {
-      this.modalType === 'catInfoModal' ? this.modalType = 'donateInfoModal' : this.modalType = 'catInfoModal'
-    },
     sendDonate () {
-      if (this.donateInfo.price < 0 || this.donateInfo.price < 500) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: '金額錯誤'
-        })
-      } else {
-        this.$axiosHelper
-          .post('spgateway/donate', {
-            data: {
-              ...this.donateInfo,
-              shelter_name: this.showCatData.shelterData.shelter_name
-            }
-          })
-          .then((obj) => {
-            this.tradeData = { ...this.tradeData, ...obj.data }
-          })
-      }
+      this.$emit('send-donate')
     },
     isFavorite (id) {
       return this.favoriteId.includes(id)
@@ -255,6 +239,12 @@ export default {
     },
     removeFavorite (id) {
       this.$emit('removeFavorite', id)
+    },
+    enterFormData (e) {
+      this.$emit('enterFormData', e)
+    },
+    changeModal () {
+      this.$emit('changeModal')
     }
   },
   mounted () {
