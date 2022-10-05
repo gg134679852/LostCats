@@ -70,10 +70,6 @@
 
   &__shelterInfo {
     &__info-box {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .5rem;
-
       &__text {
         border-left: 3px solid #212529;
         margin-left: 5px;
@@ -101,6 +97,14 @@
           width: 250px;
           height: 250px;
         }
+      }
+    }
+
+    &__shelterInfo {
+      &__info-box {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: .5rem;
       }
     }
   }

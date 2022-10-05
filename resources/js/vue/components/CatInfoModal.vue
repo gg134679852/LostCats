@@ -66,12 +66,7 @@
                 <h2>{{showCatData.animal_remark}}</h2>
               </div>
           <hr>
-           <div class="catInfoModal__shelterInfo__info-box__wrap">
              <div class="catInfoModal__shelterInfo__info-box">
-                 <div class="catInfoModal__shelterInfo__info-box__text">
-                    <h6>收容所地區</h6>
-                  <h2>{{showCatData.shelterData.shelter_city}}</h2>
-                </div>
                 <div class="catInfoModal__shelterInfo__info-box__text">
                     <h6>收容所名稱</h6>
                   <h2>{{showCatData.shelterData.shelter_name}}</h2>
@@ -80,8 +75,15 @@
                     <h6>收容所電話</h6>
                   <h2>{{showCatData.shelterData.shelter_tel}}</h2>
                 </div>
+                 <div class="catInfoModal__shelterInfo__info-box__text">
+                    <h6>收容所地區</h6>
+                  <h2>{{showCatData.shelterData.shelter_city}}</h2>
+                </div>
+                 <div class="catInfoModal__shelterInfo__info-box__text">
+                    <h6>收容所地址</h6>
+                  <h2>{{showCatData.shelterData.shelter_address}}</h2>
+                </div>
               </div>
-           </div>
           <div class="catInfoModal__info__map">
             <GoogleMap :shelter-data="showCatData.shelterData" :screen-size="screenSize" />
           </div>
