@@ -4,6 +4,14 @@
       :zoom="16"
       map-type-id="terrain"
       :style="{width: '100%', height: mapHeight + 'px',position: 'relative', overflow: 'hidden'}"
+      :options="{
+                      zoomControl: true,
+                      mapTypeControl: true,
+                      scaleControl: true,
+                      streetViewControl: false,
+                      rotateControl: true,
+                      fullscreenControl: true,
+                }"
   >
   </GMapMap>
 </template>

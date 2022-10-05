@@ -35,13 +35,15 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+
       & button {
         width: 45%;
         height: 80%;
       }
-      & .btn-like{
+
+      & .btn-like {
         background-color: #FF69B4;
-        color:azure;
+        color: azure;
       }
     }
 
@@ -49,7 +51,7 @@
 
       &__wrap {
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: .5rem;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -68,6 +70,10 @@
 
   &__shelterInfo {
     &__info-box {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .5rem;
+
       &__text {
         border-left: 3px solid #212529;
         margin-left: 5px;
@@ -85,9 +91,11 @@
   .catInfoModal {
     &__catInfo {
       display: flex;
-      &__content{
+
+      &__content {
         padding-left: 20px;
       }
+
       &__img {
         & img {
           width: 250px;
