@@ -35,7 +35,7 @@ export default createStore({
       state.isAuthenticated = false
     },
     fetchCurrentUser (state) {
-      axiosHelper('CurrentUser')
+      axiosHelper('user/CurrentUser')
         .then((obj) => {
           const { user, favoriteCats, isAuthenticated } = obj.data
           state.currentUser = {

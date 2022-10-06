@@ -127,7 +127,7 @@ export default {
       } else {
         this.favoriteId.push(id)
         this.$axiosHelper
-          .post(`${id}/addFavorite`)
+          .post(`user/addFavorite/${id}`)
           .then(() => {
             this.Toast.fire({
               icon: 'success',
@@ -147,7 +147,7 @@ export default {
       const target = this.favoriteId.indexOf(id)
       this.favoriteId.splice(target, 1)
       this.$axiosHelper
-        .delete(`${id}/removeFavorite`)
+        .delete(`user/removeFavorite/${id}`)
         .then(() => {
           this.Toast.fire({
             icon: 'success',

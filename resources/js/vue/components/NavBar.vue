@@ -61,7 +61,7 @@ export default {
     },
     logout () {
       this.$axiosHelper
-        .post('logout')
+        .post('user/logout')
         .then(() => {
           this.$store.commit('revokeAuthentication')
           this.Toast.fire({

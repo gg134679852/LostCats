@@ -14,20 +14,16 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('CatCard')">最愛喵星人</a></li>
-    <li><a class="dropdown-item" href="#">捐款紀錄</a></li>
-    <li><a class="dropdown-item" href="#">會員資料</a></li>
+    <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('DonateLog')">捐款紀錄</a></li>
   </ul>
     </div>
      <div class="userPage__navTab" v-if="screenSize === 'Middle' || screenSize === 'Big'">
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click.prevent="switchComponent('CatCard')">最愛喵星人</button>
+            <button class="nav-link" :class="{active: currenComponent === 'CatCard'}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click.prevent="switchComponent('CatCard')">最愛喵星人</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">捐款紀錄</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">會員資料</button>
+            <button class="nav-link" :class="{active: currenComponent === 'DonateLog'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click.prevent="switchComponent('DonateLog')">捐款紀錄</button>
           </li>
         </ul>
    </div>
@@ -43,12 +39,24 @@
          />
       </template>
     </div>
+     <div class="userPage__components__DonateLog" v-if="currenComponent === 'DonateLog'">
+      <div class="userPage__components_DonateLog__message" v-if="donateLogData.length === 0">
+          <h2>尚無任何紀錄</h2>
+      </div>
+      <template v-else>
+         <DonateLog
+         :donate-log-data="donateLogData"
+         :screen-size="screenSize"
+         />
+      </template>
+    </div>
    </div>
   </div>
 </template>
 <script>
 import CatCard from './../components/CatCard.vue'
 import NavBar from '../components/NavBar.vue'
+import DonateLog from '../components/DonateLog.vue'
 import { Toast } from './../utils/helpers'
 import { mapState } from 'vuex'
 const getToken = () => localStorage.getItem('token')
@@ -56,11 +64,13 @@ const getToken = () => localStorage.getItem('token')
 export default {
   components: {
     NavBar,
-    CatCard
+    CatCard,
+    DonateLog
   },
   data () {
     return {
       catInfoData: [],
+      donateLogData: [],
       showCatData: {
         album_file: '',
         animal_age: '',
@@ -88,6 +98,7 @@ export default {
   },
   created () {
     this.copyFavoriteCats()
+    this.fetchDonateLog()
     this.screenRuler()
   },
   mounted () {
@@ -120,24 +131,19 @@ export default {
           console.log(error)
         })
     },
-    fetchAnimalDetailData (id, address) {
-      this.modalIsLoading = true
-      this.$axiosHelper.get(`api/animalData/${id}/${address}/detail`).then((obj) => {
-        this.catData = {
-          ...this.catData,
-          ...obj.data[0]
-        }
-        this.catData.address = {
-          ...this.catData.address,
-          ...obj.data[1].candidates[0].geometry.location
-        }
-        this.modalIsLoading = false
+    fetchDonateLog () {
+      this.$axiosHelper.get(`user/donateLogData?userId=${this.currentUser.id}`).then((obj) => {
+        this.donateLogData = obj.data.donateLog.data
       })
     },
     switchComponent (type) {
       switch (type) {
         case 'CatCard':{
           this.currenComponent = 'CatCard'
+          break
+        }
+        case 'DonateLog':{
+          this.currenComponent = 'DonateLog'
           break
         }
       }

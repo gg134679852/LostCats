@@ -42,10 +42,10 @@ class userControllers extends Controller
             $token = $user->createToken('token');
 
             Auth::loginUsingId($user['id'], $remember = false);
-            $favoriteCats =  $user->cat()->with('shelter')->get()->toArray();
+            $favoriteCats = $user->cat()->with('shelter')->get()->toArray();
 
             return response(['icon' => 'success', 'message' => '登陸成功', 'userData' => ['user' => $user,
-                'favoriteCats' =>  $favoriteCats,
+                'favoriteCats' => $favoriteCats,
                 'isAuthenticated' => Auth::check()],
                 'token' => $token->plainTextToken,
             ]);
@@ -107,7 +107,7 @@ class userControllers extends Controller
     {
         $user = Auth::user();
 
-        $cat = FavoriteCat::where(['user_id'=>$user['id'],'animal_data_id'=>$id])->delete();
+        $cat = FavoriteCat::where(['user_id' => $user['id'], 'animal_data_id' => $id])->delete();
 
         if ($cat) {
             return response()->json([
@@ -121,5 +121,12 @@ class userControllers extends Controller
                 'message' => '刪除失敗，請重新操作',
             ]);
         }
+    }
+    public function getUserDonateLogData(Request $request)
+    {
+        $requestData = $request->all();
+        $userId = $requestData['userId'];
+        $responseData = User::where(['id' => $userId])->with('donateLog')->get()->pluck('donateLog')->collapse()->paginate(10);
+        return response(['donateLog'=>$responseData]);
     }
 }

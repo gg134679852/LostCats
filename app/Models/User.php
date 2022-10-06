@@ -47,4 +47,8 @@ class User extends Authenticatable
    {
        return $this->belongsToMany(AnimalData::class, 'favorite_cats');
    }
+   public function donateLog()
+    {
+        return $this->hasMany(DonateLog::class,'user_id');
+    }
 }

@@ -12,17 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::post('/singup', 'userControllers@singup');
-Route::post('/login', 'userControllers@login');
+Route::post('user/singup', 'userControllers@singup');
+Route::post('user/login', 'userControllers@login');
 Route::get('/facebook/login','userControllers@faceBookLogin');
 Route::get('/facebook/callback', 'userControllers@faceBookLoginCallBack');
 Route::post('/spgateway/callback', 'donateController@callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::post('/logout', 'userControllers@logout');
-    Route::get('/CurrentUser', 'userControllers@getCurrentUser');
-    Route::middleware('userChecker')->post('{id}/addFavorite', 'userControllers@addFavorite');
-    Route::middleware('userChecker')->delete('{id}/removeFavorite', 'userControllers@removeFavorite');
+    Route::post('user/logout', 'userControllers@logout');
+    Route::get('user/CurrentUser', 'userControllers@getCurrentUser');
+    Route::middleware('userChecker')->post('user/addFavorite/{id}', 'userControllers@addFavorite');
+    Route::middleware('userChecker')->delete('user/removeFavorite/{id}', 'userControllers@removeFavorite');
+    Route::middleware('userChecker')->get('user/donateLogData', 'userControllers@getUserDonateLogData');
     Route::middleware('userChecker')->post('/spgateway/donate', 'donateController@Donate');
     Route::middleware('adminChecker')->post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
     Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'animalDataController@uploadImage');

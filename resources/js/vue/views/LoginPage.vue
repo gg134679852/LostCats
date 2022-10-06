@@ -90,7 +90,7 @@ export default {
   methods: {
     login () {
       this.isLoading = true
-      this.$axiosHelper.post('login', {
+      this.$axiosHelper.post('user/login', {
         email: this.loginData.email,
         password: this.loginData.password
       })
@@ -108,7 +108,7 @@ export default {
     },
     singUp () {
       this.isLoading = true
-      this.$axiosHelper.post('singup', {
+      this.$axiosHelper.post('user/singup', {
         name: this.singUpData.name,
         email: this.singUpData.email,
         password: this.singUpData.password,
