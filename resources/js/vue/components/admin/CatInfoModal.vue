@@ -95,18 +95,18 @@
                 <div class="mb-3 col-md-6">
                   <label for="shelter_name" class="form-label">收容所名稱</label>
                   <input type="text" class="form-control" id="shelter_name" placeholder="請輸入收容所名稱" @input="passValue"
-                    :value="catInfoData.shelter_name">
+                    :value="catInfoData.shelterData.shelter_name">
                 </div>
                 <div class="mb-3 col-md-6">
                   <label for="shelter_tel" class="form-label">收容所電話</label>
                   <input type="text" class="form-control" id="shelter_tel" placeholder="請輸入收容所電話" @input="passValue"
-                    :value="catInfoData.shelter_tel">
+                    :value="catInfoData.shelterData.shelter_tel">
                 </div>
               </div>
               <div class="mb-3">
                 <label for="shelter_address" class="form-label">收容所地址</label>
                 <input type="text" class="form-control" id="shelter_address" placeholder="請輸入收容所地址" @input="passValue"
-                  :value="catInfoData.shelter_address">
+                  :value="catInfoData.shelterData.shelter_address">
               </div>
               <hr>
               <div class=" mb-3">

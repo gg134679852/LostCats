@@ -30,7 +30,7 @@ export default {
   inject: ['Toast'],
   methods: {
     logout () {
-      this.$axiosHelper.post('/logout')
+      this.$axiosHelper.post('user/logout')
         .then(() => {
           this.$store.dispatch('revokeAuthentication')
           this.$router.push('/login')
