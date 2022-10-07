@@ -87,11 +87,15 @@ export default {
           break
         }
         case 'filterData':{
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&screenSize=${this.screenSize}`
+          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
               const { catData } = obj.data.responseData
-              this.catInfoData = catData.data
+              if (condition.haveImage === 'notNull' || condition.haveImage === 'Null') {
+                this.catInfoData = Object.values(catData.data)
+              } else {
+                this.catInfoData = catData.data
+              }
               this.paginationLinks = {
                 links: catData.links,
                 currentPage: catData.current_page,

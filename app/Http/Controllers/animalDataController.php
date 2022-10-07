@@ -25,7 +25,7 @@ class animalDataController extends Controller
                 $dataLength = 20;
                 break;
         };
-      return $dataLength;
+        return $dataLength;
     }
     public function getAnimalData(Request $request)
     {
@@ -60,21 +60,35 @@ class animalDataController extends Controller
     {
         $allRequestData = $request->all();
         $screenSize = $allRequestData['screenSize'];
+        $haveImage = $allRequestData['haveImage'];
         $dataLength = $this->dataLengthCalculator($screenSize);
         $requestCatData = ["animal_sex" => $allRequestData['animal_sex'], "animal_color" => $allRequestData['animal_color']];
         $requestShelterData = ["shelter_city" => $allRequestData['shelter_city'], "shelter_name" => $allRequestData['shelter_name']];
 
-        $whereCatData = array_filter($requestCatData, function ($item) {return $item !== "0";});
-        $whereShelterData = array_filter($requestShelterData, function ($item) {return $item !== "0";});
+        $catDataWhereQuery = array_filter($requestCatData, function ($item) {return $item !== "0";});
+        $shelterDataWhereQuery = array_filter($requestShelterData, function ($item) {return $item !== "0";});
 
-        $findShelterQuery = ShelterList::select('id')->where($whereShelterData);
-        $findAllCat = $findShelterQuery->with(['cat' => function ($q) use ($whereCatData) {$q->where($whereCatData)->with('shelter');}])->get()->pluck('cat')->collapse()->paginate($dataLength)->withQueryString();
+        $findShelter = ShelterList::select('id')->where($shelterDataWhereQuery);
+
+        $findCat = $findShelter->with(['cat' => function ($q) use ($catDataWhereQuery) {$q->where($catDataWhereQuery)->with('shelter');}])->get()->pluck('cat')->collapse();
+
+        switch ($haveImage) {
+            case 'notNull':
+                $responseCatData = $findCat->whereNotNull('album_file')->paginate($dataLength)->withQueryString();
+                break;
+            case 'Null':
+                $responseCatData = $findCat->whereNull('album_file')->paginate($dataLength)->withQueryString();
+                break;
+            default:
+                $responseCatData = $findCat->paginate($dataLength)->withQueryString();
+                break;
+        }
 
         return response()->json(
             [
                 'success' => 'true',
                 'responseData' => [
-                    'catData' => $findAllCat],
+                    'catData' => $responseCatData],
             ]);
     }
 

@@ -27,7 +27,7 @@
           <td>
             {{ item.shelter.shelter_city}}
           </td>
-          <td>{{ item.album_file.length !== 0 ? '有照片':'沒照片' }}</td>
+          <td>{{ item.album_file !== null ? '有照片':'沒照片' }}</td>
           <td>{{ item.animal_sterilization }}</td>
           <td>
             <div class="btn-group">
@@ -166,11 +166,15 @@ export default {
           break
         }
         case 'filterData':{
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&screenSize=${this.screenSize}`
+          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
               const { catData } = obj.data.responseData
-              this.catData = catData.data
+              if (condition.haveImage !== '0') {
+                this.catData = Object.values(catData.data)
+              } else {
+                this.catData = catData.data
+              }
               this.paginationLinks = {
                 links: catData.links,
                 currentPage: catData.current_page,

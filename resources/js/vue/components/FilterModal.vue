@@ -60,6 +60,14 @@
                  <option :value="name" v-for="(name,index) in shelter_name_option" :key="index">{{name}}</option>
               </select>
               </div>
+              <div class="mb-3">
+                <label for="shelter_name" class="form-label">是否要有照片</label>
+                 <select class="form-select" id="shelter_name" v-model="formData.haveImage">
+                 <option value="0">默認</option>
+                 <option value="notNull">有照片</option>
+                 <option value="Null">沒照片</option>
+              </select>
+              </div>
           <button type="submit" class="btn btn-primary">送出</button>
        </form>
       </div>
@@ -97,7 +105,8 @@ export default {
         animal_sex: '0',
         shelter_city: '0',
         animal_color: '0',
-        shelter_name: '0'
+        shelter_name: '0',
+        haveImage: '0'
       },
       shelter_city_option: '',
       shelter_name_option: []
@@ -110,7 +119,8 @@ export default {
         animal_sex: '0',
         shelter_city: '0',
         animal_color: '0',
-        shelter_name: '0'
+        shelter_name: '0',
+        haveImage: '0'
       }
       this.$emit('filterSwitcher')
     },
