@@ -135,7 +135,7 @@ class getCatData extends Command
                     "animal_bacterin" => $cat['animal_bacterin'] === 'F' ? '未打狂犬病疫苗' : '已打狂犬病疫苗',
                     "animal_foundplace" => $cat['animal_foundplace'],
                     "animal_remark" => $cat['animal_remark'],
-                    "album_file" => $cat['album_file'],
+                    "album_file" => $cat['album_file']  === '' ? NULL:$cat['album_file'],
                     "shelter_name" => $cat['shelter_name']
                 ];
                 addNewAnimaData($newCatData);
