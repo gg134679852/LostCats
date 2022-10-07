@@ -16,9 +16,9 @@
           :key="index">
           <button :class="['page-link', { disabled: pagination.url === null}]" v-if="index === 0"
             @click.stop.prevent="paginationButtonClick(pagination.url)">&laquo;</button>
-          <button :class="['page-link', { disabled: pagination.url === null}]" v-if="index === 14"
+          <button :class="['page-link', { disabled: pagination.url === null}]" v-if="index === paginationLinks.links.length - 1"
             @click.stop.prevent="paginationButtonClick(pagination.url)">&raquo;</button>
-          <button class="page-link" v-if="index !== 0 && index !== 14 "
+          <button class="page-link" v-if="index !== 0 && index !== paginationLinks.links.length - 1 "
             @click.stop.prevent="paginationButtonClick(pagination.url)">{{pagination.label}}</button>
         </li>
       </ul>
