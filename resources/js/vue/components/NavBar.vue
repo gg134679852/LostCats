@@ -11,7 +11,7 @@
 <div class="navbar__linkList__desktop">
   <ul>
      <li>
-      <a class="nav-link" aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
+      <a aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
     </li>
     <li>
      <a aria-current="page" href="#" @click.prevent="linkClick('/catList')">喵星人列表</a>
