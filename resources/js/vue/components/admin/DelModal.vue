@@ -5,16 +5,22 @@
       <div class="modal-content border-0">
         <div class="modal-header bg-danger text-white">
           <h5 class="modal-title">
-            <span>刪除 編號 {{ animalId }}</span>
+            <span v-if="delModalType === 'CatList'">刪除 編號 {{ animalId }}</span>
+            <span v-else>刪除 {{ shelterInfoData.shelter_name }} 的資料</span>
           </h5>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" v-if="delModalType === 'CatList'">
           是否刪除 <strong class="text-danger">編號 {{ animalId }}</strong> (刪除後將無法恢復)。
         </div>
+        <div class="modal-body" v-else>
+          是否刪除 <strong class="text-danger">{{ shelterInfoData.shelter_name }}的資料</strong> (刪除後將無法恢復)。
+        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" @click="closeModal('none','closeModal')">取消
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+            @click="closeModal('none','closeModal')">取消
           </button>
-          <button type="button" class="btn btn-danger" @click="deleteCatData(animalId)">確認刪除
+          <button type="button" class="btn btn-danger"
+            @click=" delModalType === 'CatList' ? deleteCatData(animalId):deleteShelterData(shelterInfoData.id)">確認刪除
           </button>
         </div>
       </div>
@@ -30,8 +36,14 @@ export default {
       required: true
     },
     animalId: {
-      type: Number,
-      required: true
+      type: Number
+    },
+    shelterInfoData: {
+      type: Object
+    },
+    delModalType: {
+      type: String,
+      require: true
     }
   },
   data () {
@@ -42,6 +54,10 @@ export default {
   methods: {
     deleteCatData (id) {
       this.$emit('deleteCatData', id)
+      this.$emit('switcher', 'none', 'closeModal')
+    },
+    deleteShelterData (id) {
+      this.$emit('deleteShelterData', id)
       this.$emit('switcher', 'none', 'closeModal')
     },
     closeModal (id, type) {

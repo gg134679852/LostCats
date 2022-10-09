@@ -101,7 +101,7 @@ export default {
           })
           if (obj.data.icon === 'success') {
             this.$store.dispatch('setUser', obj.data)
-            this.$store.state.currentUser.isAdmin ? (this.$router.push('/admin/dashboard/catlist')) : (this.$router.push('/'))
+            this.$store.state.currentUser.isAdmin ? (this.$router.push('/admin/dashboard/datalist')) : (this.$router.push('/'))
           }
           this.isLoading = false
         })

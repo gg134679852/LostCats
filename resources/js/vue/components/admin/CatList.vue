@@ -1,8 +1,22 @@
 <template>
-  <loading-icon :active="isLoading" />
+  <div class="text-star d-flex justify-content-between mt-3">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        資料選項
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#" @click.prevent="componentSwitcher('CatList')">貓咪清單</a></li>
+        <li><a class="dropdown-item" href="#" @click.prevent="componentSwitcher('ShelterList')">收容所清單</a></li>
+      </ul>
+    </div>
+    <div class="button-warp">
+      <button type="button" class="btn btn-primary" @click.prevent="switcher('none','createNewCatData')">新增資料</button>
+      <button type="button" class="btn btn-secondary" @click.prevent="filterSwitcher"><i
+          class="fas fa-filter"></i>過濾器</button>
+    </div>
+  </div>
   <div class="text-end mt-3">
-    <button type="button" class="btn btn-primary" @click.prevent="switcher('none','createNewCatData')">新增資料</button>
-    <button type="button" class="btn btn-secondary" @click.prevent="filterSwitcher"><i class="fas fa-filter"></i>過濾器</button>
     <table class="table mt-4">
       <thead>
         <tr>
@@ -16,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for=" item in catData" :key="item.animal_id">
+        <tr v-for=" item in catData.data" :key="item.animal_id">
           <td>{{ item.animal_id }}</td>
           <td class="text-right">
             {{ item.animal_sex }}
@@ -31,45 +45,48 @@
           <td>{{ item.animal_sterilization }}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-outline-primary btn-sm" @click.prevent="switcher(item.animal_id,'updateCatData')">編輯</button>
-              <button class="btn btn-outline-danger btn-sm" @click.prevent="switcher(item.animal_id,'deleteCatData')">刪除</button>
+              <button class="btn btn-outline-primary btn-sm"
+                @click.prevent="switcher(item.animal_id,'updateCatData')">編輯</button>
+              <button class="btn btn-outline-danger btn-sm"
+                @click.prevent="switcher(item.animal_id,'deleteCatData')">刪除</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-   <PaginationComponent
-    :pagination-links="paginationLinks"
+  <PaginationComponent
+    :pagination-links="catData.paginationLinks"
     :screen-size="screenSize"
-    @fetch-animal-data="fetchAnimalData"
-   />
+    @fetch-animal-data="fetchAnimalData" />
   <CatInfoModal
     :cat-info-modal-switcher="catInfoModalSwitcher"
-    :is-loading="isLoading"
     :cat-info-data="catInfoData"
     :modal-type="modalType"
+    :shelter-option="shelterOption"
     @form-value-enter="formValueEnter"
     @switcher="switcher"
     @upload-image="uploadImage"
     @upload-new-cat-data="uploadNewCatData"
     @updateCatData="updateCatData"
-  />
+    @shelter-filter="shelterFilter"
+    />
   <DelModal
     :del-modal-switcher="delModalSwitcher"
     :animal-id="catInfoData.animal_id"
+    :del-modal-type="delModalType"
     @delete-cat-data="deleteCatData"
     @switcher="switcher"
   />
   <FilterModal
     :filter-modal-switcher="filterModalSwitcher"
-    :shelter-name="shelterName"
-    :color="color"
+    :shelter-option="shelterOption"
+    :color="catData.color"
     :screen-size="screenSize"
     @filter-switcher="filterSwitcher"
     @shelter-filter="shelterFilter"
     @fetch-animal-data="fetchAnimalData"
-  />
+    />
 </template>
 <script>
 import CatInfoModal from './CatInfoModal.vue'
@@ -77,15 +94,36 @@ import PaginationComponent from '../PaginationComponent.vue'
 import DelModal from '../../components/admin/DelModal.vue'
 import FilterModal from '../FilterModal.vue'
 export default {
+  props: {
+    catData: {
+      type: Object,
+      require: true
+    },
+    shelterData: {
+      type: Object,
+      require: true
+    },
+    screenSize: {
+      type: String,
+      require: true
+    },
+    currentComponent: {
+      type: String,
+      require: true
+    }
+  },
+  emits: ['componentSwitcher', 'fetchAnimalData', 'loadingSwitcher'],
   components: {
     CatInfoModal,
     PaginationComponent,
     DelModal,
     FilterModal
   },
+  created () {
+    this.shelterFilter('')
+  },
   data () {
     return ({
-      catData: [],
       catInfoData: {
         album_file: '',
         animal_age: '',
@@ -97,20 +135,11 @@ export default {
         animal_remark: '',
         animal_sex: '',
         animal_sterilization: '',
-        shelterData: {
-          id: '',
-          shelter_address: '',
-          shelter_city: '',
-          shelter_lat: 0,
-          shelter_lng: 0,
-          shelter_name: '',
-          shelter_tel: ''
-        }
+        shelter_id: '0',
+        shelter_city: '0'
       },
       inputName: {
-        shelter_address: '收容所地址',
-        shelter_tel: '收容所電話',
-        shelter_name: '收容所名稱',
+        shelter_id: '收容所',
         animal_foundplace: '發現地點',
         animal_bacterin: '是否已施打狂犬病疫苗',
         animal_sterilization: '是否已絕育',
@@ -120,106 +149,24 @@ export default {
         animal_sex: '性別',
         animal_id: '編號'
       },
-      paginationLinks: [],
-      shelterList: [],
-      shelterName: [],
-      color: [],
-      isLoading: false,
+      shelterOption: [],
       catInfoModalSwitcher: 'hide',
       delModalSwitcher: 'hide',
       filterModalSwitcher: 'hide',
       modalType: '',
-      screenSize: 'Big'
-
+      delModalType: 'CatList'
     })
-  },
-  created () {
-    this.fetchAnimalData()
   },
   inject: ['Toast'],
   methods: {
-    fetchAnimalData (type, url, condition) {
-      this.isLoading = true
+    fetchAnimalData (type, value) {
       switch (type) {
-        case 'pageClick':{
-          this.$axiosHelper.get(url)
-            .then((obj) => {
-              const { catData } = obj.data.responseData
-              this.catData = catData.data
-              this.paginationLinks = {
-                links: catData.links,
-                currentPage: catData.current_page,
-                prevPageUrl: catData.prev_page_url,
-                nextPageUrl: catData.next_page_url,
-                lastPage: catData.last_page
-              }
-              this.isLoading = false
-            })
-            .catch((err) => {
-              this.Toast.fire({
-                icon: 'error',
-                title: '發生錯誤，請查看開發者工具'
-              })
-              console.log(err)
-              this.isLoading = false
-            })
+        case 'pageClick': {
+          this.$emit('fetchAnimalData', 'pageClick', value)
           break
         }
-        case 'filterData':{
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
-            .then((obj) => {
-              const { catData } = obj.data.responseData
-              if (condition.haveImage !== '0') {
-                this.catData = Object.values(catData.data)
-              } else {
-                this.catData = catData.data
-              }
-              this.paginationLinks = {
-                links: catData.links,
-                currentPage: catData.current_page,
-                prevPageUrl: catData.prev_page_url,
-                nextPageUrl: catData.next_page_url,
-                lastPage: catData.last_page
-              }
-              this.isLoading = false
-            })
-            .catch((err) => {
-              this.Toast.fire({
-                icon: 'error',
-                title: '發生錯誤，請查看開發者工具'
-              })
-              console.log(err)
-              this.isLoading = false
-            })
-          break
-        }
-        default:{
-          url = `api/animalData?screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
-            .then((obj) => {
-              const { catData, selectOption, shelterList } = obj.data.responseData
-              this.catData = catData.data
-              this.shelterList = shelterList
-              this.shelterName = this.shelterList.map(data => data.shelter_name)
-              this.paginationLinks = {
-                links: catData.links,
-                currentPage: catData.current_page,
-                prevPageUrl: catData.prev_page_url,
-                nextPageUrl: catData.next_page_url,
-                lastPage: catData.last_page
-              }
-              this.color = selectOption.color
-              this.isLoading = false
-            })
-            .catch((err) => {
-              this.Toast.fire({
-                icon: 'error',
-                title: '發生錯誤，請查看開發者工具'
-              })
-              console.log(err)
-              this.isLoading = false
-            })
+        case 'filterData': {
+          this.$emit('fetchAnimalData', 'filterData', '', value)
           break
         }
       }
@@ -229,7 +176,7 @@ export default {
     },
     uploadImage (value) {
       if (value) {
-        this.isLoading = true
+        this.$emit('loadingSwitcher')
         const responseData = new FormData()
         responseData.append('image', value)
         this.$axiosHelper.post('admin/animalData/uploadImage', responseData, {
@@ -241,7 +188,7 @@ export default {
               title: obj.data.message
             })
             this.catInfoData.album_file = obj.data.image
-            this.isLoading = false
+            this.$emit('loadingSwitcher')
           })
           .catch((err) => {
             this.Toast.fire({
@@ -249,19 +196,19 @@ export default {
               title: '發生錯誤，請查看開發者工具'
             })
             console.log(err)
-            this.isLoading = false
+            this.$emit('loadingSwitcher')
           })
       }
     },
     uploadNewCatData () {
-      this.isLoading = true
+      this.$emit('loadingSwitcher')
       this.$axiosHelper.post('admin/animalData/createNewCatData', this.catInfoData)
         .then((obj) => {
           this.Toast.fire({
             icon: obj.data.icon,
             title: obj.data.message
           })
-          this.isLoading = false
+          this.$emit('loadingSwitcher')
         })
         .catch((err) => {
           if (err.response.data.errors) {
@@ -273,19 +220,19 @@ export default {
                 title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
               })
             })
-            this.isLoading = false
+            this.$emit('loadingSwitcher')
           }
         })
     },
     updateCatData () {
-      this.isLoading = true
+      this.$emit('loadingSwitcher')
       this.$axiosHelper.put('admin/animalData/updateCatData', this.catInfoData)
         .then((obj) => {
           this.Toast.fire({
             icon: obj.data.icon,
             title: obj.data.message
           })
-          this.isLoading = false
+          this.$emit('loadingSwitcher')
         })
         .catch((err) => {
           if (err.response.data.errors) {
@@ -297,23 +244,19 @@ export default {
                 title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
               })
             })
-            this.isLoading = false
+            this.$emit('loadingSwitcher')
           }
         })
     },
     deleteCatData (id) {
-      const index = this.catData.findIndex((obj) => obj.animal_id === id)
-      this.isLoading = true
+      this.$emit('loadingSwitcher')
       this.$axiosHelper.delete(`admin/animalData/deleteCatData?id=${id}`)
         .then((obj) => {
           this.Toast.fire({
             icon: obj.data.icon,
             title: obj.data.message
           })
-          if (obj.data.icon === 'success') {
-            this.catData.splice(index, 1)
-          }
-          this.isLoading = false
+          this.$emit('loadingSwitcher')
         })
         .catch((err) => {
           this.Toast.fire({
@@ -321,13 +264,14 @@ export default {
             title: '發生錯誤，請查看開發者工具'
           })
           console.log(err)
-          this.isLoading = false
+          this.$emit('loadingSwitcher')
         })
     },
     switcher (id, type) {
       if (id !== 'none') {
-        const catDataIndex = this.catData.findIndex((obj) => obj.animal_id === id)
-        const targetData = { ...this.catData[catDataIndex], shelterData: { ...this.catData[catDataIndex].shelter } }
+        const catDataIndex = this.catData.data.findIndex((obj) => obj.animal_id === id)
+        const targetData = { ...this.catData.data[catDataIndex], shelter_id: this.catData.data[catDataIndex].shelter.id, shelter_city: this.catData.data[catDataIndex].shelter.shelter_city }
+        this.shelterFilter(this.catData.data[catDataIndex].shelter.shelter_city)
         this.catInfoData = targetData
       }
       switch (type) {
@@ -341,7 +285,7 @@ export default {
           this.modalType = 'updateCatData'
           break
         }
-        case 'deleteCatData' : {
+        case 'deleteCatData': {
           this.delModalSwitcher = 'show'
           break
         }
@@ -380,16 +324,21 @@ export default {
     },
     shelterFilter (city) {
       if (city === '') {
-        this.shelterName = this.shelterList.map(data => data.shelter_name)
+        this.catInfoData.shelter_city = '0'
+        this.shelterOption = this.shelterData.data
       }
       if (city !== '') {
-        this.shelterName = []
-        this.shelterList.forEach((data) => {
+        this.catInfoData.shelter_city = city
+        this.shelterOption = []
+        this.shelterData.data.forEach((data) => {
           if (data.shelter_city === city) {
-            this.shelterName.push(data.shelter_name)
+            this.shelterOption.push(data)
           }
         })
       }
+    },
+    componentSwitcher (type) {
+      this.$emit('componentSwitcher', type)
     }
   }
 }

@@ -22,7 +22,8 @@
         "lodash": "^4.17.19",
         "resolve-url-loader": "^4.0.0",
         "sass-loader": "^12.1.0",
-        "vue-loader": "^16.8.3"
+        "vue-loader": "^16.8.3",
+        "@volar-plugins/vetur": "latest"
     },
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.79",

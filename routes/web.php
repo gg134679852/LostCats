@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
  */
 Route::post('user/singup', 'userControllers@singup');
 Route::post('user/login', 'userControllers@login');
-Route::get('/facebook/login','userControllers@faceBookLogin');
+Route::get('/facebook/login', 'userControllers@faceBookLogin');
 Route::get('/facebook/callback', 'userControllers@faceBookLoginCallBack');
 Route::post('/spgateway/callback', 'donateController@callback');
 
@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
     Route::middleware('adminChecker')->put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
     Route::middleware('adminChecker')->delete('admin/animalData/deleteCatData', 'animalDataController@deleteCatData');
+    Route::middleware('adminChecker')->post('admin/shelterData/createNewShelterData', 'animalDataController@createNewShelterData');
+    Route::middleware('adminChecker')->put('admin/shelterData/updateShelterData', 'animalDataController@updateShelterData');
+    Route::middleware('adminChecker')->delete('admin/shelterData/deleteShelterData', 'animalDataController@deleteShelterData');
 });
 
 Route::get('/{any}', function () {

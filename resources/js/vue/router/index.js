@@ -2,11 +2,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginPage from '../views/LoginPage.vue'
 import DashBoard from '../views/admin/DashBoard.vue'
-import adminCatList from '../components/admin/CatList.vue'
+import DataList from '../views/admin/DataList.vue'
 import AboutUs from '../views/AboutUs.vue'
 import store from '../store/index'
 import UserPage from '../views/UserPage.vue'
-import userCatList from '../views/CatList.vue'
+import CatList from '../views/CatList.vue'
 const routes = [
   {
     path: '/',
@@ -22,7 +22,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if (store.state.isAuthenticated) {
         if (store.state.currentUser.isAdmin) {
-          next({ path: '/admin/dashboard/catlist' })
+          next({ path: '/admin/dashboard/datalist' })
         } else {
           next({ path: '/' })
         }
@@ -33,7 +33,7 @@ const routes = [
   },
   {
     path: '/catList',
-    component: userCatList
+    component: CatList
   },
   {
     path: '/userPage',
@@ -56,8 +56,8 @@ const routes = [
     children:
       [
         {
-          path: 'catlist',
-          component: adminCatList
+          path: 'datalist',
+          component: DataList
         }
       ],
     beforeEnter: (to, from, next) => {

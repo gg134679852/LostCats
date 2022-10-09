@@ -57,7 +57,7 @@
                 <label for="shelter_name" class="form-label">收容所</label>
                  <select class="form-select" id="shelter_name" v-model="formData.shelter_name">
                  <option value="0">選擇收容所</option>
-                 <option :value="name" v-for="(name,index) in shelter_name_option" :key="index">{{name}}</option>
+                 <option :value="item.shelter_name" v-for="(item,index) in shelterOption" :key="index">{{item.shelter_name}}</option>
               </select>
               </div>
               <div class="mb-3">
@@ -85,7 +85,7 @@ export default {
       type: String,
       required: true
     },
-    shelterName: {
+    shelterOption: {
       type: Array,
       required: true
     },
@@ -107,9 +107,7 @@ export default {
         animal_color: '0',
         shelter_name: '0',
         haveImage: '0'
-      },
-      shelter_city_option: '',
-      shelter_name_option: []
+      }
     })
   },
   methods: {
@@ -129,7 +127,7 @@ export default {
       this.$emit('shelterFilter', e.target.value)
     },
     fetchAnimalData () {
-      this.$emit('fetchAnimalData', 'filterData', '', this.formData)
+      this.$emit('fetchAnimalData', 'filterData', this.formData)
     }
   },
   mounted () {
@@ -138,9 +136,6 @@ export default {
   watch: {
     filterModalSwitcher (newValue, oldValue) {
       return newValue === 'show' ? this.modal.show() : this.modal.hide()
-    },
-    shelterName (newValue, oldValue) {
-      this.shelter_name_option = this.shelterName
     }
   }
 }

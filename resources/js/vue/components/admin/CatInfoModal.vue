@@ -1,7 +1,6 @@
 <template>
   <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
     aria-hidden="true" ref="modal">
-    <loading-icon :active="isLoading" />
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content border-0">
         <div class="modal-header bg-dark text-white">
@@ -25,10 +24,9 @@
               <img class="img-fluid" :src="catInfoData.album_file" alt="">
             </div>
             <div class="col-sm-8">
-              <div class="mb-3">
+              <div class="mb-3" v-if="modalType === 'updateCatData'">
                 <label for="animal_id" class="form-label">編號</label>
-                <input type="text" class="form-control" id="animal_id" placeholder="請輸入編號" @input="passValue"
-                  :value="catInfoData.animal_id">
+                <input type="text" class="form-control" id="animal_id" placeholder="請輸入編號"            @input="passValue" :value="catInfoData.animal_id">
               </div>
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
@@ -93,20 +91,40 @@
                <hr>
               <div class="row gx-2">
                 <div class="mb-3 col-md-6">
-                  <label for="shelter_name" class="form-label">收容所名稱</label>
-                  <input type="text" class="form-control" id="shelter_name" placeholder="請輸入收容所名稱" @input="passValue"
-                    :value="catInfoData.shelterData.shelter_name">
+                  <label for="shelter_city" class="form-label">地區</label>
+             <select class="form-select" id="shelter_city" @change="shelterFilter" :value="catInfoData.shelter_city" >
+                  <option value="0">選擇縣市</option>
+                  <option value="臺北市">臺北市</option>
+                  <option value="基隆市">基隆市</option>
+                  <option value="新北市">新北市</option>
+                  <option value="宜蘭縣">宜蘭縣</option>
+                  <option value="桃園市" >桃園市</option>
+                  <option value="新竹市" >新竹市</option>
+                  <option value="新竹縣" >新竹縣</option>
+                  <option value="苗栗縣" >苗栗縣</option>
+                  <option value="台中市" >台中市</option>
+                  <option value="彰化縣" >彰化縣</option>
+                  <option value="南投縣" >南投縣</option>
+                  <option value="嘉義市" >嘉義市</option>
+                  <option value="嘉義縣" >嘉義縣</option>
+                  <option value="雲林縣" >雲林縣</option>
+                  <option value="台南市" >台南市</option>
+                  <option value="高雄市" >高雄市</option>
+                  <option value="澎湖縣" >澎湖縣</option>
+                  <option value="金門縣" >金門縣</option>
+                  <option value="屏東縣" >屏東縣</option>
+                  <option value="台東縣" >台東縣</option>
+                  <option value="花蓮縣" >花蓮縣</option>
+                  <option value="連江縣" >連江縣</option>
+            </select>
                 </div>
                 <div class="mb-3 col-md-6">
-                  <label for="shelter_tel" class="form-label">收容所電話</label>
-                  <input type="text" class="form-control" id="shelter_tel" placeholder="請輸入收容所電話" @input="passValue"
-                    :value="catInfoData.shelterData.shelter_tel">
+                   <label for="shelter_id" class="form-label">收容所</label>
+                 <select class="form-select" id="shelter_id" :value="catInfoData.shelter_id" @change="passValue">
+                 <option value="0">選擇收容所</option>
+                 <option :value="item.id" v-for="(item,index) in shelterOption" :key="index">{{item.shelter_name}}</option>
+              </select>
                 </div>
-              </div>
-              <div class="mb-3">
-                <label for="shelter_address" class="form-label">收容所地址</label>
-                <input type="text" class="form-control" id="shelter_address" placeholder="請輸入收容所地址" @input="passValue"
-                  :value="catInfoData.shelterData.shelter_address">
               </div>
               <hr>
               <div class=" mb-3">
@@ -140,12 +158,12 @@ export default {
       type: Object,
       required: true
     },
-    isLoading: {
-      type: Boolean,
-      required: true
-    },
     modalType: {
       type: String,
+      required: true
+    },
+    shelterOption: {
+      type: Array,
       required: true
     }
   },
@@ -177,6 +195,9 @@ export default {
           break
         }
       }
+    },
+    shelterFilter (e) {
+      this.$emit('shelterFilter', e.target.value)
     }
   },
   mounted () {
