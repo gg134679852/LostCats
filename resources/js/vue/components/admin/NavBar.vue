@@ -8,15 +8,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">貓咪列表</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">捐款紀錄</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">使用者列表</a>
-          </li>
            <li class="nav-item">
             <a class="nav-link" href="#" @click.prevent="logout">登出</a>
           </li>
