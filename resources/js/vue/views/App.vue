@@ -1,13 +1,19 @@
 <template>
-  <router-view/>
-  <FooterComponentVue />
+  <div class="app__wrap">
+    <div class="app__router-view__wrap">
+      <router-view />
+    </div>
+    <div class="app__FooterComponent__wrap">
+      <FooterComponent />
+    </div>
+  </div>
 </template>
 <script>
 import { Toast } from '../utils/helpers'
-import FooterComponentVue from '../components/FooterComponent.vue'
+import FooterComponent from '../components/FooterComponent.vue'
 export default {
   components: {
-    FooterComponentVue
+    FooterComponent
   },
   provide () {
     return {
