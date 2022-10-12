@@ -12,7 +12,7 @@
       </ul>
     </div>
     <div class="button-warp">
-      <button type="button" class="btn btn-primary" @click.prevent="switcher('none','createNewCatData')">新增資料</button>
+      <button type="button" class="btn btn-secondary mx-3" @click.prevent="switcher('none','createNewCatData')">新增資料</button>
       <button type="button" class="btn btn-secondary" @click.prevent="filterSwitcher"><i
           class="fas fa-filter"></i>過濾器</button>
     </div>
