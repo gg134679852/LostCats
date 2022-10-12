@@ -8,6 +8,7 @@
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li><a class="dropdown-item" href="#" @click.prevent="componentSwitcher('CatList')">貓咪清單</a></li>
         <li><a class="dropdown-item" href="#" @click.prevent="componentSwitcher('ShelterList')">收容所清單</a></li>
+        <li><a class="dropdown-item" href="#" @click.prevent="componentSwitcher('DonateLog')">捐獻紀錄</a></li>
       </ul>
     </div>
     <div class="button-warp">

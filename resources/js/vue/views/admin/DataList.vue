@@ -1,22 +1,42 @@
 <template>
   <loading-icon :active="isLoading" />
   <template v-if="currentComponent === 'CatList'">
-    <CatList :cat-data="catData" :shelterData="shelterData" :current-component="currentComponent"
-      :screen-size="screenSize" @fetch-animal-data="fetchAnimalData" @component-switcher="componentSwitcher"
-      @loading-switcher="loadingSwitcher" />
+    <CatList
+    :cat-data="catData"
+    :shelterData="shelterData"
+    :current-component="currentComponent"
+    :screen-size="screenSize"
+    @fetch-animal-data="fetchAnimalData"
+    @component-switcher="componentSwitcher"
+    @loading-switcher="loadingSwitcher"
+    />
   </template>
   <template v-if="currentComponent === 'ShelterList'">
-    <ShelterList :current-component="currentComponent" :shelter-data="shelterData.data"
-      @loading-switcher="loadingSwitcher" @component-switcher="componentSwitcher" />
+    <ShelterList
+    :current-component="currentComponent"
+    :shelter-data="shelterData.data"
+    @loading-switcher="loadingSwitcher"
+    @component-switcher="componentSwitcher"
+    />
+  </template>
+  <template v-if="currentComponent === 'DonateLog'">
+    <DonateLog
+    :current-component="currentComponent"
+    :donate-log-data="donateLog"
+    :screen-size="screenSize"
+    @loading-switcher="loadingSwitcher"
+    @component-switcher="componentSwitcher" />
   </template>
 </template>
 <script>
 import CatList from '../../components/admin/CatList.vue'
 import ShelterList from '../../components/admin/ShelterList.vue'
+import DonateLog from '../../components/admin/DonateLog.vue'
 export default {
   components: {
     CatList,
-    ShelterList
+    ShelterList,
+    DonateLog
   },
   created () {
     this.fetchAnimalData()
@@ -34,7 +54,8 @@ export default {
         data: []
       },
       donateLog: {
-        data: []
+        data: [],
+        paginationLinks: {}
       },
       currentComponent: 'CatList',
       screenSize: 'Big',
@@ -117,7 +138,6 @@ export default {
                 lastPage: catData.last_page
               }
               this.catData.color = selectOption.color
-              this.isLoading = false
             })
             .catch((err) => {
               this.Toast.fire({
@@ -134,20 +154,27 @@ export default {
     fetchDonateLogData () {
       this.$axiosHelper.get('admin/donateLogData')
         .then((obj) => {
-          console.log(obj.data)
+          const { donateLog } = obj.data
+          this.donateLog.data = donateLog.data
+          this.donateLog.paginationLinks = {
+            links: donateLog.links,
+            currentPage: donateLog.current_page,
+            prevPageUrl: donateLog.prev_page_url,
+            nextPageUrl: donateLog.next_page_url,
+            lastPage: donateLog.last_page
+          }
+          this.isLoading = false
+        })
+        .catch((err) => {
+          this.Toast.fire({
+            icon: 'error',
+            title: '發生錯誤，請查看開發者工具'
+          })
+          console.log(err)
         })
     },
     componentSwitcher (type) {
-      switch (type) {
-        case 'CatList': {
-          this.currentComponent = 'CatList'
-          break
-        }
-        case 'ShelterList': {
-          this.currentComponent = 'ShelterList'
-          break
-        }
-      }
+      this.currentComponent = type
     },
     loadingSwitcher () {
       this.isLoading === false ? this.isLoading = true : this.isLoading = false
