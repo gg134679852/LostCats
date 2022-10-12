@@ -25,13 +25,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::middleware('userChecker')->delete('user/removeFavorite/{id}', 'userControllers@removeFavorite');
     Route::middleware('userChecker')->get('user/donateLogData', 'userControllers@getUserDonateLogData');
     Route::middleware('userChecker')->post('/spgateway/donate', 'donateController@Donate');
-    Route::middleware('adminChecker')->post('admin/animalData/createNewCatData', 'animalDataController@createNewCatData');
-    Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'animalDataController@uploadImage');
-    Route::middleware('adminChecker')->put('admin/animalData/updateCatData', 'animalDataController@updateCatData');
-    Route::middleware('adminChecker')->delete('admin/animalData/deleteCatData', 'animalDataController@deleteCatData');
-    Route::middleware('adminChecker')->post('admin/shelterData/createNewShelterData', 'animalDataController@createNewShelterData');
-    Route::middleware('adminChecker')->put('admin/shelterData/updateShelterData', 'animalDataController@updateShelterData');
-    Route::middleware('adminChecker')->delete('admin/shelterData/deleteShelterData', 'animalDataController@deleteShelterData');
+    Route::middleware('adminChecker')->post('admin/animalData/createNewCatData', 'adminController@createNewCatData');
+    Route::middleware('adminChecker')->post('admin/animalData/uploadImage', 'adminController@uploadImage');
+    Route::middleware('adminChecker')->put('admin/animalData/updateCatData', 'adminController@updateCatData');
+    Route::middleware('adminChecker')->delete('admin/animalData/deleteCatData', 'adminController@deleteCatData');
+    Route::middleware('adminChecker')->post('admin/shelterData/createNewShelterData', 'adminController@createNewShelterData');
+    Route::middleware('adminChecker')->put('admin/shelterData/updateShelterData', 'adminController@updateShelterData');
+    Route::middleware('adminChecker')->delete('admin/shelterData/deleteShelterData', 'adminController@deleteShelterData');
+    Route::middleware('adminChecker')->get('admin/donateLogData', 'adminController@getAllDonateLogData');
 });
 
 Route::get('/{any}', function () {

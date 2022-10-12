@@ -1,24 +1,14 @@
 <template>
-  <loading-icon :active="isLoading" style="z-index: 999;" />
- <template v-if="currentComponent === 'CatList'">
-   <CatList
-   :cat-data="catData"
-   :shelterData="shelterData"
-   :current-component="currentComponent"
-   :screen-size="screenSize"
-   @fetch-animal-data="fetchAnimalData"
-   @component-switcher="componentSwitcher"
-   @loading-switcher="loadingSwitcher"
-   />
- </template>
- <template v-if="currentComponent === 'ShelterList'">
-   <ShelterList
-   :current-component="currentComponent"
-   :shelter-data="shelterData.data"
-   @loading-switcher="loadingSwitcher"
-   @component-switcher="componentSwitcher"
-   />
- </template>
+  <loading-icon :active="isLoading" />
+  <template v-if="currentComponent === 'CatList'">
+    <CatList :cat-data="catData" :shelterData="shelterData" :current-component="currentComponent"
+      :screen-size="screenSize" @fetch-animal-data="fetchAnimalData" @component-switcher="componentSwitcher"
+      @loading-switcher="loadingSwitcher" />
+  </template>
+  <template v-if="currentComponent === 'ShelterList'">
+    <ShelterList :current-component="currentComponent" :shelter-data="shelterData.data"
+      @loading-switcher="loadingSwitcher" @component-switcher="componentSwitcher" />
+  </template>
 </template>
 <script>
 import CatList from '../../components/admin/CatList.vue'
@@ -30,6 +20,7 @@ export default {
   },
   created () {
     this.fetchAnimalData()
+    this.fetchDonateLogData()
   },
   inject: ['Toast'],
   data () {
@@ -42,6 +33,9 @@ export default {
       shelterData: {
         data: []
       },
+      donateLog: {
+        data: []
+      },
       currentComponent: 'CatList',
       screenSize: 'Big',
       isLoading: false
@@ -51,7 +45,7 @@ export default {
     fetchAnimalData (type, url, condition) {
       this.isLoading = true
       switch (type) {
-        case 'pageClick':{
+        case 'pageClick': {
           this.$axiosHelper.get(url)
             .then((obj) => {
               const { catData } = obj.data.responseData
@@ -79,7 +73,7 @@ export default {
             })
           break
         }
-        case 'filterData':{
+        case 'filterData': {
           url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
@@ -108,7 +102,7 @@ export default {
             })
           break
         }
-        default:{
+        default: {
           url = `api/animalData?screenSize=${this.screenSize}`
           this.$axiosHelper.get(url)
             .then((obj) => {
@@ -137,13 +131,19 @@ export default {
         }
       }
     },
+    fetchDonateLogData () {
+      this.$axiosHelper.get('admin/donateLogData')
+        .then((obj) => {
+          console.log(obj.data)
+        })
+    },
     componentSwitcher (type) {
       switch (type) {
-        case 'CatList':{
+        case 'CatList': {
           this.currentComponent = 'CatList'
           break
         }
-        case 'ShelterList':{
+        case 'ShelterList': {
           this.currentComponent = 'ShelterList'
           break
         }
