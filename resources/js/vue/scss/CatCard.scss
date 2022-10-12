@@ -25,11 +25,11 @@
       height: 35px;
       background-color: #fff;
       border: none;
-      opacity: 0.5;
       border-radius: 50%;
       position: absolute;
       left: 70%;
       top: 5%;
+      opacity: 1
     }
   }
   &__wrapper:hover{
@@ -114,6 +114,7 @@
       & .animalCard__like-button {
         transition: opacity 0.3s ease-out;
         cursor: pointer;
+        opacity: 0.5;
       }
 
       & .animalCard__like-button:hover {
