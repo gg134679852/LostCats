@@ -24,6 +24,7 @@
     :current-component="currentComponent"
     :donate-log-data="donateLog"
     :screen-size="screenSize"
+    @fetch-animal-data="fetchAnimalData"
     @loading-switcher="loadingSwitcher"
     @component-switcher="componentSwitcher" />
   </template>

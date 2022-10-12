@@ -32,9 +32,18 @@
       </tbody>
     </table>
   </div>
+  <PaginationComponent
+  :screen-size="screenSize"
+  :paginationLinks="donateLogData.paginationLinks"
+  @fetch-animal-data="fetchAnimalData"
+  />
 </template>
 <script>
+import PaginationComponent from '../PaginationComponent.vue'
 export default {
+  components: {
+    PaginationComponent
+  },
   props: {
     donateLogData: {
       type: Object,
@@ -45,6 +54,7 @@ export default {
       required: true
     }
   },
+  emits: ['componentSwitcher', 'fetchAnimalData'],
   methods: {
     componentSwitcher (type) {
       this.$emit('componentSwitcher', type)
