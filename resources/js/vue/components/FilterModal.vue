@@ -57,7 +57,7 @@
                 <label for="shelter_name" class="form-label">收容所</label>
                  <select class="form-select" id="shelter_name" v-model="formData.shelter_name">
                  <option value="0">選擇收容所</option>
-                 <option :value="item.shelter_name" v-for="(item,index) in shelterOption" :key="index">{{item.shelter_name}}</option>
+                 <option :value="item.shelter_name" v-for="(item,index) in shelterData" :key="index">{{item.shelter_name}}</option>
               </select>
               </div>
               <div class="mb-3">
@@ -85,7 +85,7 @@ export default {
       type: String,
       required: true
     },
-    shelterOption: {
+    shelterData: {
       type: Array,
       required: true
     },
@@ -128,6 +128,7 @@ export default {
     },
     fetchAnimalData () {
       this.$emit('fetchAnimalData', 'filterData', this.formData)
+      this.closeModal()
     }
   },
   mounted () {

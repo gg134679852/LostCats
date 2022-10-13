@@ -175,6 +175,7 @@ export default {
   methods: {
     closeModal (id, type) {
       this.$emit('switcher', id, type)
+      this.$emit('shelterFilter', '0')
     },
     passValue (e) {
       const key = e.target.id

@@ -6,19 +6,19 @@
     <button type="button" class="btn btn-secondary" @click.prevent="filterSwitcher"><i class="fas fa-filter"></i>過濾器</button>
    </div>
     <CatCard
-      :cat-info-data="catInfoData"
+      :cat-info-data="catData.data"
       :screen-size="screenSize"
     />
      <PaginationComponent
-      :pagination-links="paginationLinks"
+      :pagination-links="catData.paginationLinks"
       :screen-size="screenSize"
       @fetch-animal-data="fetchAnimalData"
      />
    </div>
    <FilterModal
       :filter-modal-switcher="filterModalSwitcher"
-      :shelter-name="shelterName"
-      :color="color"
+      :shelter-data="shelterData.option"
+      :color="catData.color"
       :screen-size="screenSize"
       @filter-switcher="filterSwitcher"
       @shelter-filter="shelterFilter"
@@ -48,26 +48,30 @@ export default {
   inject: ['Toast'],
   data () {
     return ({
-      catInfoData: [],
-      paginationLinks: {},
-      shelterList: [],
-      shelterName: [],
-      color: [],
+      catData: {
+        data: [],
+        color: [],
+        paginationLinks: {}
+      },
+      shelterData: {
+        data: [],
+        option: []
+      },
       screenSize: '',
       filterModalSwitcher: 'hide',
       isLoading: false
     })
   },
   methods: {
-    fetchAnimalData (type, url, condition) {
+    fetchAnimalData (type, value) {
       this.isLoading = true
       switch (type) {
         case 'pageClick':{
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(value)
             .then((obj) => {
               const { catData } = obj.data.responseData
-              this.catInfoData = catData.data
-              this.paginationLinks = {
+              this.catData.data = catData.data
+              this.catData.paginationLinks = {
                 links: catData.links,
                 currentPage: catData.current_page,
                 prevPageUrl: catData.prev_page_url,
@@ -87,16 +91,15 @@ export default {
           break
         }
         case 'filterData':{
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(`api/animalData/getFilter?animal_sex=${value.animal_sex}&animal_color=${value.animal_color}&shelter_city=${value.shelter_city}&shelter_name=${value.shelter_name}&haveImage=${value.haveImage}&screenSize=${this.screenSize}`)
             .then((obj) => {
               const { catData } = obj.data.responseData
-              if (condition.haveImage === 'notNull' || condition.haveImage === 'Null') {
-                this.catInfoData = Object.values(catData.data)
+              if (Array.isArray(catData)) {
+                this.catData.data = catData.data
               } else {
-                this.catInfoData = catData.data
+                this.catData.data = Object.values(catData.data)
               }
-              this.paginationLinks = {
+              this.catData.paginationLinks = {
                 links: catData.links,
                 currentPage: catData.current_page,
                 prevPageUrl: catData.prev_page_url,
@@ -116,21 +119,20 @@ export default {
           break
         }
         default:{
-          url = `api/animalData?screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(`api/animalData?screenSize=${this.screenSize}`)
             .then((obj) => {
               const { catData, selectOption, shelterList } = obj.data.responseData
-              this.catInfoData = catData.data
-              this.shelterList = shelterList
-              this.shelterName = this.shelterList.map(data => data.shelter_name)
-              this.paginationLinks = {
+              this.catData.data = catData.data
+              this.shelterData.data = shelterList
+              this.shelterData.option = shelterList
+              this.catData.paginationLinks = {
                 links: catData.links,
                 currentPage: catData.current_page,
                 prevPageUrl: catData.prev_page_url,
                 nextPageUrl: catData.next_page_url,
                 lastPage: catData.last_page
               }
-              this.color = selectOption.color
+              this.catData.color = selectOption.color
               this.isLoading = false
             })
             .catch((err) => {
@@ -163,16 +165,11 @@ export default {
       }
     },
     shelterFilter (city) {
-      if (city === '') {
-        this.shelterName = this.shelterList.map(data => data.shelter_name)
+      if (city === '0') {
+        this.shelterData.option = this.shelterData.data
       }
       if (city !== '') {
-        this.shelterName = []
-        this.shelterList.forEach((data) => {
-          if (data.shelter_city === city) {
-            this.shelterName.push(data.shelter_name)
-          }
-        })
+        this.shelterData.option = this.shelterData.data.filter(item => item.shelter_city === city)
       }
     },
     filterSwitcher () {

@@ -3,7 +3,7 @@
   <template v-if="currentComponent === 'CatList'">
     <CatList
     :cat-data="catData"
-    :shelterData="shelterData"
+    :shelter-data="shelterData.data"
     :current-component="currentComponent"
     :screen-size="screenSize"
     @fetch-animal-data="fetchAnimalData"
@@ -64,11 +64,11 @@ export default {
     })
   },
   methods: {
-    fetchAnimalData (type, url, condition) {
+    fetchAnimalData (type, value) {
       this.isLoading = true
       switch (type) {
         case 'pageClick': {
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(value)
             .then((obj) => {
               const { catData } = obj.data.responseData
               if (Array.isArray(catData)) {
@@ -96,8 +96,7 @@ export default {
           break
         }
         case 'filterData': {
-          url = `api/animalData/getFilter?animal_sex=${condition.animal_sex}&animal_color=${condition.animal_color}&shelter_city=${condition.shelter_city}&shelter_name=${condition.shelter_name}&haveImage=${condition.haveImage}&screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(`api/animalData/getFilter?animal_sex=${value.animal_sex}&animal_color=${value.animal_color}&shelter_city=${value.shelter_city}&shelter_name=${value.shelter_name}&haveImage=${value.haveImage}&screenSize=${this.screenSize}`)
             .then((obj) => {
               const { catData } = obj.data.responseData
               if (Array.isArray(catData)) {
@@ -125,8 +124,7 @@ export default {
           break
         }
         default: {
-          url = `api/animalData?screenSize=${this.screenSize}`
-          this.$axiosHelper.get(url)
+          this.$axiosHelper.get(`api/animalData?screenSize=${this.screenSize}`)
             .then((obj) => {
               const { catData, selectOption, shelterList } = obj.data.responseData
               this.catData.data = catData.data

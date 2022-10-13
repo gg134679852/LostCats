@@ -81,7 +81,7 @@
   />
   <FilterModal
     :filter-modal-switcher="filterModalSwitcher"
-    :shelter-option="shelterOption"
+    :shelter-data="shelterOption"
     :color="catData.color"
     :screen-size="screenSize"
     @filter-switcher="filterSwitcher"
@@ -101,7 +101,7 @@ export default {
       require: true
     },
     shelterData: {
-      type: Object,
+      type: Array,
       require: true
     },
     screenSize: {
@@ -119,9 +119,6 @@ export default {
     PaginationComponent,
     DelModal,
     FilterModal
-  },
-  created () {
-    this.shelterFilter('')
   },
   data () {
     return ({
@@ -167,7 +164,7 @@ export default {
           break
         }
         case 'filterData': {
-          this.$emit('fetchAnimalData', 'filterData', '', value)
+          this.$emit('fetchAnimalData', 'filterData', value)
           break
         }
       }
@@ -324,22 +321,22 @@ export default {
         : this.filterModalSwitcher = 'hide'
     },
     shelterFilter (city) {
-      if (city === '') {
+      if (city === '0') {
         this.catInfoData.shelter_city = '0'
-        this.shelterOption = this.shelterData.data
+        this.shelterOption = this.shelterData
       }
-      if (city !== '') {
+      if (city !== '0') {
         this.catInfoData.shelter_city = city
-        this.shelterOption = []
-        this.shelterData.data.forEach((data) => {
-          if (data.shelter_city === city) {
-            this.shelterOption.push(data)
-          }
-        })
+        this.shelterOption = this.shelterData.filter(item => item.shelter_city === city)
       }
     },
     componentSwitcher (type) {
       this.$emit('componentSwitcher', type)
+    }
+  },
+  watch: {
+    shelterData (newValue, oldValue) {
+      this.shelterOption = this.shelterData
     }
   }
 }
