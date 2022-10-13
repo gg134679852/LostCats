@@ -59,25 +59,25 @@ nav {
     background: #212529;
     padding: 40px;
     cursor: pointer;
-    transition: all .5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 
     &__burger-button {
       width: 30px;
       height: 3px;
       background: azure;
       border-radius: 5px;
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
     }
 
     &__burger-button::after,
     &__burger-button::before {
-      content: '';
+      content: "";
       position: absolute;
       width: 30px;
       height: 3px;
       background: azure;
       border-radius: 5px;
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
     }
 
     &__burger-button::before {
@@ -112,14 +112,14 @@ nav {
 @media screen and (min-width: 768px) {
   .navbar {
     &__web-name {
-        & h3 {
-         font-size: 1.25rem;
-        }
+      & h3 {
+        font-size: 1.25rem;
       }
+    }
     &__linkList {
       &__desktop {
         display: block;
-        width: 35%;
+        width: 60%;
         padding: 25px;
         & ul {
           display: flex;
@@ -136,6 +136,15 @@ nav {
 
     &__mobile {
       display: none;
+    }
+  }
+}
+@media screen and (min-width: 1440px) {
+  .navbar {
+    &__linkList {
+      &__desktop {
+        width: 35%;
+      }
     }
   }
 }
