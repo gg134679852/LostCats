@@ -1,56 +1,45 @@
 <template>
   <NavBar />
   <div class="container">
-    <div class="userPage__userCard">
-      <img src="../../../../public/img/avatar.png" />
-      <div class="userInfo">
-        <h5>{{ this.currentUser.name }}</h5>
-        <h5>{{ this.currentUser.email }}</h5>
+    <div class="userPage__container__wrap">
+      <div class="userPage__userCard">
+        <img src="../../../../public/img/avatar.png" />
+        <div class="userInfo">
+          <h5>{{ this.currentUser.name }}</h5>
+          <h5>{{ this.currentUser.email }}</h5>
+        </div>
+      </div>
+      <div class="userPage__dropdown">
+        <dic class="userPage__dropdown__wrap">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            頁面選項
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('CatCard')">最愛喵星人</a></li>
+            <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('DonateLog')">捐款紀錄</a></li>
+          </ul>
+        </dic>
       </div>
     </div>
-    <div class="userPage__dropdown" v-if="screenSize === 'Small'">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    頁面選項
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('CatCard')">最愛喵星人</a></li>
-    <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('DonateLog')">捐款紀錄</a></li>
-  </ul>
-    </div>
-     <div class="userPage__navTab" v-if="screenSize === 'Middle' || screenSize === 'Big'">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" :class="{active: currenComponent === 'CatCard'}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" @click.prevent="switchComponent('CatCard')">最愛喵星人</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" :class="{active: currenComponent === 'DonateLog'}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" @click.prevent="switchComponent('DonateLog')">捐款紀錄</button>
-          </li>
-        </ul>
-   </div>
-  <div class="userPage__components__warp">
-    <div class="userPage__components__CatCard" v-if="currenComponent === 'CatCard'">
-      <div class="userPage__components__CatCard__message" v-if="catInfoData.length === 0">
+    <div class="userPage__components__warp">
+      <div class="userPage__components__CatCard" v-if="currenComponent === 'CatCard'">
+        <div class="userPage__components__CatCard__message" v-if="catInfoData.length === 0">
           <h2>尚無任何收藏</h2>
+        </div>
+        <template v-else>
+          <CatCard :cat-info-data="catInfoData" :screen-size="screenSize" />
+        </template>
       </div>
-      <template v-else>
-         <CatCard
-            :cat-info-data="catInfoData"
-            :screen-size="screenSize"
-         />
-      </template>
-    </div>
-     <div class="userPage__components__DonateLog" v-if="currenComponent === 'DonateLog'">
-      <div class="userPage__components_DonateLog__message" v-if="donateLogData.length === 0">
+      <div class="userPage__components__DonateLog" v-if="currenComponent === 'DonateLog'">
+        <div class="userPage__components_DonateLog__message" v-if="donateLogData.length === 0">
           <h2>尚無任何紀錄</h2>
+        </div>
+        <template v-else>
+          <DonateLog :donate-log-data="donateLogData" :screen-size="screenSize" />
+        </template>
       </div>
-      <template v-else>
-         <DonateLog
-         :donate-log-data="donateLogData"
-         :screen-size="screenSize"
-         />
-      </template>
     </div>
-   </div>
   </div>
 </template>
 <script>
@@ -138,11 +127,11 @@ export default {
     },
     switchComponent (type) {
       switch (type) {
-        case 'CatCard':{
+        case 'CatCard': {
           this.currenComponent = 'CatCard'
           break
         }
-        case 'DonateLog':{
+        case 'DonateLog': {
           this.currenComponent = 'DonateLog'
           break
         }
@@ -150,15 +139,15 @@ export default {
     },
     screenRuler () {
       switch (true) {
-        case window.innerWidth <= 767:{
+        case window.innerWidth <= 767: {
           this.screenSize = 'Small'
           break
         }
-        case window.innerWidth >= 992:{
+        case window.innerWidth >= 992: {
           this.screenSize = 'Big'
           break
         }
-        case window.innerWidth >= 768:{
+        case window.innerWidth >= 768: {
           this.screenSize = 'Middle'
           break
         }
