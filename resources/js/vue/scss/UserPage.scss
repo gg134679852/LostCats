@@ -21,18 +21,16 @@
   }
 
   &__navTab {
-    padding: 23px;
+    padding-bottom: 23px;
   }
 
   &__components {
     &__CatCard ,&__DonateLog{
-      padding-bottom: 81%;
       &__message {
         text-align: center;
         & h2 {
           font-size: 1rem;
           padding-top: 20%;
-          padding-bottom: 81%;
         }
       }
     }
