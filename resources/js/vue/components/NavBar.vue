@@ -1,6 +1,6 @@
 <template>
  <nav class="navbar__wrap">
-<div class="navbar__web-name">
+<div class="navbar__web-name" @click.prevent="linkClick('/')">
   <h3 class="navbar-brand__title">
     <i class="fas fa-cat"></i> 迷途喵星人
   </h3>
