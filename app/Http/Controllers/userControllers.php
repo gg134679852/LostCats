@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
 
 class userControllers extends Controller
 {
@@ -50,16 +49,6 @@ class userControllers extends Controller
                 'token' => $token->plainTextToken,
             ]);
         }
-    }
-    public function faceBookLogin()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
-    public function faceBookLoginCallBack()
-    {
-        $user = Socialite::driver('facebook')->user();
-
-        return response(dump($user));
     }
     public function logout()
     {
