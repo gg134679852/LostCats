@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Str;
 
-$db = parse_url(env('CLEARDB_DATABASE_URL'));
-
-
 return [
 
     /*
