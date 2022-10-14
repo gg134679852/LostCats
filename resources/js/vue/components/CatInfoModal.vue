@@ -173,8 +173,8 @@
       </div>
       <div class="modal-footer">
          <div class="catInfoModal__donateInfo__buttons__wrap" v-if="modalType === 'donateInfoModal'">
-         <button type="button" class="btn btn-primary" @click="changeModal">返回</button>
-         <button type="button" class="btn btn-primary" @click.prevent.stop="sendDonate" v-if="tradeData. MerchantID === ''">送出</button>
+         <button type="button" class="btn btn-secondary mx-1" @click="changeModal">返回</button>
+         <button type="button" class="btn btn-secondary mx-1" @click.prevent.stop="sendDonate" v-if="tradeData. MerchantID === ''">送出</button>
          </div>
       </div>
     </div>

@@ -17,7 +17,7 @@
             v-model="loginData.password" />
         </div>
         <div class="text-center mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
+          <button class="btn btn-lg btn-secondary btn-block" type="submit">登入</button>
         </div>
       </div>
     </form>
@@ -52,7 +52,7 @@
             v-model="singUpData.password_confirmation" />
         </div>
         <div class="text-center mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">註冊</button>
+          <button class="btn btn-lg btn-secondary btn-block" type="submit">註冊</button>
         </div>
       </div>
     </form>
