@@ -1,5 +1,5 @@
 <template>
-  <loading-icon :active="isLoading" />
+  <loading-icon :active="isLoading" style="z-index: 1500;"/>
   <template v-if="currentComponent === 'CatList'">
     <CatList
     :cat-data="catData"
