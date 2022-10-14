@@ -94,7 +94,7 @@
     <div class="singUpLink__content">
       <h2>註冊會員</h2>
       <h2>收藏喜歡的喵星人</h2>
-      <button type="button" class="btn btn-success">註冊</button>
+      <button type="button" class="btn btn-success" @click="linkClick('/login')">註冊</button>
     </div>
   </div>
 </template>
@@ -107,6 +107,11 @@ export default {
   },
   mounted () {
     AOS.init()
+  },
+  methods: {
+    linkClick (url) {
+      this.$router.push(url)
+    }
   }
 }
 </script>
