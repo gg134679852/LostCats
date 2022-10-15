@@ -98,25 +98,32 @@ class adminController extends Controller
             "animal_remark" => [],
             "animal_sex" => ['required'],
             "animal_sterilization" => ['required'],
-            "shelter_address" => ['required'],
-            "shelter_name" => ['required'],
-            "shelter_tel" => ['required'],
+            "shelter_id" => ['required'],
         ]);
 
         $id = $request->input('id');
+        if (ShelterList::where('id', $validatedData["shelter_id"])->exists()) {
 
-        $updateCatData = AnimalData::where('id', $id)->update($validatedData);
+            $updateCatData = AnimalData::where('id', $id)->update($validatedData);
 
-        if ($updateCatData === 1) {
-            return response()->json([
-                'icon' => 'success',
-                'message' => '更新檔案成功',
-            ]);
+            if ($updateCatData === 1) {
+                return response()->json([
+                    'icon' => 'success',
+                    'message' => '更新檔案成功',
+                ]);
+            } else {
+                return response()->json([
+                    'icon' => 'error',
+                    'message' => '更新檔案失敗，請排除錯誤',
+                ]);
+            }
+
         } else {
             return response()->json([
                 'icon' => 'error',
-                'message' => '更新檔案失敗，請排除錯誤',
+                'message' => '找不到收容所，請重新確認',
             ]);
+
         }
     }
 
@@ -254,8 +261,8 @@ class adminController extends Controller
     {
         $responseData = DonateLog::paginate(30);
         return response()->json([
-            'state'=> 'success',
-            'donateLog' => $responseData
+            'state' => 'success',
+            'donateLog' => $responseData,
         ]);
 
     }
