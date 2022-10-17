@@ -1,5 +1,6 @@
 <template>
   <NavBar />
+  <loading-icon :active="isLoading" />
   <div class="container">
     <div class="userPage__container__wrap">
       <div class="userPage__userCard">
@@ -10,7 +11,7 @@
         </div>
       </div>
       <div class="userPage__dropdown">
-        <dic class="userPage__dropdown__wrap">
+        <div class="userPage__dropdown__wrap">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
             data-bs-toggle="dropdown" aria-expanded="false">
             頁面選項
@@ -19,7 +20,7 @@
             <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('CatCard')">最愛喵星人</a></li>
             <li><a class="dropdown-item" href="#" @click.prevent="switchComponent('DonateLog')">捐款紀錄</a></li>
           </ul>
-        </dic>
+        </div>
       </div>
     </div>
     <div class="userPage__components__warp">
@@ -28,7 +29,7 @@
           <h2>尚無任何收藏</h2>
         </div>
         <template v-else>
-          <CatCard :cat-info-data="catInfoData" :screen-size="screenSize" />
+          <CatCard :cat-info-data="catInfoData" :screen-size="screenSize" @loading-switcher="loadingSwitcher" />
         </template>
       </div>
       <div class="userPage__components__DonateLog" v-if="currenComponent === 'DonateLog'">
@@ -46,9 +47,7 @@
 import CatCard from './../components/CatCard.vue'
 import NavBar from '../components/NavBar.vue'
 import DonateLog from '../components/DonateLog.vue'
-import { Toast } from './../utils/helpers'
 import { mapState } from 'vuex'
-const getToken = () => localStorage.getItem('token')
 
 export default {
   components: {
@@ -82,13 +81,16 @@ export default {
         }
       },
       currenComponent: 'CatCard',
-      screenSize: ''
+      screenSize: '',
+      isLoading: false
     }
   },
   created () {
+    this.loadingSwitcher()
     this.copyFavoriteCats()
     this.fetchDonateLog()
     this.screenRuler()
+    this.loadingSwitcher()
   },
   mounted () {
     window.onresize = () => {
@@ -98,27 +100,6 @@ export default {
   methods: {
     copyFavoriteCats () {
       this.catInfoData = [...this.favoriteCats]
-    },
-    getRemoveFavoriteCatId (id) {
-      this.catInfoData = this.catInfoData.filter((data) => data.id !== id)
-
-      this.$axiosHelper
-        .delete(`${id}/removeFavorite`, {
-          headers: { Authorization: `Bearer ${getToken()}` }
-        })
-        .then(() => {
-          Toast.fire({
-            icon: 'success',
-            title: '成功移除最愛'
-          })
-        })
-        .catch((error) => {
-          Toast.fire({
-            icon: 'warning',
-            title: '發生錯誤 請稍後在試'
-          })
-          console.log(error)
-        })
     },
     fetchDonateLog () {
       this.$axiosHelper.get(`user/donateLogData?userId=${this.currentUser.id}`).then((obj) => {
@@ -152,15 +133,18 @@ export default {
           break
         }
       }
+    },
+    loadingSwitcher () {
+      this.isLoading === false ? this.isLoading = true : this.isLoading = false
     }
+  },
+  computed: {
+    ...mapState(['isAuthenticated', 'currentUser', 'favoriteCats'])
   },
   watch: {
     favoriteCats: function () {
       this.catInfoData = [...this.favoriteCats]
     }
-  },
-  computed: {
-    ...mapState(['isAuthenticated', 'currentUser', 'favoriteCats'])
   }
 }
 </script>

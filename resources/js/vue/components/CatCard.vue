@@ -59,6 +59,7 @@ export default {
       required: true
     }
   },
+  emits: ['loadingSwitcher'],
   components: {
     CatInfoModal
   },
@@ -124,14 +125,17 @@ export default {
           title: '達到收藏上限'
         })
       } else {
+        this.$emit('loadingSwitcher')
         this.favoriteId.push(id)
         this.$axiosHelper
           .post(`user/addFavorite/${id}`)
           .then(() => {
+            this.$store.dispatch('fetchCurrentUser')
             this.Toast.fire({
               icon: 'success',
               title: '成功加入最愛'
             })
+            this.$emit('loadingSwitcher')
           })
           .catch((error) => {
             this.Toast.fire({
@@ -139,19 +143,23 @@ export default {
               title: '發生錯誤 請稍後在試'
             })
             console.log(error)
+            this.$emit('loadingSwitcher')
           })
       }
     },
     removeFavorite (id) {
+      this.$emit('loadingSwitcher')
       const target = this.favoriteId.indexOf(id)
       this.favoriteId.splice(target, 1)
       this.$axiosHelper
         .delete(`user/removeFavorite/${id}`)
         .then(() => {
+          this.$store.dispatch('fetchCurrentUser')
           this.Toast.fire({
             icon: 'success',
             title: '成功移除最愛'
           })
+          this.$emit('loadingSwitcher')
         })
         .catch((error) => {
           this.Toast.fire({
@@ -159,6 +167,7 @@ export default {
             title: '發生錯誤 請稍後在試'
           })
           console.log(error)
+          this.$emit('loadingSwitcher')
         })
     },
     isFavorite (id) {

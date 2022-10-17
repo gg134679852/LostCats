@@ -8,6 +8,7 @@
     <CatCard
       :cat-info-data="catData.data"
       :screen-size="screenSize"
+      @loading-switcher="loadingSwitcher"
     />
      <PaginationComponent
       :pagination-links="catData.paginationLinks"
@@ -176,6 +177,9 @@ export default {
       this.filterModalSwitcher === 'hide'
         ? this.filterModalSwitcher = 'show'
         : this.filterModalSwitcher = 'hide'
+    },
+    loadingSwitcher () {
+      this.isLoading === false ? this.isLoading = true : this.isLoading = false
     }
   },
   watch: {
