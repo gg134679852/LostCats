@@ -122,13 +122,14 @@ export default {
           this.formType = 'login'
           this.isLoading = false
         })
-        .catch(error => {
-          if (error.response) {
-            const input = ['password', 'email', 'name']
-            input.forEach((input) => {
-              this.Toast.fire({
+        .catch(err => {
+          if (err.response.data.errors) {
+            const errorMessage = err.response.data.errors
+            const objectKey = Object.keys(errorMessage)
+            objectKey.forEach((key) => {
+              return this.Toast.fire({
                 icon: 'warning',
-                title: error.response.data.errors[input][0]
+                title: `${errorMessage[key]}`
               })
             })
             this.isLoading = false
