@@ -12,7 +12,7 @@
       </ul>
     </div>
     <div class="button-warp">
-      <button type="button" class="btn btn-primary"
+      <button type="button" class="btn btn-secondary"
         @click.prevent="switcher('none','createNewShelterData')">新增資料</button>
     </div>
   </div>

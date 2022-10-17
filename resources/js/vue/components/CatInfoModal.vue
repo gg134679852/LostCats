@@ -164,7 +164,7 @@
                     name="Version"
                     :value="tradeData.Version"
                   /><br />
-                  <button type="submit" class="btn btn-primary" @click="closeModal">
+                  <button type="submit" class="btn btn-secondary" @click="closeModal">
                     開始捐款程序
                   </button>
                 </form>
