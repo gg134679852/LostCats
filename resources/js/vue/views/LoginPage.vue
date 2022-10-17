@@ -120,17 +120,18 @@ export default {
             title: '成功註冊'
           })
           this.formType = 'login'
+          this.isLoading = false
         })
         .catch(error => {
           if (error.response) {
             const input = ['password', 'email', 'name']
             input.forEach((input) => {
-              this.isLoading = false
               this.Toast.fire({
                 icon: 'warning',
                 title: error.response.data.errors[input][0]
               })
             })
+            this.isLoading = false
           }
         })
     },
