@@ -82,12 +82,6 @@ export default {
         shelter_address: '',
         shelter_tel: ''
       },
-      inputName: {
-        shelter_name: '收容所名稱',
-        shelter_city: '0',
-        shelter_address: '',
-        shelter_tel: ''
-      },
       shelterInfoModalSwitcher: 'hide',
       delModalSwitcher: 'hide',
       modalType: '',
@@ -129,7 +123,7 @@ export default {
             objectKey.forEach((key) => {
               return this.Toast.fire({
                 icon: 'warning',
-                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+                title: `${errorMessage[key]}`
               })
             })
             this.$emit('loadingSwitcher')
@@ -153,7 +147,7 @@ export default {
             objectKey.forEach((key) => {
               return this.Toast.fire({
                 icon: 'warning',
-                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+                title: `${errorMessage[key]}`
               })
             })
             this.$emit('loadingSwitcher')

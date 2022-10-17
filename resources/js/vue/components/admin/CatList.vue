@@ -136,17 +136,6 @@ export default {
         shelter_id: '0',
         shelter_city: '0'
       },
-      inputName: {
-        shelter_id: '收容所',
-        animal_foundplace: '發現地點',
-        animal_bacterin: '是否已施打狂犬病疫苗',
-        animal_sterilization: '是否已絕育',
-        animal_bodytype: '體型',
-        animal_color: '顏色',
-        animal_age: '年紀',
-        animal_sex: '性別',
-        animal_id: '編號'
-      },
       shelterOption: [],
       catInfoModalSwitcher: 'hide',
       delModalSwitcher: 'hide',
@@ -215,7 +204,7 @@ export default {
             objectKey.forEach((key) => {
               return this.Toast.fire({
                 icon: 'warning',
-                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+                title: `${errorMessage[key]}`
               })
             })
             this.$emit('loadingSwitcher')
@@ -239,7 +228,7 @@ export default {
             objectKey.forEach((key) => {
               return this.Toast.fire({
                 icon: 'warning',
-                title: `${this.inputName[key]} ${errorMessage[key][0].split(' ')[2]}`
+                title: `${errorMessage[key]}`
               })
             })
             this.$emit('loadingSwitcher')
