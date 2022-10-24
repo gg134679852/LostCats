@@ -43,7 +43,7 @@ class userControllers extends Controller
             Auth::loginUsingId($user['id'], $remember = false);
             $favoriteCats = $user->cat()->with('shelter')->get()->toArray();
 
-            return response(['icon' => 'success', 'message' => '登陸成功', 'userData' => ['user' => $user,
+            return response(['icon' => 'success', 'message' => '登入成功', 'userData' => ['user' => $user,
                 'favoriteCats' => $favoriteCats,
                 'isAuthenticated' => Auth::check()],
                 'token' => $token->plainTextToken,

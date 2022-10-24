@@ -18,7 +18,7 @@
     </li>
     <li>
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>
-     <a href="#" v-else @click.prevent="linkClick('/login')">登陸</a>
+     <a href="#" v-else @click.prevent="linkClick('/login')">登入</a>
     </li>
      <li v-if="this.$store.state.isAuthenticated">
      <a href="#" @click.prevent="logout">登出</a>
@@ -35,7 +35,7 @@
     </li>
     <li>
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>
-     <a href="#" v-else @click.prevent="linkClick('/login')">登陸</a>
+     <a href="#" v-else @click.prevent="linkClick('/login')">登入</a>
     </li>
      <li v-if="this.$store.state.isAuthenticated">
      <a href="#" @click.prevent="logout">登出</a>

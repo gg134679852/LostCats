@@ -59,7 +59,7 @@
     </div>
     <div class="formBody__singUp__bottom">
        <h2>已經是會員？</h2>
-       <a class="formBody__singUp__button" href="#"  @click.stop.prevent="switcher('login')">登陸</a>
+       <a class="formBody__singUp__button" href="#"  @click.stop.prevent="switcher('login')">登入</a>
     </div>
      </div>
     </div>
