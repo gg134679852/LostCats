@@ -15,10 +15,10 @@
 
      </template>
     <div class="animalCard__main">
-      <img
-        class="animalCard__img"
-        :src="catInfoData.album_file === null ? 'https://via.placeholder.com/200x200?text=NO+IMAGE':catInfoData.album_file"
-      />
+      <div class="animalCard__img">
+        <img
+          :src="catInfoData.album_file === null ? 'https://via.placeholder.com/200x200?text=NO+IMAGE':catInfoData.album_file" />
+      </div>
       <div class="animalCard__body">
         <div class="animalCard__info text-secondary">
           <h4 class="card-text">
