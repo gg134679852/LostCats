@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\AnimalData;
 use App\Models\ShelterList;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class animalDataController extends Controller
 {
@@ -28,6 +27,7 @@ class animalDataController extends Controller
         };
         return $dataLength;
     }
+
     public function getAnimalData(Request $request)
     {
         $animal_color = AnimalData::select('animal_color')->get()->toArray();
@@ -55,6 +55,22 @@ class animalDataController extends Controller
                     'selectOption' => ['color' => $color],
                 ],
             ]);
+    }
+
+    public function getAnimalDetailData(Request $request)
+    {
+        $requestData = $request->all();
+        $id = $requestData['id'];
+        $responseData = AnimalData::where('animal_id', $id)->with('shelter')->get();
+       
+        return response()->json(
+            [
+                'success' => 'true',
+                'responseData' => [
+                    'catData' => $responseData
+                ],
+            ]);
+
     }
 
     public function getAnimalDataFilter(Request $request)
