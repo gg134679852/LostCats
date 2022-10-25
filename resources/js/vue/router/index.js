@@ -7,6 +7,7 @@ import AboutUs from '../views/AboutUs.vue'
 import store from '../store/index'
 import UserPage from '../views/UserPage.vue'
 import CatList from '../views/CatList.vue'
+import DetailPage from '../views/DetailPage.vue'
 const routes = [
   {
     path: '/',
@@ -34,6 +35,10 @@ const routes = [
   {
     path: '/catList',
     component: CatList
+  },
+  {
+    path: '/catList/detailPage/:id',
+    component: DetailPage
   },
   {
     path: '/userPage',
