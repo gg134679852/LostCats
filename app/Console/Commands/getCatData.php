@@ -81,6 +81,7 @@ class getCatData extends Command
             $shelter_id = ShelterList::select('id')->where('shelter_name',$catData['shelter_name'])->get()->toArray();
             AnimalData::create([
                 "animal_id" => $catData['animal_id'],
+                "animal_subid" =>$catData['animal_subid'],
                 "animal_sex" => $catData['animal_sex'],
                 "animal_bodytype" =>$catData['animal_bodytype'],
                 "animal_color" => $catData['animal_color'],
@@ -127,6 +128,7 @@ class getCatData extends Command
                 $newCatData =
                     [
                     "animal_id" => $cat['animal_id'],
+                    "animal_subid" =>$cat['animal_subid'],
                     "animal_sex" => $cat['animal_sex'] === 'F' ? '女生' : '男生',
                     "animal_bodytype" => $cat['animal_bodytype'] === 'SMALL' ? '小型' : ($cat['animal_bodytype'] === 'MEDIUM' ? '中型' : '大型'),
                     "animal_color" => $cat['animal_colour'],
