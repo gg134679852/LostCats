@@ -14,7 +14,7 @@
       <a aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
     </li>
     <li>
-     <a aria-current="page" href="#" @click.prevent="linkClick('/catList')">喵星人列表</a>
+     <a aria-current="page" href="#" @click.prevent="linkClick('/catList/listPage')">喵星人列表</a>
     </li>
     <li>
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>
@@ -31,7 +31,7 @@
       <a class="nav-link" aria-current="page" href="#" @click.prevent="linkClick('/aboutUs')">關於我們</a>
     </li>
     <li>
-     <a aria-current="page" href="#" @click.prevent="linkClick('/catList')">喵星人列表</a>
+     <a aria-current="page" href="#" @click.prevent="linkClick('/catList/listPage')">喵星人列表</a>
     </li>
     <li>
      <a href="#" v-if="this.$store.state.isAuthenticated" @click.prevent="linkClick('/userPage')">會員頁面</a>

@@ -1,4 +1,4 @@
-.catInfoModal {
+.detailPage {
   &__catInfo {
     &__content {
       &__text {
@@ -84,7 +84,7 @@
 }
 
 @media screen and (min-width:768px) {
-  .catInfoModal {
+  .detailPage {
     &__catInfo {
       display: flex;
 

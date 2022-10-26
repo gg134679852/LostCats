@@ -1,5 +1,4 @@
 <template>
-  <NavBarVue />
   <loading-icon :active="isLoading" />
   <div class="catList__warp">
    <div class="catFilter__wrap">
@@ -27,14 +26,12 @@
    />
 </template>
 <script>
-import NavBarVue from '../components/NavBar.vue'
-import CatCard from '../components/CatCard.vue'
-import FilterModal from '../components/FilterModal.vue'
-import PaginationComponent from '../components/PaginationComponent.vue'
+import CatCard from './CatCard.vue'
+import FilterModal from './FilterModal.vue'
+import PaginationComponent from './PaginationComponent.vue'
 export default {
   components: {
     CatCard,
-    NavBarVue,
     FilterModal,
     PaginationComponent
   },
