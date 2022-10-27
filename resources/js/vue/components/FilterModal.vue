@@ -68,7 +68,7 @@
                  <option value="Null">沒照片</option>
               </select>
               </div>
-          <button type="submit" class="btn btn-primary">送出</button>
+          <button type="submit" class="btn btn-secondary">送出</button>
        </form>
       </div>
       <div class="modal-footer">
