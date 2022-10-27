@@ -1,19 +1,10 @@
 <template>
   <loading-icon :active="isLoading" />
-  <div class="detailPage__wrap">
+  <div class="detailPage__wrap container" v-if="isLoading === false">
     <div class="detailPage__catInfo">
       <div class="detailPage__catInfo__img">
         <img class="rounded-3" :src="showCatData.album_file"
           onerror="this.src='https://via.placeholder.com/200x200?text=NO+IMAGE'" />
-        <div class="detailPage__catInfo__buttonGroup">
-          <button type="button" class="btn btn-success" @click="changeModal"
-            v-if="this.$store.state.isAuthenticated">捐款</button>
-          <template v-if="this.$store.state.isAuthenticated">
-            <button type="button" class="btn btn-like" @click="addFavorite(showCatData.id)"
-              v-if="isFavorite(showCatData.id) === false">收藏</button>
-            <button type="button" class="btn btn-like" @click="removeFavorite(showCatData.id)" v-else>已收藏</button>
-          </template>
-        </div>
       </div>
       <div class="detailPage__catInfo__content">
         <div class="detailPage__catInfo__content__text__id">
@@ -51,12 +42,26 @@
             </div>
           </div>
         </div>
+        <div class="detailPage__catInfo__buttonGroup">
+          <button type="button" class="btn btn-secondary" @click.stop.prevent="adoptionLink"><i
+              class="fas fa-home"></i>領養</button>
+          <template v-if="this.$store.state.isAuthenticated">
+            <button type="button" class="btn btn-secondary" @click="modalSwitcher"><i
+                class="fas fa-dollar-sign"></i>捐款</button>
+            <button type="button" class="btn btn-secondary" @click="addFavorite(showCatData.id)"
+              v-if="isFavorite(showCatData.id) === false"><i class="far fa-heart"></i>收藏</button>
+            <button type="button" class="btn btn-secondary" @click="removeFavorite(showCatData.id)" v-else><i
+                class="far fa-heart"></i>已收藏</button>
+          </template>
+        </div>
       </div>
     </div>
-    <div class="detailPage__catInfo__content__text__remark">
-      <h3>註記:</h3>
-      <h2>{{ showCatData.animal_remark }}</h2>
-    </div>
+    <template v-if="showCatData.animal_remark.length > 0">
+      <div class="detailPage__catInfo__content__text__remark">
+        <h3>註記:</h3>
+        <h2>{{ showCatData.animal_remark }}</h2>
+      </div>
+    </template>
     <hr>
     <div class="detailPage__shelterInfo__info-box">
       <div class="detailPage__shelterInfo__info-box__text">
@@ -76,27 +81,79 @@
         <h2>{{ showCatData.shelter.shelter_address }}</h2>
       </div>
     </div>
+    <br>
     <div class="detailPage__info__map">
       <GoogleMap :shelter-data="showCatData.shelter" :screen-size="screenSize" />
     </div>
   </div>
+  <DonateInfoModal
+    :screen-size="screenSize"
+    :donate-info-modal-switcher="donateInfoModalSwitcher"
+    :shelter-name="showCatData.shelter.shelter_name"
+    :donate-info="donateInfo" :trade-data="tradeData"
+    @modal-switcher="modalSwitcher"
+    @enter-form-data="enterFormData"
+    @send-donate="sendDonate"
+  />
 </template>
 <script>
 import GoogleMap from './GoogleMap.vue'
+import DonateInfoModal from './DonateInfoModal.vue'
 import { Toast } from '../utils/helpers'
 export default {
   components: {
-    GoogleMap
+    GoogleMap,
+    DonateInfoModal
+  },
+  provide () {
+    return {
+      Toast
+    }
   },
   data () {
     return ({
-      showCatData: {},
+      showCatData: {
+        album_file: '',
+        animal_age: '',
+        animal_bacterin: '',
+        animal_bodytype: '',
+        animal_color: '',
+        animal_foundplace: '',
+        animal_id: '',
+        animal_remark: '',
+        animal_sex: '',
+        animal_sterilization: '',
+        shelter: {
+          id: '',
+          shelter_address: '',
+          shelter_city: '',
+          shelter_lat: 0,
+          shelter_lng: 0,
+          shelter_name: '',
+          shelter_tel: ''
+        }
+      },
+      donateInfo: {
+        price: '',
+        name: '',
+        email: '',
+        phone: ''
+      },
+      tradeData: {
+        PayGateWay: '',
+        MerchantID: '',
+        TradeInfo: '',
+        TradeSha: '',
+        Version: ''
+      },
       screenSize: '',
+      donateInfoModalSwitcher: 'hide',
       isLoading: false
     })
   },
   created () {
     this.fetchAnimalData()
+    this.screenRuler()
   },
   mounted () {
     window.onresize = () => {
@@ -123,7 +180,56 @@ export default {
         })
     },
     isFavorite (id) {
-      return this.$store.state.favoriteCats.includes(id)
+      return this.$store.state.favoriteCats.findIndex((obj) => obj.id === id) !== -1
+    },
+    addFavorite (id) {
+      if (this.$store.state.favoriteCats.length === 16) {
+        Toast.fire({
+          icon: 'warning',
+          title: '達到收藏上限'
+        })
+      } else {
+        this.isLoading = true
+        this.$axiosHelper
+          .post(`user/addFavorite/${id}`)
+          .then(() => {
+            this.$store.dispatch('fetchCurrentUser')
+            Toast.fire({
+              icon: 'success',
+              title: '成功加入最愛'
+            })
+            this.isLoading = false
+          })
+          .catch((error) => {
+            Toast.fire({
+              icon: 'warning',
+              title: '發生錯誤 請稍後在試'
+            })
+            console.log(error)
+            this.isLoading = false
+          })
+      }
+    },
+    removeFavorite (id) {
+      this.isLoading = true
+      this.$axiosHelper
+        .delete(`user/removeFavorite/${id}`)
+        .then(() => {
+          this.$store.dispatch('fetchCurrentUser')
+          Toast.fire({
+            icon: 'success',
+            title: '成功移除最愛'
+          })
+          this.isLoading = false
+        })
+        .catch((error) => {
+          Toast.fire({
+            icon: 'warning',
+            title: '發生錯誤 請稍後在試'
+          })
+          console.log(error)
+          this.isLoading = false
+        })
     },
     screenRuler () {
       switch (true) {
@@ -140,10 +246,64 @@ export default {
           break
         }
       }
+    },
+    adoptionLink () {
+      window.open(
+        `https://asms.coa.gov.tw/Amlapp/App/AnnounceList.aspx?Id=${this.showCatData.animal_id}&AcceptNum=${this.showCatData.animal_subid}&PageType=Adopt`, '_blank')
+    },
+    enterFormData (e) {
+      const key = e.target.name
+      const value = e.target.value
+      this.donateInfo[key] = value
+    },
+    sendDonate () {
+      if (this.donateInfo.price < 0 || this.donateInfo.price < 500) {
+        Toast.fire({
+          icon: 'warning',
+          title: '金額錯誤'
+        })
+      } else {
+        this.$axiosHelper
+          .post('spgateway/donate', {
+            data: {
+              ...this.donateInfo,
+              shelter_name: this.showCatData.shelter.shelter_name
+            }
+          })
+          .then((obj) => {
+            this.tradeData = { ...this.tradeData, ...obj.data }
+          })
+          .catch((error) => {
+            this.Toast.fire({
+              icon: 'warning',
+              title: '發生錯誤 請稍後在試'
+            })
+            console.log(error)
+            this.isLoading = false
+          })
+      }
+    },
+    modalSwitcher () {
+      this.donateInfoModalSwitcher === 'hide' ? this.donateInfoModalSwitcher = 'show' : this.donateInfoModalSwitcher = 'hide'
+      if (this.donateInfoModalSwitcher === 'show') {
+        this.donateInfo = {
+          price: '',
+          name: '',
+          email: '',
+          phone: ''
+        }
+        this.tradeData = {
+          PayGateWay: '',
+          MerchantID: '',
+          TradeInfo: '',
+          TradeSha: '',
+          Version: ''
+        }
+      }
     }
   }
 }
 </script>
 <style lang="scss">
-@import'../scss/DetailPage.scss';
+@import'../scss/CatInfo.scss';
 </style>

@@ -1,4 +1,9 @@
 .detailPage {
+  &__wrap {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
   &__catInfo {
     &__content {
       &__text {
@@ -20,29 +25,31 @@
     &__img {
       display: flex;
       flex-direction: column;
+      height: 500px;
 
       & img {
-        width: 450px;
-        height: 400px;
-        margin: 0 auto;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
       }
     }
 
     &__buttonGroup {
-      height: 55px;
+      height: 150px;
       width: 100%;
-      margin: 0 auto;
+      margin: 20% auto;
       display: flex;
       justify-content: space-around;
       align-items: center;
 
       & button {
-        width: 45%;
-        height: 80%;
-      }
-
-      & .btn-like {
-        background-color: #FF69B4;
+        width: 30%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #212529;
         color: azure;
       }
     }
@@ -90,12 +97,27 @@
 
       &__content {
         padding-left: 20px;
+        width: 50%;
+        &__text {
+          &__id {
+            font-size: 1.5rem;
+          }
+        }
       }
 
       &__img {
-        & img {
-          width: 250px;
-          height: 250px;
+        width: 50%;
+      }
+
+      &__info-box {
+        &__text {
+          & h6 {
+            font-size: 1rem;
+          }
+
+          & h2 {
+            font-size: 1.5rem;
+          }
         }
       }
     }
@@ -105,6 +127,16 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: .5rem;
+
+        &__text {
+          & h6 {
+            font-size: 1rem;
+          }
+
+          & h2 {
+            font-size: 1.5rem;
+          }
+        }
       }
     }
   }
