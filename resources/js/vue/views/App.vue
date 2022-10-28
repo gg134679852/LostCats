@@ -9,16 +9,10 @@
   </div>
 </template>
 <script>
-import { Toast } from '../utils/helpers'
 import FooterComponent from '../components/FooterComponent.vue'
 export default {
   components: {
     FooterComponent
-  },
-  provide () {
-    return {
-      Toast
-    }
   }
 }
 </script>

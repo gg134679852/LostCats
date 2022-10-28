@@ -1,37 +1,44 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginPage from '../views/LoginPage.vue'
 import DashBoard from '../views/admin/DashBoard.vue'
 import DataList from '../views/admin/DataList.vue'
-import AboutUs from '../views/AboutUs.vue'
 import store from '../store/index'
 import UserPage from '../views/UserPage.vue'
 import CatList from '../components/CatList.vue'
 import CatInfo from '../components/CatInfo.vue'
 import CatListPage from '../views/CatListPage.vue'
+import LandingPageComponent from '../components/LandingPageComponent.vue'
+import AboutUsPageComponent from '../components/AboutUsPageComponent.vue'
+import LoginPageComponent from '../components/LoginPageComponent.vue'
 const routes = [
   {
     path: '/',
-    component: HomeView
-  },
-  {
-    path: '/aboutUs',
-    component: AboutUs
-  },
-  {
-    path: '/login',
-    component: LoginPage,
-    beforeEnter: (to, from, next) => {
-      if (store.state.isAuthenticated) {
-        if (store.state.currentUser.isAdmin) {
-          next({ path: '/admin/dashboard/datalist' })
-        } else {
-          next({ path: '/' })
+    component: HomeView,
+    children: [
+      {
+        path: '/landing',
+        component: LandingPageComponent
+      },
+      {
+        path: '/aboutUs',
+        component: AboutUsPageComponent
+      },
+      {
+        path: '/login',
+        component: LoginPageComponent,
+        beforeEnter: (to, from, next) => {
+          if (store.state.isAuthenticated) {
+            if (store.state.currentUser.isAdmin) {
+              next({ path: '/admin/dashboard/datalist' })
+            } else {
+              next({ path: '/' })
+            }
+          } else {
+            next()
+          }
         }
-      } else {
-        next()
       }
-    }
+    ]
   },
   {
     path: '/catList',

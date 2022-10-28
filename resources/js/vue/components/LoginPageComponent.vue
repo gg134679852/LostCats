@@ -1,5 +1,4 @@
 <template>
-   <NavBarVue />
   <loading-icon :active="isLoading" />
     <div class="formBody">
     <div class="formBody__login" v-if="formType === 'login'">
@@ -65,11 +64,7 @@
     </div>
 </template>
 <script>
-import NavBarVue from '../components/NavBar.vue'
 export default {
-  components: {
-    NavBarVue
-  },
   data () {
     return {
       loginData: {
@@ -152,5 +147,5 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import '../scss/LoginPage.scss';
+  @import '../scss/LoginPageComponent.scss';
 </style>

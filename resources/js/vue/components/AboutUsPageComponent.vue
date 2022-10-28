@@ -1,5 +1,4 @@
 <template>
- <NavBarVue />
  <div class="aboutUs-content__banner">
   <div class="aboutUs-content__banner__title">
      <h2>關於我們</h2>
@@ -25,14 +24,6 @@
   </div>
  </div>
 </template>
-<script>
-import NavBarVue from '../components/NavBar.vue'
-export default {
-  components: {
-    NavBarVue
-  }
-}
-</script>
 <style lang="scss">
-  @import '../scss/AboutUs.scss';
+  @import '../scss/AboutUsPageComponent.scss';
 </style>
