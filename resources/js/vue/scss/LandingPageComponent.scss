@@ -109,6 +109,16 @@
         }
       }
     }
+    & .userComment__image{
+      margin: 0 auto;
+      height: 200px;
+      width: 200px;
+      & img {
+        border-radius: 50%;
+        min-height: 100%;
+        min-width: 100%;
+      }
+    }
   }
 }
 
@@ -160,8 +170,8 @@
       width: 30;
       margin: 10px;
       & .userComment__image{
-        width: 50%;
-        margin: 0 auto;
+        height: 200px;
+        width: 200px;
       }
     }
   }

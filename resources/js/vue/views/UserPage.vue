@@ -1,5 +1,4 @@
 <template>
-  <NavBar />
   <loading-icon :active="isLoading" />
   <div class="container">
     <div class="userPage__container__wrap">
@@ -45,13 +44,11 @@
 </template>
 <script>
 import CatCard from './../components/CatCard.vue'
-import NavBar from '../components/NavBar.vue'
 import DonateLog from '../components/DonateLog.vue'
 import { mapState } from 'vuex'
 
 export default {
   components: {
-    NavBar,
     CatCard,
     DonateLog
   },

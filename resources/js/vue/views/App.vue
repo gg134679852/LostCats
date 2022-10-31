@@ -1,4 +1,5 @@
 <template>
+  <NavBarVue />
   <div class="app__wrap">
     <div class="app__router-view__wrap">
       <router-view />
@@ -10,9 +11,17 @@
 </template>
 <script>
 import FooterComponent from '../components/FooterComponent.vue'
+import NavBarVue from '../components/NavBar.vue'
+import { Toast } from '../utils/helpers'
 export default {
   components: {
-    FooterComponent
+    FooterComponent,
+    NavBarVue
+  },
+  provide () {
+    return {
+      Toast
+    }
   }
 }
 </script>

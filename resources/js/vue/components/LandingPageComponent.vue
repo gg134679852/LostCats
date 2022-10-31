@@ -53,7 +53,7 @@
     <ul class="userComment">
       <li>
         <div class="userComment__image">
-          <img src="../../../../public/img/avatar.png">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg">
         </div>
         <div class="userComment__comment">
           <div class="userComment__comment__warp">
@@ -65,11 +65,11 @@
       </li>
       <li>
         <div class="userComment__image">
-          <img src="../../../../public/img/avatar.png">
+          <img src="https://randomuser.me/api/portraits/women/53.jpg">
         </div>
         <div class="userComment__comment">
           <div class="userComment__comment__warp">
-            <h2>Ken</h2>
+            <h2>Karen</h2>
             <hr>
             <p>謝謝這個網站，讓我找到命中注定的喵星人，變成貓奴感覺真好！</p>
           </div>
@@ -77,11 +77,11 @@
       </li>
       <li>
         <div class="userComment__image">
-          <img src="../../../../public/img/avatar.png">
+          <img src="https://randomuser.me/api/portraits/women/82.jpg">
         </div>
         <div class="userComment__comment">
           <div class="userComment__comment__warp">
-            <h2>Jerry</h2>
+            <h2>Ada</h2>
             <hr>
             <p>多虧了收藏功能，可以讓我追蹤想收養的的貓咪的狀態，搬家之後有了空間，終於可以變成貓奴了</p>
           </div>

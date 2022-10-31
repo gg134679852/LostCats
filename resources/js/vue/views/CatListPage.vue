@@ -1,12 +1,13 @@
 <template>
-<NavBar />
-<router-view />
+  <router-view />
 </template>
 <script>
-import NavBar from '../components/NavBar.vue'
+import { Toast } from '../utils/helpers'
 export default {
-  components: {
-    NavBar
+  provide () {
+    return {
+      Toast
+    }
   }
 }
 </script>

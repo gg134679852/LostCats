@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import DashBoard from '../views/admin/DashBoard.vue'
 import DataList from '../views/admin/DataList.vue'
 import store from '../store/index'
@@ -13,32 +12,26 @@ import LoginPageComponent from '../components/LoginPageComponent.vue'
 const routes = [
   {
     path: '/',
-    component: HomeView,
-    children: [
-      {
-        path: '/landing',
-        component: LandingPageComponent
-      },
-      {
-        path: '/aboutUs',
-        component: AboutUsPageComponent
-      },
-      {
-        path: '/login',
-        component: LoginPageComponent,
-        beforeEnter: (to, from, next) => {
-          if (store.state.isAuthenticated) {
-            if (store.state.currentUser.isAdmin) {
-              next({ path: '/admin/dashboard/datalist' })
-            } else {
-              next({ path: '/' })
-            }
-          } else {
-            next()
-          }
+    component: LandingPageComponent
+  },
+  {
+    path: '/aboutUs',
+    component: AboutUsPageComponent
+  },
+  {
+    path: '/login',
+    component: LoginPageComponent,
+    beforeEnter: (to, from, next) => {
+      if (store.state.isAuthenticated) {
+        if (store.state.currentUser.isAdmin) {
+          next({ path: '/admin/dashboard/datalist' })
+        } else {
+          next({ path: '/' })
         }
+      } else {
+        next()
       }
-    ]
+    }
   },
   {
     path: '/catList',
@@ -90,6 +83,10 @@ const routes = [
         next({ path: '/login' })
       }
     }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
