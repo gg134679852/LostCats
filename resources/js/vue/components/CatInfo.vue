@@ -87,14 +87,10 @@
     </div>
   </div>
   <DonateInfoModal
-    :screen-size="screenSize"
-    :donate-info-modal-switcher="donateInfoModalSwitcher"
-    :shelter-name="showCatData.shelter.shelter_name"
-    :donate-info="donateInfo" :trade-data="tradeData"
-    @modal-switcher="modalSwitcher"
-    @enter-form-data="enterFormData"
-    @send-donate="sendDonate"
-  />
+    :screen-size="screenSize" :donate-info-modal-switcher="donateInfoModalSwitcher"
+    :shelter-name="showCatData.shelter.shelter_name" :donate-info="donateInfo" :trade-data="tradeData"
+    :is-transaction="isTransaction" @modal-switcher="modalSwitcher" @enter-form-data="enterFormData"
+    @send-donate="sendDonate" />
 </template>
 <script>
 import GoogleMap from './GoogleMap.vue'
@@ -148,7 +144,8 @@ export default {
       },
       screenSize: '',
       donateInfoModalSwitcher: 'hide',
-      isLoading: false
+      isLoading: false,
+      isTransaction: false
     })
   },
   created () {
@@ -263,6 +260,7 @@ export default {
           title: '金額錯誤'
         })
       } else {
+        this.isTransaction = true
         this.$axiosHelper
           .post('spgateway/donate', {
             data: {
@@ -272,6 +270,7 @@ export default {
           })
           .then((obj) => {
             this.tradeData = { ...this.tradeData, ...obj.data }
+            this.isTransaction = false
           })
           .catch((error) => {
             this.Toast.fire({
@@ -279,7 +278,7 @@ export default {
               title: '發生錯誤 請稍後在試'
             })
             console.log(error)
-            this.isLoading = false
+            this.isTransaction = false
           })
       }
     },

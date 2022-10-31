@@ -1,4 +1,5 @@
 <template>
+  <loading-icon :active="isTransaction" :style="{'z-index': 1200}" />
   <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" ref="modal">
     <div class="modal-dialog"
       :class="{ 'modal-fullscreen': screenSize === 'Small' || screenSize === 'Middle', 'modal-lg': screenSize === 'Big' }">
@@ -14,7 +15,7 @@
               <div class="mb-3">
                 <label class="form-label">捐款金額</label>
                 <input type="number" max="5000" class="form-control" placeholder="金額不可小於500" name="price"
-                 @input="enterFormData" required />
+                  @input="enterFormData" required />
               </div>
               <div class="mb-3">
                 <label class="form-label">姓名</label>
@@ -77,6 +78,10 @@ export default {
     },
     tradeData: {
       type: Object,
+      required: true
+    },
+    isTransaction: {
+      type: Boolean,
       required: true
     }
   },
