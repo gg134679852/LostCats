@@ -115,7 +115,7 @@ class userControllers extends Controller
     {
         $requestData = $request->all();
         $userId = $requestData['userId'];
-        $responseData = User::where(['id' => $userId])->with('donateLog')->get()->pluck('donateLog')->collapse()->paginate(10);
+        $responseData = User::where(['id' => $userId])->with(['donateLog'=>function($q){$q->where(['isComplete' => true]);}])->get()->pluck('donateLog')->collapse()->paginate(10);
         return response(['donateLog'=>$responseData]);
     }
 }

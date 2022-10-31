@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DonateLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\DonateLog;
 
 class donateController extends Controller
 {
-   
-    public function Donate (Request $request) {
+
+    public function Donate(Request $request)
+    {
         $PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
-        $url= env('URL');
+        $url = env('URL');
         $user = Auth::user();
         $orderId = $this->makeOrderId();
         $trade_info_arr = array(
-        'MerchantID' => env('Merchant_ID'),
-        'RespondType' => 'JSON',
-        'TimeStamp' => Carbon::now()->timestamp,
-        'Version' => 1.6,
-        'MerchantOrderNo' => $orderId,
-        'LoginType'=> 0,
-        'OrderComment'=> "捐款至{$request->data['shelter_name']}",
-        'Amt' => $request->data['price'],
-        'ItemDesc' => $request->data['shelter_name'],
-        'Email'=> $request->data['email'],
-        'ReturnURL'=> $url . '/spgateway/callback?from=ReturnURL', 
-        'NotifyURL'=> $url . '/spgateway/callback?from=NotifyURL'
-    );
+            'MerchantID' => env('Merchant_ID'),
+            'RespondType' => 'JSON',
+            'TimeStamp' => Carbon::now()->timestamp,
+            'Version' => 1.6,
+            'MerchantOrderNo' => $orderId,
+            'LoginType' => 0,
+            'OrderComment' => "捐款至{$request->data['shelter_name']}",
+            'Amt' => $request->data['price'],
+            'ItemDesc' => $request->data['shelter_name'],
+            'Email' => $request->data['email'],
+            'ReturnURL' => $url . '/spgateway/callback?from=ReturnURL',
+            'NotifyURL' => $url . '/spgateway/callback?from=NotifyURL',
+        );
 
         $mer_key = env('HASH_KEY');
         $mer_iv = env('HASH_IV');
@@ -40,35 +41,37 @@ class donateController extends Controller
         $shaData = 'HashKey=' . $mer_key . '&' . $TradeInfo . '&HashIV=' . $mer_iv;
 
         $Tradehsa = strtoupper(hash('sha256', $shaData));
-        
+
         DonateLog::create([
-        'user_id'=>$user->id,
-        'order_id'=>$orderId,
-        'shelter_name'=>$request->data['shelter_name'],
-        'donate_price'=>$request->data['price']
+            'user_id' => $user->id,
+            'order_id' => $orderId,
+            'shelter_name' => $request->data['shelter_name'],
+            'donate_price' => $request->data['price'],
         ]);
 
-
-       return response(json_encode(['MerchantID'=>env('Merchant_ID'),'TradeInfo'=>$TradeInfo,'TradeSha'=>$Tradehsa,'Version'=>'1.6','PayGateWay'=>$PayGateWay]));
+        return response(json_encode(['MerchantID' => env('Merchant_ID'), 'TradeInfo' => $TradeInfo, 'TradeSha' => $Tradehsa, 'Version' => '1.6', 'PayGateWay' => $PayGateWay]));
     }
 
-    public function callback (Request $request){
+    public function callback(Request $request)
+    {
         $requestData = $request->all();
         $decryptData = $requestData['TradeInfo'];
         $mer_key = env('HASH_KEY');
         $mer_iv = env('HASH_IV');
-        $TradeInfo = $this->strippadding(openssl_decrypt(hex2bin($decryptData), 'AES-256-CBC',$mer_key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING,$mer_iv));
+        $TradeInfo = $this->strippadding(openssl_decrypt(hex2bin($decryptData), 'AES-256-CBC', $mer_key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $mer_iv));
 
-        $returnData = json_decode($TradeInfo,true);
+        $returnData = json_decode($TradeInfo, true);
         $result = $returnData['Result'];
 
-        if( isset($returnData) && $returnData['Status'] !== 'SUCCESS'){
-          DonateLog::where('order_id',$result['MerchantOrderNo'])->delete();
+        if (isset($returnData) && $returnData['Status'] !== 'SUCCESS') {
+            DonateLog::where('order_id', $result['MerchantOrderNo'])->delete();
+        }
+        if (isset($returnData) && $returnData['Status'] === 'SUCCESS') {
+            DonateLog::where('order_id', $result['MerchantOrderNo'])->update(['isComplete' => true]);
         }
 
-        return view('donateCallBackPage',$returnData);
+        return view('donateCallBackPage', $returnData);
     }
-
 
     public function strippadding($string)
     {
@@ -84,10 +87,11 @@ class donateController extends Controller
         return false;
     }
 
-    public function makeOrderId(){
-      $Strings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      $shuffleString = substr(str_shuffle($Strings), 1, 2);
-      $randomNum = uniqid();
-      return "{$shuffleString}{$randomNum}";
+    public function makeOrderId()
+    {
+        $Strings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $shuffleString = substr(str_shuffle($Strings), 1, 2);
+        $randomNum = uniqid();
+        return "{$shuffleString}{$randomNum}";
     }
 }
