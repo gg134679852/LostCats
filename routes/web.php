@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
  */
 Route::post('user/singup', 'userControllers@singup');
 Route::post('user/login', 'userControllers@login');
-Route::get('/facebook/login', 'userControllers@faceBookLogin');
-Route::get('/facebook/callback', 'userControllers@faceBookLoginCallBack');
 Route::post('/spgateway/callback', 'donateController@callback');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
