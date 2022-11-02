@@ -42,6 +42,7 @@ class adminController extends Controller
             "animal_sex" => $validatedData["animal_sex"],
             "animal_sterilization" => $validatedData["animal_sterilization"],
             "shelter_id" => $validatedData["shelter_id"],
+            "isFake" => true
         ])->save();
         if ($createNewCatData) {
             return response()->json([
@@ -101,12 +102,26 @@ class adminController extends Controller
             "animal_sex" => ['required'],
             "animal_sterilization" => ['required'],
             "shelter_id" => ['required'],
+            "animal_subid" =>['required']
         ]);
 
         $id = $request->input('id');
         if (ShelterList::where('id', $validatedData["shelter_id"])->exists()) {
 
-            $updateCatData = AnimalData::where('id', $id)->update($validatedData);
+            $updateCatData = AnimalData::where('id', $id)->update([ 
+            "animal_subid" => $validatedData["animal_subid"],
+            "album_file" => $validatedData["album_file"],
+            "animal_age" => $validatedData["animal_age"],
+            "animal_bacterin" => $validatedData["animal_bacterin"],
+            "animal_bodytype" => $validatedData["animal_bodytype"],
+            "animal_color" => $validatedData["animal_color"],
+            "animal_foundplace" => $validatedData["animal_foundplace"],
+            "animal_remark" => $validatedData["animal_remark"],
+            "animal_sex" => $validatedData["animal_sex"],
+            "animal_sterilization" => $validatedData["animal_sterilization"],
+            "shelter_id" => $validatedData["shelter_id"],
+            "isFake" => true
+        ]);
 
             if ($updateCatData === 1) {
                 return response()->json([
