@@ -24,12 +24,14 @@ class adminController extends Controller
             "animal_sex" => ['required'],
             "animal_sterilization" => ['required'],
             "shelter_id" => ['required'],
+            "animal_subid" =>['required']
         ]);
 
         $animalId = AnimalData::where('shelter_id', $allRequestData['shelter_id'])->max('animal_id');
 
         $createNewCatData = AnimalData::create([
             "animal_id" => $animalId + 1,
+            "animal_subid" => $validatedData["animal_subid"],
             "album_file" => $validatedData["album_file"],
             "animal_age" => $validatedData["animal_age"],
             "animal_bacterin" => $validatedData["animal_bacterin"],
