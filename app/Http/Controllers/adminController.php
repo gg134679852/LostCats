@@ -30,7 +30,7 @@ class adminController extends Controller
         $animalId = AnimalData::where('shelter_id', $allRequestData['shelter_id'])->max('animal_id');
 
         $createNewCatData = AnimalData::create([
-            "animal_id" => $animalId + 1,
+            "animal_id" => $animalId + 2,
             "animal_subid" => $validatedData["animal_subid"],
             "album_file" => $validatedData["album_file"],
             "animal_age" => $validatedData["animal_age"],
@@ -91,7 +91,6 @@ class adminController extends Controller
     public function updateCatData(Request $request)
     {
         $validatedData = $request->validateWithBag('post', [
-            "animal_id" => ['required'],
             "album_file" => [],
             "animal_age" => ['required'],
             "animal_bacterin" => ['required'],
