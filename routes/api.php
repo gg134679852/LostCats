@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('/animalData', 'animalDataController@getAnimalData');
 Route::get('/animalData/getDetail', 'animalDataController@getAnimalDetailData');
-Route::get('/animalData/getSelect', 'animalDataController@getAnimalDataSelect');
 Route::get('/animalData/getFilter', 'animalDataController@getAnimalDataFilter');
 Route::post('user/singup', 'userControllers@singup');
 Route::post('user/login', 'userControllers@login');

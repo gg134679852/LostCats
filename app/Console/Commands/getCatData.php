@@ -111,7 +111,7 @@ class getCatData extends Command
                 if ($arrayIndex === false) {
                     deleteOldAnimaData($id);
                 }
-                if ($arrayIndex !== false && $oldData['album_file'] === null) {
+                if ($arrayIndex !== false && $oldData['album_file'] === null && strlen($catData[$arrayIndex]['album_file']) !== 0) {
                     $albumFile = $catData[$arrayIndex]['album_file'];
                     updateAlbumFile($id, $albumFile);
                 }

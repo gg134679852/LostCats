@@ -1,62 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# 迷途喵星人
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+根據統計動物收容所的一半以上動物都是被棄養，流浪動物棄養的問題到現在並未停止過，最近因疫情變得更加嚴重，收容所可容量的動物數量也漸漸減少，本網站的初衷是藉由網站社群呼籲社會大眾以領養代替購買，減少動物收容所的負擔
 
-## About Laravel
+![App Screenshot](https://i.imgur.com/JP7arx2.png)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 使用技術
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 前端
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- HTML
+- CSS
+- JavaScript
+- Vue.js
+- Bootstrap
 
-## Learning Laravel
+### 後端
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8
+- Laravel 8
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 資料庫
 
-## Laravel Sponsors
+- MySQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## 網站功能
 
-### Premium Partners
+### 一般使用者
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+- 查看喵星人列表
+- 瀏覽喵星人資料
+- 領養喵星人
+- 註冊成為會員
 
-## Contributing
+### 網站會員
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 查看喵星人列表
+- 瀏覽喵星人資料
+- 領養喵星人
+- 收藏喵星人
+- 刪除收藏喵星人
+- 捐款
+- 查看捐款紀錄
 
-## Code of Conduct
+### 網站管理員
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- 新增喵星人資料
+- 瀏覽喵星人資料
+- 更新喵星人資料
+- 刪除喵星人資料
+- 新增收容所資料
+- 查看收容所資料
+- 更新收容所資料
+- 刪除收容所資料
+- 瀏覽會員捐款紀錄
 
-## Security Vulnerabilities
+## 資料庫關聯圖
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+![App Screenshot](https://i.imgur.com/YDTqlMI.png)
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 安裝與執行 (installation and execution)
+1. 選定一個資料夾，用來存放本專案。開啟終端機，移動至該資料夾，下載本專案
+```
+git clone https://github.com/gg134679852/LostCats.git
+```
+2. 移動至本專案資料夾
+```
+cd LostCats
+```
+3. 安裝套件
+```
+composer install
+```
+4. 設定好資料庫環境變數後，執行migrate
+```
+php artisan migrate
+```
+5.  執行UserSeeder，產生使用者
+```
+php artisan db:seed --class=UserSeeder
+```
+6. 執行command:getCatData，獲取喵星人資料
+```
+php artisan command:getCatData
+```
+7. 啟動伺服器
+```
+php artisan serve
+```
