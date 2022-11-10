@@ -11,5 +11,5 @@ const ESLintPlugin = require('eslint-webpack-plugin')
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vue().sass('resources/css/app.scss', 'public/css').webpackConfig({ plugins: [new ESLintPlugin({ fix: true, extensions: ['js', 'vue'] })] })
-mix.version()
+// mix.js('resources/js/app.js', 'public/js').vue().sass('resources/css/app.scss', 'public/css').webpackConfig({ plugins: [new ESLintPlugin({ fix: true, extensions: ['js', 'vue'] })] })
+// mix.version()
