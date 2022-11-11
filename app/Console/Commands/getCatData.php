@@ -108,7 +108,7 @@ class getCatData extends Command
             foreach ($oldAnimalData as $oldData) {
                 $id = $oldData['animal_id'];
                 $arrayIndex = array_search($id, array_column($catData, 'animal_id'));
-                if ($arrayIndex === false) {
+                if ($arrayIndex === false && $oldData['isFake'] === false) {
                     deleteOldAnimaData($id);
                 }
                 if ($arrayIndex !== false && $oldData['album_file'] === null && strlen($catData[$arrayIndex]['album_file']) !== 0) {
