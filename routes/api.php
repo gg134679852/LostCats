@@ -17,7 +17,6 @@ Route::get('/animalData/getDetail', 'animalDataController@getAnimalDetailData');
 Route::get('/animalData/getFilter', 'animalDataController@getAnimalDataFilter');
 Route::post('user/singup', 'userControllers@singup');
 Route::post('user/login', 'userControllers@login');
-Route::post('/spgateway/callback', 'donateController@callback');
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
