@@ -14,6 +14,8 @@
 - Vue.js
 - Bootstrap
 
+#### 前端部分原本是跟後端寫在一起的 現在移置到新的repository做分離
+[LostCats-frontend](https://github.com/gg134679852/LostCats-frontend)
 ### 後端
 
 - PHP 8
